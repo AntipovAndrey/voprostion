@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+</head>
+<body>
+<div>
+    <!--/*@thymesVar id="user" type="ru.voprostion.app.domain.dto.UserDto"*/-->
+    <form action="" th:action="@{/registration}" th:object="${user}" method="POST" enctype="utf8" role="form">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+
+        <p th:text="login"></p>
+        <input th:field="*{name}" type="text" name="username" placeholder="Логин"/>
+
+        <p th:text="pass"></p>
+        <input th:field="*{password}" type="text" name="username" placeholder="Логин"/>
+
+        <p th:text="confirm"></p>
+        <input th:field="*{passwordConfirmation}" type="text" name="username" placeholder="Логин"/>
+
+        <button type="submit" class="btn btn-default">
+            Register
+        </button>
+    </form>
+</div>
+<p sec:authorize="isAuthenticated()">
+    You cannot create an user account because you are already logged in.
+</p>
+</body>
+</html>

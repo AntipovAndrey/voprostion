@@ -1,5 +1,7 @@
 package ru.voprostion.app.domain.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,8 @@ public class SecurityServiceImpl implements SecurityService {
     private AuthenticationManager authenticationManager;
     private UserDetailsService userDetailsService;
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
+
     @Autowired
     public SecurityServiceImpl(AuthenticationManager authenticationManager,
                                @Qualifier("PersistenceUserDetailsService") UserDetailsService userDetailsService) {
@@ -24,7 +28,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public String findLoggedInUsername() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userDetails instanceof UserDetails) {
             return ((UserDetails) userDetails).getUsername();
         }
@@ -43,6 +47,7 @@ public class SecurityServiceImpl implements SecurityService {
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext()
                     .setAuthentication(usernamePasswordAuthenticationToken);
+            logger.info(String.format("Auto login %s successfully!", username));
         }
     }
 }
