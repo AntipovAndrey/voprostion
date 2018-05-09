@@ -58,5 +58,3 @@ public class User extends BaseModel {
         votes.add(vote);
     }
 }
-
-
