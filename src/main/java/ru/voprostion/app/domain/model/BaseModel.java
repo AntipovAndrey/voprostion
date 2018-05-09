@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 public abstract class BaseModel implements Comparable<BaseModel> {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     @Override

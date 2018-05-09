@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,10 +12,17 @@ import java.util.Set;
 @Getter
 @Setter
 public class User extends BaseModel {
+    @NotNull
+    @Column(unique = true)
     private String name;
+
+    @NotNull
     private String password;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
@@ -26,11 +34,11 @@ public class User extends BaseModel {
     @OneToMany(mappedBy = "user")
     private Set<Answer> answers = createSet();
     @OneToMany(mappedBy = "user")
-    private Set<Vote> votes= createSet();
+    private Set<Vote> votes = createSet();
 
     public void addRole(Role role) {
         Objects.requireNonNull(role);
-        if(roles.add(role)) {
+        if (roles.add(role)) {
             role.addUser(this);
         }
     }
