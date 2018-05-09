@@ -55,16 +55,16 @@ public class UserRoleRepositoryTest {
         user4 = new User();
 
         user1.setName("user1");
-        user1.setPassword("password1");
+        user1.setPasswordHash("password1");
 
         user2.setName("user2");
-        user2.setPassword("password1");
+        user2.setPasswordHash("password1");
 
         user3.setName("user3");
-        user3.setPassword("password1");
+        user3.setPasswordHash("password1");
 
         user4.setName("user4");
-        user4.setPassword("password1");
+        user4.setPasswordHash("password1");
 
         user2.addRole(role1);
 
@@ -104,7 +104,7 @@ public class UserRoleRepositoryTest {
     @Test
     public void remove_user_with_roles_does_not_remove_roles() {
         final User afterSave = userRepository.save(user4);
-        userRepository.deleteById(afterSave.getId());
+        userRepository.delete(afterSave.getId());
         final int sizeRoles = roleRepository.findAll().size();
 
         Assert.assertEquals(2, sizeRoles);

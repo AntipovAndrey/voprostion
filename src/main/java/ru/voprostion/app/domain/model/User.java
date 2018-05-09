@@ -17,6 +17,9 @@ public class User extends BaseModel {
     private String name;
 
     @NotNull
+    private String passwordHash;
+
+    @Transient
     private String password;
 
     @ManyToMany(cascade = {

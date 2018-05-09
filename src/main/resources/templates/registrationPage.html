@@ -2,52 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Registration</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet"  type="text/css" th:href="@{css/registrationPageStyles.css}">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300" type="text/css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/registrationPageStyles.css}"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300" type="text/css"/>
 </head>
 
 <nav class="top-menu">
     <ul class="menu-main">
-        <li ali><div class="current" align="left">The Voprostion  </div></li>
+        <li>
+            <div class="current" align="left">The Voprostion</div>
+        </li>
         <li><a href="">About us</a></li>
 
-        <li><div align="left" >
-            <p><tt>Already have an account?</tt> <a href="">Sign in</a></p>
-        </div></li>
+        <li>
+            <div align="left">
+                <p><tt>Already have an account?</tt> <a href="">Sign in</a></p>
+            </div>
+        </li>
     </ul>
 </nav>
-
-
 
 
 <form action="action_page.php">
     <div class="container">
 
-        <H1 align="center" style="margin-top: 30px" > <b><tt>Register</tt></b> </H1>
-    </br>
+        <H1 align="center" style="margin-top: 30px"><b><tt>Register</tt></b></H1>
 
 
         <p align="center"><tt>Please fill in this form to create an account</tt></p>
-        <hr>
+        <hr/>
 
         <label><b><p align="center"><tt>Email</tt></p></b></label>
-        <div align="center"> <input type="text" style="width: 270px; height :40px;" placeholder="Enter Email"
-                                    name="email" required></div>
+        <div align="center"><input type="text" style="width: 270px; height :40px;" placeholder="Enter Email"
+                                   name="email"/></div>
 
 
         <label><b><p align="center"><tt>Password</tt></p></b></label>
-        <div align="center"><input type="password"  style="width: 270px; height :40px;" placeholder="Enter Password"
-                                   name="psw" required></div>
+        <div align="center"><input type="password" style="width: 270px; height :40px;" placeholder="Enter Password"
+                                   name="psw"/></div>
 
         <label><b><p align="center"><tt>Repeat Password</tt></p></b></label>
-        <div align="center"> <input  type="password"  style="width: 270px; height :40px;" placeholder="Repeat Password"
-                                     name="psw-repeat" required></div><hr>
+        <div align="center"><input type="password" style="width: 270px; height :40px;" placeholder="Repeat Password"
+                                   name="psw-repeat"/></div>
+        <hr/>
 
 
-        <div align="center"> <button type="submit", style="width: 270px; height: 40px" class="registerbtn">Register</button></div>
+        <div align="center">
+            <button type="submit" style="width: 270px; height: 40px" class="registerbtn">Register</button>
+        </div>
     </div>
-
-
-
 </form>
+</html>

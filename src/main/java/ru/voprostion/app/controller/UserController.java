@@ -35,7 +35,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    @ResponseBody
     public String registration(@Valid @ModelAttribute("userForm") UserDto userForm,
                                BindingResult bindingResult,
                                Model model) {
@@ -47,17 +46,16 @@ public class UserController {
         User userToRegister = new User();
 
         userToRegister.setName(userForm.getName());
+        userToRegister.setPasswordHash(userForm.getPassword());
         userToRegister.setPassword(userForm.getPassword());
 
         registrationUseCase.registerNewUser(userToRegister);
         authorizationUseCase.login(userToRegister);
 
-        return userForm.toString();
-        //      return "redirect:/welcome";
+        return "redirect:/welcome";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    @ResponseBody
     public String login(Model model, String error, String logout) {
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
