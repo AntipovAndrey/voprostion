@@ -21,4 +21,9 @@ public class Tag extends BaseModel {
         Objects.requireNonNull(question);
         questions.add(question);
     }
+
+    public void removeQuestion(Question question) {
+        Objects.requireNonNull(question);
+        questions.remove(question);
+    }
 }

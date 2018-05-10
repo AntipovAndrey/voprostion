@@ -45,4 +45,20 @@ public class Question extends BaseModel {
             tag.addQuestion(this);
         }
     }
+
+    public void removeAnswer(Answer answer) {
+        Objects.requireNonNull(answer);
+        if (answers.contains(answer)) {
+            answers.remove(answer);
+        }
+    }
+
+    public void removeTag(Tag tag) {
+        Objects.requireNonNull(tag);
+        if (tags.contains(tag)) {
+            tags.remove(tag);
+            tag.removeQuestion(this);
+        }
+    }
+
 }

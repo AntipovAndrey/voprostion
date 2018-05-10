@@ -79,6 +79,7 @@ public class UserRoleRepositoryTest {
         final int sizeBefore = userRepository.findAll().size();
         userRepository.save(user1);
         final int sizeAfter = userRepository.findAll().size();
+
         Assert.assertEquals(sizeBefore + 1, sizeAfter);
     }
 
