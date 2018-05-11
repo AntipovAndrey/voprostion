@@ -212,7 +212,7 @@ body {
 #questionPreview{
     margin-top: 60px;
     margin: 40px;
-    width: auto;
+    width: 85%;
     height: 100%; /* Размеры */
     background: whitesmoke;
     outline: 1px solid #004d39; /* Чёрная рамка */

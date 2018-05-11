@@ -9,11 +9,11 @@
     <nav class="top-menu">
         <ul class="menu-main">
             <li>
-                <div class="current" align="left"><tt>The Voprostion</tt></div>
+                <div class="current" align="left"><tt><b>The Voprostion</b></tt></div>
             </li>
 
             <li>
-                <a href="">About us</a>
+                <a href=""><tt>About us</tt></a>
             </li>
 
             <li sec:authorize="isAuthenticated()">
@@ -25,7 +25,7 @@
             </li>
 
             <li sec:authorize="!isAuthenticated()">
-                <tt>Already have an account?</tt> <a th:href="@{/login}">Sign in</a>
+                <tt>Already have an account?</tt> <a th:href="@{/login}"><tt>Sign in</tt></a>
             </li>
         </ul>
     </nav>
@@ -35,7 +35,7 @@
         <h2>Правая панель</h2>
         <div align="bottom">
             <div sec:authorize="isAuthenticated()">
-                <a href="">Мои вопросы</a>
+                <a href="" ><tt>Мои вопросы</tt></a>
             </div>
             <div align="bottom" class="buttonToAdd"></div>
         </div>
