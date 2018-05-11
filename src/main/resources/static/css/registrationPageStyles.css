@@ -15,6 +15,13 @@ input[type=text]:focus, input[type=password]:focus {
     outline: none;
 }
 
+#inputStyle {
+    position: center;
+    width: 270px;
+    height :40px
+}
+
+
 hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
@@ -166,4 +173,67 @@ H1{
     .cancelbtn, .signupbtn {
         width: 100%;
     }
+}
+
+
+.buttonToAdd{
+    display: inline-block;
+    margin-top: 500px;
+    width: 70px;
+    height: 70px;
+    background: #004d39;
+    cursor: pointer;
+    border-radius: 50%;
+
+}
+
+
+body {
+    background: #FFF;
+    color: #000;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+#header {
+    background: #F5DEB3;
+    width: 100%;
+    height: 55px;
+}
+
+#container {
+    background: whitesmoke;
+    margin: auto auto;
+    text-align: center;
+    width: 80%;
+    height: 400px;
+}
+
+#questionPreview{
+    margin-top: 60px;
+    margin: 40px;
+    width: auto;
+    height: 100%; /* Размеры */
+    background: whitesmoke;
+    outline: 1px solid #004d39; /* Чёрная рамка */
+    border: 3px solid #fff; /* Белая рамка */
+
+}
+
+#sidebar {
+    float: right;
+    width: 20%;
+}
+
+#tagsButton{
+    width: auto;
+    height: auto;
+    margin: 5px;
+    font-size: 15px;
+}
+
+#content {
+    background: white;
+    float: right;
+    width: 80%;
 }

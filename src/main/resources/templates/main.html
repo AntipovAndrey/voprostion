@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<body>
+<div id="page" layout:fragment="content">
+    <div id="content">
+       <th:block th:each="question : ${questions}">
+            <div id="questionPreview">
+                <div>
+                    <h5 align="right" style="margin-right: 10px"><tt
+                            th:text="|${question.user.name + ' • ' + #lists.size(question.answers)}| + ' answers'">
+                    </tt></h5>
+                </div>
+
+                <h3><tt th:text="${question.questionTitle}"></tt></h3>
+                <div>
+                    <th:block th:each="tag : ${question.tags}">
+                        <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
+                    </th:block>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>
