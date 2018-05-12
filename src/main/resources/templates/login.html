@@ -1,36 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-
-    <title>Registration</title>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
 <body>
+<div id="page" layout:fragment="content">
+    <div id="content">
 
-<h1>Login page</h1>
-<form th:action="@{/login}" method="post">
-    <label for="username">Username</label>:
-    <input type="text"
-           id="username"
-           name="username"
-           class="form-control"
-           autofocus="autofocus"
-           placeholder="Username"/>
-    <label for="password">Password</label>:
-    <input type="password"
-           id="password"
-           name="password"
-           class="form-control"
-           placeholder="Password"/>
-    <input type="submit"
-           name="login-submit"
-           id="login-submit"
-           class="form-control btn btn-info"
-           value="Log In"/>
+        <H1 align="center" style="margin-top: 30px"><b><tt>Log in</tt></b></H1>
+        <hr/>
+        <form th:action="@{/login}" method="post">
 
-    <div class="form-group">
-        <span>New user? <a href="/" th:href="@{/registration}">Register here</a></span>
+            <label><b><p align="center"><tt>Login</tt></p></b></label>
+            <div align="center">
+                <input type="text" style="width: 270px; height :40px;" placeholder="Enter Email"
+                       name="username"/>
+            </div>
+
+            <label><b><p align="center"><tt>Password</tt></p></b></label>
+            <div align="center">
+                <input type="password" style="width: 270px; height :40px;" placeholder="Enter Password"
+                       name="password"/>
+            </div>
+
+            <hr/>
+
+            <div align="center">
+                <button type="submit" style="width: 270px; height: 40px" class="registerbtn">Log in</button>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 </body>
 </html>

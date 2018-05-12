@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import ru.voprostion.app.domain.dto.UserDto;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.usecase.AuthorizationUseCase;
@@ -52,7 +51,7 @@ public class UserController {
         registrationUseCase.registerNewUser(userToRegister);
         authorizationUseCase.login(userToRegister);
 
-        return "redirect:/welcome";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -66,9 +65,4 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    @ResponseBody
-    public String welcome(Model model) {
-        return "welcome";
-    }
 }

@@ -1,29 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
-<div>
-    <!--/*@thymesVar id="user" type="ru.voprostion.app.domain.dto.UserDto"*/-->
-    <form action="" th:action="@{/registration}" th:object="${user}" method="POST">
+<div id="page" layout:fragment="content">
+    <div id="content">
 
-        <p th:text="login"></p>
-        <input th:field="*{name}" type="text" name="username" placeholder="Логин"/>
+        <p sec:authorize="isAuthenticated()" sec:authentication="name"></p>
 
-        <p th:text="pass"></p>
-        <input th:field="*{password}" type="text" name="username" placeholder="Логин"/>
+        <th:block sec:authorize="!isAuthenticated()">
+            <!--/*@thymesVar id="user" type="ru.voprostion.app.domain.dto.UserDto"*/-->
+            <form action="" th:action="@{/registration}" th:object="${user}" method="POST">
+                <H1 align="center" style="margin-top: 30px"><b><tt>Register</tt></b></H1>
 
-        <p th:text="confirm"></p>
-        <input th:field="*{passwordConfirmation}" type="text" name="username" placeholder="Логин"/>
+                <p align="center"><tt>Please fill in this form to create an account</tt></p>
+                <hr/>
 
-        <button type="submit" class="btn btn-default">
-            Register
-        </button>
-    </form>
+                <label><b><p align="center"><tt>Login</tt></p></b></label>
+                <div align="center">
+                    <input th:field="*{name}" type="text" style="width: 270px; height :40px;"
+                           placeholder="Enter Login"
+                           name="email"/>
+                </div>
+
+
+                <label><b><p align="center"><tt>Password</tt></p></b></label>
+                <div align="center">
+                    <input th:field="*{password}" type="password" id="inputStyle"
+                           placeholder="Enter Password"
+                           name="psw"/>
+                </div>
+
+                <label><b><p align="center"><tt>Repeat Password</tt></p></b></label>
+                <div align="center">
+                    <input th:field="*{passwordConfirmation}" type="password" id="inputStyle"
+                           placeholder="Repeat Password"
+                           name="psw-repeat"/>
+                </div>
+                <hr/>
+
+
+                <div align="center">
+                    <button type="submit" id="inputStyle" class="registerbtn">Register</button>
+                </div>
+            </form>
+        </th:block>
+    </div>
 </div>
-<p sec:authorize="isAuthenticated()" sec:authentication="name">
-    You cannot create an user account because you are already logged in.
-</p>
 </body>
 </html>
+
+
+
+
