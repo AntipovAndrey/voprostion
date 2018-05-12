@@ -9,9 +9,12 @@
         <th:block th:each="question : ${questions}">
             <div id="questionPreview" align="center">
                 <div>
-                    <h5 align="right" style="margin-right: 10px"><tt
-                            th:text="|${question.user.name + ' • ' + #lists.size(question.answers)}| + ' answers'">
-                    </tt></h5>
+                    <h5 align="right" style="margin-right: 10px">
+                        <a th:href="@{'/question/' + ${question.id}}">
+                            <tt
+                                    th:text="|${question.user.name + ' • ' + #lists.size(question.answers)}| + ' answers'">
+                            </tt>
+                        </a></h5>
                 </div>
 
                 <h3><tt th:text="${question.questionTitle}"></tt></h3>

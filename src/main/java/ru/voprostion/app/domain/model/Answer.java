@@ -27,4 +27,10 @@ public class Answer extends BaseModel {
         this.user = user;
         user.addAnswer(this);
     }
+
+    public int getRating() {
+        return votes.stream()
+                .mapToInt(Vote::getValue)
+                .sum();
+    }
 }

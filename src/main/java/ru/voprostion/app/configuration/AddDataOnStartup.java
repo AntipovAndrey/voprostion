@@ -17,13 +17,12 @@ public class AddDataOnStartup {
     @Value("${roles.authenticated}")
     private String simpleUserRole;
 
-    @Value("spring.jpa.hibernate.ddl-auto")
-    private String databaseUpdateType;
+    @Value("${app.filldb}")
+    private Boolean databaseUpdate;
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
-        if (databaseUpdateType.equals("update")) return;
-        if (databaseUpdateType.equals("validate")) return;
+        if (!databaseUpdate) return;
         roleRepository.save(new Role(simpleUserRole));
     }
 }

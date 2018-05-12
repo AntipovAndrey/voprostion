@@ -42,4 +42,14 @@ public class QuestionServiceImpl implements QuestionService {
         tags.forEach(question::addTag);
         return questionRepository.save(question);
     }
+
+    @Override
+    public Question findById(Long id) {
+        return questionRepository.findOne(id);
+    }
+
+    @Override
+    public Question save(Question question) {
+        return questionRepository.save(question);
+    }
 }

@@ -10,4 +10,8 @@ public interface QuestionService {
     List<Question> getAll();
 
     Question create(String question, List<Tag> tags);
+
+    Question findById(Long id);
+
+    Question save(Question question);
 }

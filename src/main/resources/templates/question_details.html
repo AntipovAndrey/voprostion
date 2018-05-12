@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default" xmlns:sec="http://www.w3.org/1999/xhtml">
+<body>
+<div id="page" layout:fragment="content">
+    <div id="content">
+        <!--/*@thymesVar id="question" type="ru.voprostion.app.domain.dto.QuestionDto"*/-->
+        <div id="questionPreview" align="center">
+            <div>
+                <h5 align="right" style="margin-right: 10px"><tt
+                        th:text="|${question.user.name + ' • ' + #lists.size(question.answers)}| + ' answers'">
+                </tt></h5>
+            </div>
+
+            <h3><tt th:text="${question.questionTitle}"></tt></h3>
+            <div>
+                <th:block th:each="tag : ${question.tags}">
+                    <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
+                </th:block>
+            </div>
+        </div>
+        <div align="center" sec:authorize="isAuthenticated()"
+             th:if="${question.user.name != #authentication.name}">
+
+            <form th:action="@{__${#httpServletRequest.requestURI}__/answer}" th:object="${answerForm}" method="post">
+
+                <label><b><p align="center"><tt>Answer</tt></p></b></label>
+                <div align="center">
+                    <input th:field="*{answer}" type="text" style="width: 270px; height :40px;"
+                           placeholder="Enter Answer"/>
+                </div>
+                <hr/>
+
+                <div align="center">
+                    <button type="submit" style="width: 270px; height: 40px" class="registerbtn">Answer</button>
+                </div>
+            </form>
+        </div>
+        <!--/*@thymesVar id="answerForm" type="ru.voprostion.app.domain.model.Answer"*/-->
+        <th:block th:each="answer : ${answers}">
+            <div id="answer" align="center">
+                <div>
+                    <h5 align="right" style="margin-right: 10px">
+                        <tt
+                                th:text="|${answer.user.name + ' • ' + #lists.size(answer.votes)}| + ' votes'">
+                        </tt></h5>
+                </div>
+
+                <h3><tt th:text="${answer.answer}"></tt></h3>
+                <div>
+                    <a sec:authorize="isAuthenticated()"
+                       th:if="${answer.user.name != #authentication.name}"
+                       th:href="@{__${#httpServletRequest.requestURI}__/like/{id}(id=${answer.id})}"
+                       th:text="Like"></a>
+                    <p th:text="${answer.rating}"></p>
+                    <a sec:authorize="isAuthenticated()"
+                       th:if="${answer.user.name != #authentication.name}"
+                       th:href="@{__${#httpServletRequest.requestURI}__/dislike/{id}(id=${answer.id})}"
+                       th:text="Like"></a>
+                </div>
+            </div>
+        </th:block>
+
+    </div>
+</div>
+</body>
+</html>

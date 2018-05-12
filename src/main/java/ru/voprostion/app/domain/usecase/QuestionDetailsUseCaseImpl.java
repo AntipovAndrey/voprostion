@@ -5,20 +5,18 @@ import org.springframework.stereotype.Service;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.service.QuestionService;
 
-import java.util.List;
-
 @Service
-public class QuestionsListUseCaseImpl implements QuestionsListUseCase {
+public class QuestionDetailsUseCaseImpl implements QuestionDetailsUseCase {
 
     private QuestionService questionService;
 
     @Autowired
-    public QuestionsListUseCaseImpl(QuestionService questionService) {
+    public QuestionDetailsUseCaseImpl(QuestionService questionService) {
         this.questionService = questionService;
     }
 
     @Override
-    public List<Question> getAll() {
-        return questionService.getAll();
+    public Question getById(Long id) {
+        return questionService.findById(id);
     }
 }

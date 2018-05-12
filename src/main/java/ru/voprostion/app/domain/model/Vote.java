@@ -1,6 +1,5 @@
 package ru.voprostion.app.domain.model;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +12,6 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 public class Vote extends BaseModel {
-    @Getter(AccessLevel.PRIVATE)
-    @Setter(AccessLevel.PRIVATE)
     private int value;
 
     @ManyToOne(fetch = FetchType.LAZY)
