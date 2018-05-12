@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<body>
+<div id="page" layout:fragment="content">
+    <div id="content">
+
+        <H1 align="center" style="margin-top: 30px"><b><tt>Log in</tt></b></H1>
+        <hr/>
+        <!--/*@thymesVar id="question" type="ru.voprostion.app.domain.dto.QuestionDto"*/-->
+        <form th:action="@{/question/add}" th:object="${questionForm}" method="post">
+
+            <label><b><p align="center"><tt>Question</tt></p></b></label>
+            <div align="center">
+                <input th:field="*{question}" type="text" style="width: 270px; height :40px;"
+                       placeholder="Enter Question"/>
+            </div>
+
+            <label><b><p align="center"><tt>Comma separated tags</tt></p></b></label>
+            <div align="center">
+                <input th:field="*{tags}" type="text" style="width: 270px; height :40px;"
+                       placeholder="Enter Tasg"/>
+            </div>
+
+            <hr/>
+
+            <div align="center">
+                <button type="submit" style="width: 270px; height: 40px" class="registerbtn">Log in</button>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+</body>
+</html>

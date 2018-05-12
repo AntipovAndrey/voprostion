@@ -2,10 +2,9 @@ package ru.voprostion.app.domain.model;
 
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +15,11 @@ public abstract class BaseModel implements Comparable<BaseModel> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
+
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private java.util.Date dateCreated = Calendar.getInstance().getTime();
 
     @Override
     public int compareTo(BaseModel other) {

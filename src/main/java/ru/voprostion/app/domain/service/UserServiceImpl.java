@@ -12,14 +12,16 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private SecurityService securityService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder) {
+                           SecurityService securityService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.securityService = securityService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -32,5 +34,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUserName(String username) {
         return userRepository.findByName(username);
+    }
+
+    @Override
+    public User getLoggedIn() {
+        return userRepository.findByName(securityService.findLoggedInUsername());
     }
 }

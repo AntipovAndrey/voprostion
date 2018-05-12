@@ -4,14 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
 <body>
-<img th:src="@{img/phone.jpg}" />
 <div id="page" layout:fragment="content">
     <div id="content">
-
-        <div style="margin-top: 20px; align-items: left;" >
-            <img src="img/back.jpg" height="400px" width="80%" /></div>
-
-       <th:block th:each="question : ${questions}">
+        <th:block th:each="question : ${questions}">
             <div id="questionPreview" align="center">
                 <div>
                     <h5 align="right" style="margin-right: 10px"><tt

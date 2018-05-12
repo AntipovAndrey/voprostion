@@ -29,7 +29,6 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("user", new UserDto());
-
         return "registration";
     }
 
@@ -64,5 +63,4 @@ public class UserController {
 
         return "login";
     }
-
 }
