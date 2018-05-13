@@ -21,8 +21,7 @@
                 </th:block>
             </div>
         </div>
-        <div align="center" sec:authorize="isAuthenticated()"
-             th:if="${question.user.name != #authentication.name}">
+        <div align="center" th:if="${canAnswer}">
 
             <form th:action="@{__${#httpServletRequest.requestURI}__/answer}" th:object="${answerForm}" method="post">
 
@@ -58,7 +57,7 @@
                     <a sec:authorize="isAuthenticated()"
                        th:if="${answer.user.name != #authentication.name}"
                        th:href="@{__${#httpServletRequest.requestURI}__/dislike/{id}(id=${answer.id})}"
-                       th:text="Like"></a>
+                       th:text="Disike"></a>
                 </div>
             </div>
         </th:block>

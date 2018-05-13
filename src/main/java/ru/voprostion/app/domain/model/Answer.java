@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -26,6 +27,13 @@ public class Answer extends BaseModel {
     public void setUser(User user) {
         this.user = user;
         user.addAnswer(this);
+    }
+
+    public void addVote(Vote vote) {
+        Objects.requireNonNull(vote);
+        if (votes.add(vote)) {
+            vote.setAnswer(this);
+        }
     }
 
     public int getRating() {

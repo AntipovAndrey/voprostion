@@ -26,4 +26,12 @@ public class Vote extends BaseModel {
         this.user = user;
         user.addVote(this);
     }
+
+    public void upVote() {
+        value = 1;
+    }
+
+    public void downVote() {
+        value = -1;
+    }
 }

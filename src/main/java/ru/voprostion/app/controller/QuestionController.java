@@ -11,10 +11,7 @@ import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
-import ru.voprostion.app.domain.usecase.AddAnswerUseCase;
-import ru.voprostion.app.domain.usecase.AskQuestionUseCase;
-import ru.voprostion.app.domain.usecase.QuestionDetailsUseCase;
-import ru.voprostion.app.domain.usecase.QuestionsListUseCase;
+import ru.voprostion.app.domain.usecase.*;
 
 import javax.validation.Valid;
 import java.util.Comparator;
@@ -29,16 +26,19 @@ public class QuestionController {
     private AskQuestionUseCase askQuestionUseCase;
     private QuestionDetailsUseCase questionDetailsUseCase;
     private AddAnswerUseCase addAnswerUseCase;
+    private VoteAnswerUseCase voteAnswerUseCase;
 
     @Autowired
     public QuestionController(QuestionsListUseCase questionsListUseCase,
                               AskQuestionUseCase askQuestionUseCase,
                               QuestionDetailsUseCase questionDetailsUseCase,
-                              AddAnswerUseCase addAnswerUseCase) {
+                              AddAnswerUseCase addAnswerUseCase,
+                              VoteAnswerUseCase voteAnswerUseCase) {
         this.questionsListUseCase = questionsListUseCase;
         this.askQuestionUseCase = askQuestionUseCase;
         this.questionDetailsUseCase = questionDetailsUseCase;
         this.addAnswerUseCase = addAnswerUseCase;
+        this.voteAnswerUseCase = voteAnswerUseCase;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -54,8 +54,7 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addQuestion(@Valid @ModelAttribute QuestionDto questionDto,
-                              Model model) {
+    public String addQuestion(@Valid @ModelAttribute QuestionDto questionDto) {
         final Question question = askQuestionUseCase.ask(questionDto);
         return "redirect:/question" + question.getId();
     }
@@ -65,32 +64,38 @@ public class QuestionController {
         final Question question = questionDetailsUseCase.getById(Long.parseLong(id));
         final List<Answer> answers = question.getAnswers()
                 .stream()
-                .sorted(Comparator.comparing(Answer::getRating)
+                .sorted(Comparator.comparing(Answer::getRating, Comparator.reverseOrder())
                         .thenComparing(Answer::getDateCreated, Comparator.reverseOrder())
                 )
                 .collect(Collectors.toList());
+        final boolean canAnswer = askQuestionUseCase.canAsk(Long.parseLong(id));
+
         model.addAttribute("question", question);
         model.addAttribute("answers", answers);
         model.addAttribute("metaTitle", question.getQuestionTitle());
         model.addAttribute("answerForm", new AnswerDto());
+        model.addAttribute("canAnswer", canAnswer);
         return "question_details";
     }
 
-    @RequestMapping(value = "/{questionId}/like/{answerId}", method = RequestMethod.POST)
-    public String likeComment(@Valid @ModelAttribute AnswerDto answerDto,
-                              @PathVariable("questionId") String questionId,
-                              @PathVariable("answerId") String answerId,
-                              Model model) {
-        // TODO: andrey : like/dislike
+    @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
+    public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
+                             @PathVariable("id") String id) {
+        addAnswerUseCase.answer(Long.parseLong(id), answerDto);
+        return "redirect:/question/" + id;
+    }
+
+    @RequestMapping(value = "/{questionId}/like/{answerId}", method = RequestMethod.GET)
+    public String likeComment(@PathVariable("questionId") String questionId,
+                              @PathVariable("answerId") String answerId) {
+        voteAnswerUseCase.upVote(Long.parseLong(answerId));
         return "redirect:/question/" + questionId;
     }
 
-    @RequestMapping(value = "/{questionId}/dislike/{answerId}", method = RequestMethod.POST)
-    public String dislikeComment(@Valid @ModelAttribute AnswerDto answerDto,
-                                 @PathVariable("questionId") String questionId,
-                                 @PathVariable("answerId") String answerId,
-                                 Model model) {
-        // TODO: andrey : like/dislike
+    @RequestMapping(value = "/{questionId}/dislike/{answerId}", method = RequestMethod.GET)
+    public String dislikeComment(@PathVariable("questionId") String questionId,
+                                 @PathVariable("answerId") String answerId) {
+        voteAnswerUseCase.downVote(Long.parseLong(answerId));
         return "redirect:/question/" + questionId;
     }
 }

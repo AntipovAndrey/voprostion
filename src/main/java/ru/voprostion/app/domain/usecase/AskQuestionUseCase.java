@@ -6,4 +6,6 @@ import ru.voprostion.app.domain.model.Question;
 public interface AskQuestionUseCase {
 
     Question ask(QuestionDto questionDto);
+
+    boolean canAsk(Long questionId);
 }

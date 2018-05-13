@@ -2,10 +2,10 @@ package ru.voprostion.app.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.voprostion.app.domain.model.Answer;
-import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.User;
+import ru.voprostion.app.domain.model.Vote;
 
-public interface AnswerRepository extends JpaRepository<Answer, Long> {
+public interface VoteRepository extends JpaRepository<Vote, Long> {
 
-    Answer findByQuestionAndUser(Question question, User user);
+    Vote findByUserAndAnswer(User owner, Answer answer);
 }
