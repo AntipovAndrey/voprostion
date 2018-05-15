@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class QuestionDto {
+public class QuestionDto extends BaseDto {
     @NotNull
     @Length(min = 5)
     private String question;

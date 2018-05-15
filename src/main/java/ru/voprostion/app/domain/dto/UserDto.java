@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
                 message = "Passwords do not match!"
         )
 })
-public class UserDto {
+public class UserDto extends BaseDto {
     @NotNull
     private String name;
     @Size(min = 4)
