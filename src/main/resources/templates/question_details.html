@@ -54,6 +54,10 @@
                         <tt
                                 th:text="|${answer.user.name + ' • ' + #lists.size(answer.votes)}| + ' votes'">
                         </tt></h5>
+                    <a sec:authorize="hasAuthority('MODERATOR')"
+                       th:href="@{/moderator/answer/delete/__${answer.id}__}" th:text="delete">
+
+                    </a>
                 </div>
 
                 <h3><tt th:text="${answer.answer}"></tt></h3>

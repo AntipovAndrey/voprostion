@@ -41,10 +41,13 @@ public class AddDataOnStartup {
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
         if (!databaseUpdate) return;
-        roleRepository.save(new Role(moderatorRole));
+        final Role moderatorRole = roleRepository.save(new Role(this.moderatorRole));
         User moderator = new User();
         moderator.setName(moderatorName);
         moderator.setPassword(moderatorPassword);
-        roleRepository.save(new Role(simpleUserRole));
+        moderator.addRole(moderatorRole);
+        final Role userRole = new Role(simpleUserRole);
+        moderator.addRole(userRole);
+        roleRepository.save(userRole);
     }
 }

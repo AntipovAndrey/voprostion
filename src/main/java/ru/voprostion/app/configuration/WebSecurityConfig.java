@@ -2,6 +2,7 @@ package ru.voprostion.app.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,6 +19,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
+
+    @Value("${roles.authenticated.moderator}")
+    private String moderatorRole;
 
     @Autowired
     public WebSecurityConfig(@Qualifier("PersistenceUserDetailsService") UserDetailsService userDetailsService) {
@@ -46,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/question/*",
                             "/question/user/*",
                             "/question/tag/*").permitAll()
+                    .antMatchers("/moderator/**").hasAuthority(moderatorRole)
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()

@@ -102,7 +102,7 @@ public class QuestionController {
     @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
     public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
                              @PathVariable("id") Long id) {
-        answerDto.setId(id);
+        answerDto.setQuestionId(id);
         addAnswerUseCase.answer(answerDto);
         return "redirect:/question/" + id;
     }
