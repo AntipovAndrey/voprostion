@@ -237,3 +237,15 @@ body {
     float: right;
     width: 80%;
 }
+
+.someText{
+    margin-top: 20px;
+
+}
+
+#addSome{
+    height: auto;
+    width: 45%;
+    font-size: 16px;
+    margin: 7px;
+}

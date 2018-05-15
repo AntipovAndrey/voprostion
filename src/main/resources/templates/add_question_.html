@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<body>
+<img th:src="@{img/phone.jpg}"/>
+<div id="page" layout:fragment="content">
+    <div id="content">
+
+        <div style="margin-top: 60px">
+
+            <label><b><p class="someText"><tt>Enter your Vopros:</tt></p></b></label>
+            <div align="center">
+                <textarea type="text" id="addSome"
+                       placeholder="Type your Vopros here..."
+                       name="question"/>
+            </div>
+        </div>
+
+
+        <div>
+
+            <label><b><p class="someText" align="center"><tt>Add tags:</tt></p></b></label>
+            <div align="center">
+                <textarea id="addSome" type="text"
+                       placeholder="Type here comma separated tags..."
+                       name="tags"/>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px"  align="center">
+            <button type="submit" id="addSome" class="registerbtn">Ask Vopros</button>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
