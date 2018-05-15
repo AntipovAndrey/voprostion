@@ -2,6 +2,7 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.voprostion.app.domain.dto.UserDto;
 import ru.voprostion.app.domain.model.Role;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.service.RoleService;
@@ -25,8 +26,11 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
     }
 
     @Override
-    public void registerNewUser(@Valid User user) {
+    public void registerNewUser(@Valid UserDto userDto) {
         final Role authRole = roleService.findOneByName(simpleUserRole);
+        final User user = new User();
+        user.setName(userDto.getName());
+        user.setPassword(userDto.getPassword());
         user.addRole(authRole);
         userService.save(user);
     }

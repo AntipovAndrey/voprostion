@@ -56,19 +56,22 @@ public class QuestionController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addQuestion(@Valid @ModelAttribute QuestionDto questionDto) {
         final Question question = askQuestionUseCase.ask(questionDto);
-        return "redirect:/question" + question.getId();
+        return "redirect:/question/" + question.getId();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getQuestionDetails(@PathVariable("id") String id, Model model) {
-        final Question question = questionDetailsUseCase.getById(Long.parseLong(id));
+        final QuestionDto questionDto = new QuestionDto();
+        questionDto.setId(Long.parseLong(id));
+        final Question question = questionDetailsUseCase.getDetailed(questionDto);
         final List<Answer> answers = question.getAnswers()
                 .stream()
                 .sorted(Comparator.comparing(Answer::getRating, Comparator.reverseOrder())
                         .thenComparing(Answer::getDateCreated, Comparator.reverseOrder())
                 )
                 .collect(Collectors.toList());
-        final boolean canAnswer = askQuestionUseCase.canAsk(Long.parseLong(id));
+        questionDto.setId(Long.parseLong(id));
+        final boolean canAnswer = addAnswerUseCase.canAnswer(questionDto);
 
         model.addAttribute("question", question);
         model.addAttribute("answers", answers);
@@ -81,21 +84,26 @@ public class QuestionController {
     @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
     public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
                              @PathVariable("id") String id) {
-        addAnswerUseCase.answer(Long.parseLong(id), answerDto);
+        answerDto.setId(Long.parseLong(id));
+        addAnswerUseCase.answer(answerDto);
         return "redirect:/question/" + id;
     }
 
     @RequestMapping(value = "/{questionId}/like/{answerId}", method = RequestMethod.GET)
     public String likeComment(@PathVariable("questionId") String questionId,
                               @PathVariable("answerId") String answerId) {
-        voteAnswerUseCase.upVote(Long.parseLong(answerId));
+        final AnswerDto answerDto = new AnswerDto();
+        answerDto.setId(Long.parseLong(answerId));
+        voteAnswerUseCase.upVote(answerDto);
         return "redirect:/question/" + questionId;
     }
 
     @RequestMapping(value = "/{questionId}/dislike/{answerId}", method = RequestMethod.GET)
     public String dislikeComment(@PathVariable("questionId") String questionId,
                                  @PathVariable("answerId") String answerId) {
-        voteAnswerUseCase.downVote(Long.parseLong(answerId));
+        final AnswerDto answerDto = new AnswerDto();
+        answerDto.setId(Long.parseLong(answerId));
+        voteAnswerUseCase.downVote(answerDto);
         return "redirect:/question/" + questionId;
     }
 }

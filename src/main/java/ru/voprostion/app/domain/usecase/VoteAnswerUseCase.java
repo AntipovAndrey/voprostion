@@ -1,8 +1,10 @@
 package ru.voprostion.app.domain.usecase;
 
+import ru.voprostion.app.domain.dto.AnswerDto;
+
 public interface VoteAnswerUseCase {
 
-    void upVote(Long answerId);
+    void upVote(AnswerDto answerDto);
 
-    void downVote(Long answerId);
+    void downVote(AnswerDto answerDto);
 }

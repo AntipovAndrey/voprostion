@@ -13,4 +13,6 @@ public class QuestionDto extends BaseDto {
     @NotNull
     @Length(min = 2)
     private String tags;
+    private UserDto userDto;
+    private int answersCount;
 }

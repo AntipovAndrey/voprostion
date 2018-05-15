@@ -2,6 +2,7 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.model.Vote;
@@ -26,13 +27,13 @@ public class VoteAnswerUseCaseImpl implements VoteAnswerUseCase {
     }
 
     @Override
-    public void upVote(Long answerId) {
-        vote(answerId, true);
+    public void upVote(AnswerDto answerDto) {
+        vote(answerDto.getId(), true);
     }
 
     @Override
-    public void downVote(Long answerId) {
-        vote(answerId, false);
+    public void downVote(AnswerDto answerDto) {
+        vote(answerDto.getId(), false);
     }
 
     private void vote(Long answerId, boolean like) {

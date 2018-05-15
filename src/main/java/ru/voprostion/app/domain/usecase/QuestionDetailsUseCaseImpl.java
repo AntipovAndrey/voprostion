@@ -2,6 +2,7 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.service.QuestionService;
 
@@ -16,7 +17,7 @@ public class QuestionDetailsUseCaseImpl implements QuestionDetailsUseCase {
     }
 
     @Override
-    public Question getById(Long id) {
-        return questionService.findById(id);
+    public Question getDetailed(QuestionDto questionDto) {
+        return questionService.findById(questionDto.getId());
     }
 }

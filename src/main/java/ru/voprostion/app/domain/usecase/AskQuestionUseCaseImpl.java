@@ -28,18 +28,15 @@ public class AskQuestionUseCaseImpl implements AskQuestionUseCase {
 
     @Override
     public Question ask(QuestionDto questionDto) {
-        if (!canAsk(Long.valueOf(questionDto.getQuestion()))) return null;
+        if (!canAsk(questionDto)) return null;
         return questionService.create(questionDto.getQuestion(),
                 Tag.fromString(questionDto.getTags()));
     }
 
     @Override
-    public boolean canAsk(Long questionId) {
+    public boolean canAsk(QuestionDto questionDto) {
         final User loggedIn = userService.getLoggedIn();
         if (loggedIn == null) return false;
-        final Question question = questionService.findById(questionId);
-        if (question.getUser().equals(loggedIn)) return false;
-        if (answerService.findPreviousAnswer(question, loggedIn) != null) return false;
         return true;
     }
 }

@@ -7,5 +7,5 @@ public interface AskQuestionUseCase {
 
     Question ask(QuestionDto questionDto);
 
-    boolean canAsk(Long questionId);
+    boolean canAsk(QuestionDto questionDto);
 }

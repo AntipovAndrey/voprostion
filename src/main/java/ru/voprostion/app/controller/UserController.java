@@ -47,8 +47,8 @@ public class UserController {
         userToRegister.setPasswordHash(userForm.getPassword());
         userToRegister.setPassword(userForm.getPassword());
 
-        registrationUseCase.registerNewUser(userToRegister);
-        authorizationUseCase.login(userToRegister);
+        registrationUseCase.registerNewUser(userForm);
+        authorizationUseCase.login(userForm);
 
         return "redirect:/";
     }
