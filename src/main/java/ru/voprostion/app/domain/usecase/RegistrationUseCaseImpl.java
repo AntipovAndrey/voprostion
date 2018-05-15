@@ -31,6 +31,7 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
         final User user = new User();
         user.setName(userDto.getName());
         user.setPassword(userDto.getPassword());
+        user.setPasswordHash(userDto.getPassword());
         user.addRole(authRole);
         userService.save(user);
     }

@@ -9,15 +9,24 @@
         <!--/*@thymesVar id="question" type="ru.voprostion.app.domain.model.Question"*/-->
         <div id="questionPreview" align="center">
             <div>
-                <h5 align="right" style="margin-right: 10px"><tt
-                        th:text="|${question.user.name + ' • ' + #lists.size(question.answers)}| + ' answers'">
-                </tt></h5>
+                <h5 align="right" style="margin-right: 10px">
+                    <tt>
+                        <a th:text="${question.user.name}" th:href="@{/user/__${question.user.name}__}"></a>
+                    </tt>
+                    <tt
+                            th:text="|${' • ' + #lists.size(question.answers)}| + ' answers'">
+                    </tt>
+                </h5>
             </div>
 
             <h3><tt th:text="${question.questionTitle}"></tt></h3>
             <div>
                 <th:block th:each="tag : ${question.tags}">
-                    <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
+                    <nobr>
+                        <form method="get" th:action="@{/question/tag/__${tag.tagName}__}">
+                            <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
+                        </form>
+                    </nobr>
                 </th:block>
             </div>
         </div>

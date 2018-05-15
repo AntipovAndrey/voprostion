@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
+import ru.voprostion.app.domain.dto.TagDto;
+import ru.voprostion.app.domain.dto.UserDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.usecase.*;
@@ -47,6 +49,22 @@ public class QuestionController {
         return "main";
     }
 
+    @RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
+    public String getQuestionsByUser(@PathVariable("username") String username, Model model) {
+        UserDto userDto = new UserDto();
+        userDto.setName(username);
+        model.addAttribute("questions", questionsListUseCase.getByUser(userDto));
+        return "main";
+    }
+
+    @RequestMapping(value = "/tag/{tagname}", method = RequestMethod.GET)
+    public String getQuestionsByTag(@PathVariable("tagname") String tagname, Model model) {
+        TagDto tagDto = new TagDto();
+        tagDto.setName(tagname);
+        model.addAttribute("questions", questionsListUseCase.getByTag(tagDto));
+        return "main";
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addQuestionForm(Model model) {
         model.addAttribute("questionForm", new QuestionDto());
@@ -60,9 +78,9 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getQuestionDetails(@PathVariable("id") String id, Model model) {
+    public String getQuestionDetails(@PathVariable("id") Long id, Model model) {
         final QuestionDto questionDto = new QuestionDto();
-        questionDto.setId(Long.parseLong(id));
+        questionDto.setId(id);
         final Question question = questionDetailsUseCase.getDetailed(questionDto);
         final List<Answer> answers = question.getAnswers()
                 .stream()
@@ -70,7 +88,7 @@ public class QuestionController {
                         .thenComparing(Answer::getDateCreated, Comparator.reverseOrder())
                 )
                 .collect(Collectors.toList());
-        questionDto.setId(Long.parseLong(id));
+        questionDto.setId(id);
         final boolean canAnswer = addAnswerUseCase.canAnswer(questionDto);
 
         model.addAttribute("question", question);
@@ -83,26 +101,26 @@ public class QuestionController {
 
     @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
     public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
-                             @PathVariable("id") String id) {
-        answerDto.setId(Long.parseLong(id));
+                             @PathVariable("id") Long id) {
+        answerDto.setId(id);
         addAnswerUseCase.answer(answerDto);
         return "redirect:/question/" + id;
     }
 
     @RequestMapping(value = "/{questionId}/like/{answerId}", method = RequestMethod.GET)
-    public String likeComment(@PathVariable("questionId") String questionId,
-                              @PathVariable("answerId") String answerId) {
+    public String likeComment(@PathVariable("questionId") Long questionId,
+                              @PathVariable("answerId") Long answerId) {
         final AnswerDto answerDto = new AnswerDto();
-        answerDto.setId(Long.parseLong(answerId));
+        answerDto.setId(answerId);
         voteAnswerUseCase.upVote(answerDto);
         return "redirect:/question/" + questionId;
     }
 
     @RequestMapping(value = "/{questionId}/dislike/{answerId}", method = RequestMethod.GET)
-    public String dislikeComment(@PathVariable("questionId") String questionId,
-                                 @PathVariable("answerId") String answerId) {
+    public String dislikeComment(@PathVariable("questionId") Long questionId,
+                                 @PathVariable("answerId") Long answerId) {
         final AnswerDto answerDto = new AnswerDto();
-        answerDto.setId(Long.parseLong(answerId));
+        answerDto.setId(answerId);
         voteAnswerUseCase.downVote(answerDto);
         return "redirect:/question/" + questionId;
     }

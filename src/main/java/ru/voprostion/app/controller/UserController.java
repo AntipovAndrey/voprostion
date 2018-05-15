@@ -5,10 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.voprostion.app.domain.dto.UserDto;
-import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.usecase.AuthorizationUseCase;
 import ru.voprostion.app.domain.usecase.RegistrationUseCase;
 
@@ -41,12 +41,6 @@ public class UserController {
             return bindingResult.getAllErrors().toString();
         }
 
-        User userToRegister = new User();
-
-        userToRegister.setName(userForm.getName());
-        userToRegister.setPasswordHash(userForm.getPassword());
-        userToRegister.setPassword(userForm.getPassword());
-
         registrationUseCase.registerNewUser(userForm);
         authorizationUseCase.login(userForm);
 
@@ -62,5 +56,10 @@ public class UserController {
             model.addAttribute("message", "You have been logged out successfully.");
 
         return "login";
+    }
+
+    @RequestMapping(value = "/user/{name}", method = RequestMethod.GET)
+    public String userPage(@PathVariable("name") String userName) {
+        return "redirect:/question/user/" + userName;
     }
 }
