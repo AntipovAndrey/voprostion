@@ -31,4 +31,9 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer findPreviousAnswer(Question question, User user) {
         return answerRepository.findByQuestionAndUser(question, user);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        answerRepository.delete(id);
+    }
 }

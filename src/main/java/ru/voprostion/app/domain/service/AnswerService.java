@@ -11,4 +11,6 @@ public interface AnswerService {
     Answer findById(Long id);
 
     Answer findPreviousAnswer(Question question, User user);
+
+    void deleteById(Long id);
 }

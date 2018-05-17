@@ -35,15 +35,7 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = new Question();
         question.setQuestionTitle(questionString);
         question.setUser(userService.getLoggedIn());
-        for (Tag tag : tags) {
-            final Tag fromRepo = tagService.findByName(tag.getTagName());
-            if (fromRepo == null) {
-                tagService.save(tag);
-            } else {
-                tag.setId(fromRepo.getId());
-            }
-        }
-        tags = tagService.saveAll(tags);
+        tags = tagService.saveOrGet(tags);
         tags.forEach(question::addTag);
         return questionRepository.save(question);
     }
