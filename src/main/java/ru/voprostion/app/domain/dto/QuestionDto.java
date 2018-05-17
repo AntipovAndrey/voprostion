@@ -8,10 +8,10 @@ import javax.validation.constraints.NotNull;
 @Data
 public class QuestionDto extends BaseDto {
     @NotNull
-    @Length(min = 5)
+    @Length(min = 5, max = 140)
     private String question;
     @NotNull
-    @Length(min = 2)
+    @Length(min = 2, max = 30)
     private String tags;
     private UserDto userDto;
     private int answersCount;
