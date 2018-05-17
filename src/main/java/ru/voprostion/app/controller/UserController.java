@@ -33,17 +33,22 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@Valid @ModelAttribute("userForm") UserDto userForm,
+    public String registration(@Valid @ModelAttribute("user") UserDto userForm,
                                BindingResult bindingResult,
                                Model model) {
-
         if (bindingResult.hasErrors()) {
-            return bindingResult.getAllErrors().toString();
+            return "registration";
         }
 
-        registrationUseCase.registerNewUser(userForm);
-        authorizationUseCase.login(userForm);
-
+        try {
+            registrationUseCase.registerNewUser(userForm);
+            authorizationUseCase.login(userForm);
+            // TODO: more specific exception
+        } catch (Exception e) {
+            model.addAttribute("usernametaken", "Username is already taken");
+            model.addAttribute("user", userForm);
+            return "registration";
+        }
         return "redirect:/";
     }
 

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,12 +15,14 @@ import java.util.Set;
 public class User extends BaseModel {
     @NotNull
     @Column(unique = true)
+    @Size(min = 2, max = 10)
     private String name;
 
     @NotNull
     private String passwordHash;
 
     @Transient
+    @Size(min = 4, max = 16)
     private String password;
 
     @ManyToMany(cascade = {

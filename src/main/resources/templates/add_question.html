@@ -16,12 +16,14 @@
             <div align="center">
                 <input th:field="*{question}" type="text" style="width: 270px; height :40px;"
                        placeholder="Enter Question"/>
+                <p th:if="${#fields.hasErrors('question')}" th:errors="*{question}"></p>
             </div>
 
             <label><b><p align="center"><tt>Comma separated tags</tt></p></b></label>
             <div align="center">
                 <input th:field="*{tags}" type="text" style="width: 270px; height :40px;"
                        placeholder="Enter Tasg"/>
+                <p th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}"></p>
             </div>
 
             <hr/>

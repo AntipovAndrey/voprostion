@@ -10,7 +10,7 @@
         <H1 align="center" style="margin-top: 30px"><b><tt>Log in</tt></b></H1>
         <hr/>
         <form th:action="@{/login}" method="post">
-
+            <span th:text="${error}"></span>
             <label><b><p align="center"><tt>Login</tt></p></b></label>
             <div align="center">
                 <input type="text" style="width: 270px; height :40px;" placeholder="Enter Email"

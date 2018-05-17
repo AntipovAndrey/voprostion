@@ -3,6 +3,7 @@ package ru.voprostion.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import ru.voprostion.app.domain.dto.TagDto;
 import ru.voprostion.app.domain.dto.UserDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
+import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.usecase.*;
 
 import javax.validation.Valid;
@@ -72,7 +74,10 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addQuestion(@Valid @ModelAttribute QuestionDto questionDto) {
+    public String addQuestion(@Valid @ModelAttribute("questionForm") QuestionDto questionDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add_question";
+        }
         final Question question = askQuestionUseCase.ask(questionDto);
         return "redirect:/question/" + question.getId();
     }
@@ -123,5 +128,20 @@ public class QuestionController {
         answerDto.setId(answerId);
         voteAnswerUseCase.downVote(answerDto);
         return "redirect:/question/" + questionId;
+    }
+
+    @RequestMapping(value = "/{questionId}/edit", method = RequestMethod.GET)
+    public String editQuestionForm(@PathVariable("questionId") Long questionId, Model model) {
+        final QuestionDto dto = new QuestionDto();
+        dto.setId(questionId);
+        final Question question = questionDetailsUseCase.getDetailed(dto);
+        dto.setQuestion(question.getQuestionTitle());
+        final String tagString = question.getTags()
+                .stream()
+                .map(Tag::getTagName)
+                .collect(Collectors.joining(","));
+        dto.setTags(tagString);
+        model.addAttribute("questionForm", dto);
+        return "add_question";
     }
 }
