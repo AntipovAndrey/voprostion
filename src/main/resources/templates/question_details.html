@@ -23,7 +23,7 @@
             <div>
                 <th:block th:each="tag : ${question.tags}">
                     <nobr>
-                        <form method="get" th:action="@{/question/tag/__${tag.tagName}__}">
+                        <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.tagName}__}">
                             <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
                         </form>
                     </nobr>
