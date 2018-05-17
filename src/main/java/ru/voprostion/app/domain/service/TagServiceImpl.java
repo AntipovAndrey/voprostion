@@ -23,6 +23,19 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<Tag> saveOrGet(List<Tag> tags) {
+        for (Tag tag : tags) {
+            final Tag fromRepo = findByName(tag.getTagName());
+            if (fromRepo == null) {
+                save(tag);
+            } else {
+                tag.setId(fromRepo.getId());
+            }
+        }
+        return saveAll(tags);
+    }
+
+    @Override
     public Tag findByName(String name) {
         return tagRepository.findByTagNameIgnoreCase(name);
     }
