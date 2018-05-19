@@ -4,14 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
-import ru.voprostion.app.domain.dto.TagDto;
-import ru.voprostion.app.domain.dto.UserDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.Tag;
@@ -46,31 +41,31 @@ public class QuestionController {
         this.voteAnswerUseCase = voteAnswerUseCase;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public String getAllQuestions(Model model) {
         model.addAttribute("questions", questionsListUseCase.getAll());
         return "main";
     }
 
-    @RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
+    @GetMapping(value = "/user/{username}")
     public String getQuestionsByUser(@PathVariable("username") String username, Model model) {
         model.addAttribute("questions", questionsListUseCase.getByUser(username));
         return "main";
     }
 
-    @RequestMapping(value = "/tag/{tagname}", method = RequestMethod.GET)
+    @GetMapping(value = "/tag/{tagname}")
     public String getQuestionsByTag(@PathVariable("tagname") String tagname, Model model) {
         model.addAttribute("questions", questionsListUseCase.getByTag(tagname));
         return "main";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @GetMapping(value = "/add")
     public String addQuestionForm(Model model) {
         model.addAttribute("questionForm", new QuestionDto());
         return "add_question";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @PostMapping(value = "/add")
     public String addQuestion(@Valid @ModelAttribute("questionForm") QuestionDto questionDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "add_question";
@@ -82,7 +77,7 @@ public class QuestionController {
         return "redirect:/question/" + question.getId();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public String getQuestionDetails(@PathVariable("id") Long id, Model model) {
         final Question question = questionDetailsUseCase.getDetailed(id);
         final List<Answer> answers = question.getAnswers()
@@ -101,28 +96,28 @@ public class QuestionController {
         return "question_details";
     }
 
-    @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
+    @PostMapping(value = "/{id}/answer")
     public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
                              @PathVariable("id") Long id) {
         addAnswerUseCase.answer(id, answerDto.getAnswer());
         return "redirect:/question/" + id;
     }
 
-    @RequestMapping(value = "/{questionId}/like/{answerId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{questionId}/like/{answerId}")
     public String likeComment(@PathVariable("questionId") Long questionId,
                               @PathVariable("answerId") Long answerId) {
         voteAnswerUseCase.upVote(answerId);
         return "redirect:/question/" + questionId;
     }
 
-    @RequestMapping(value = "/{questionId}/dislike/{answerId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{questionId}/dislike/{answerId}")
     public String dislikeComment(@PathVariable("questionId") Long questionId,
                                  @PathVariable("answerId") Long answerId) {
         voteAnswerUseCase.downVote(answerId);
         return "redirect:/question/" + questionId;
     }
 
-    @RequestMapping(value = "/{questionId}/edit", method = RequestMethod.GET)
+    @GetMapping(value = "/{questionId}/edit")
     public String editQuestionForm(@PathVariable("questionId") Long questionId, Model model) {
         final QuestionDto dto = new QuestionDto();
         dto.setId(questionId);

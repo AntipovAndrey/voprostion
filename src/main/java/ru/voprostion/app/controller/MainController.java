@@ -1,15 +1,13 @@
 package ru.voprostion.app.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getAllQuestions(Model model) {
+    @GetMapping(value = "/")
+    public String getAllQuestions() {
         return "redirect:/question/";
     }
 }
