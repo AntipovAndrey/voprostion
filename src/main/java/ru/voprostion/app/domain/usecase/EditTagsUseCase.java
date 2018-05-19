@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface EditTagsUseCase {
 
-    Question setNewTags(QuestionDto questionDto, List<TagDto> tagDtos);
+    Question setNewTags(Long questionId, List<String> tags);
 }

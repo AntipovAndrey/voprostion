@@ -6,5 +6,5 @@ import ru.voprostion.app.domain.dto.AnswerDto;
 public interface DeleteAnswerUseCase {
 
     @PreAuthorize("hasAuthority('MODERATOR')")
-    void delete(AnswerDto answerDto);
+    void delete(Long answerId);
 }

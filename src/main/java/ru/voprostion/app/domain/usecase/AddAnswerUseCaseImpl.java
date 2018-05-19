@@ -2,8 +2,6 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.voprostion.app.domain.dto.AnswerDto;
-import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.User;
@@ -32,16 +30,11 @@ public class AddAnswerUseCaseImpl implements AddAnswerUseCase {
     }
 
     @Override
-    public Answer answer(AnswerDto answerDto) {
-        final QuestionDto questionDto = new QuestionDto();
-        questionDto.setId(answerDto.getQuestionId());
-        if (!canAnswer(questionDto)) {
-            return null;
-        }
-        final Question question = questionDetailsUseCase.getDetailed(questionDto);
+    public Answer answer(Long questionId, String answerText) {
+        final Question question = questionDetailsUseCase.getDetailed(questionId);
         final User loggedIn = userService.getLoggedIn();
         Answer answer = new Answer();
-        answer.setAnswer(answerDto.getAnswer());
+        answer.setAnswer(answerText);
         answer.setUser(loggedIn);
         question.addAnswer(answer);
         answerService.save(answer);
@@ -49,10 +42,10 @@ public class AddAnswerUseCaseImpl implements AddAnswerUseCase {
     }
 
     @Override
-    public boolean canAnswer(QuestionDto questionDto) {
+    public boolean canAnswer(Long questionId) {
         final User loggedIn = userService.getLoggedIn();
         if (loggedIn == null) return false;
-        final Question question = questionService.findById(questionDto.getId());
+        final Question question = questionService.findById(questionId);
         if (question.getUser().equals(loggedIn)) return false;
         if (answerService.findPreviousAnswer(question, loggedIn) != null) return false;
         return true;

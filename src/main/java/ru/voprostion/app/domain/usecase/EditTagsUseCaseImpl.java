@@ -2,8 +2,6 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.voprostion.app.domain.dto.QuestionDto;
-import ru.voprostion.app.domain.dto.TagDto;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.service.QuestionService;
@@ -26,16 +24,15 @@ public class EditTagsUseCaseImpl implements EditTagsUseCase {
     }
 
     @Override
-    public Question setNewTags(QuestionDto questionDto, List<TagDto> tagDtos) {
-        if (tagDtos == null || tagDtos.size() < 3) {
+    public Question setNewTags(Long questionId, List<String> tags) {
+        if (tags == null || tags.size() < 1) {
             throw new IllegalArgumentException();
         }
-        List<Tag> tagList = tagDtos.stream()
-                .map(TagDto::getName)
+        List<Tag> tagList = tags.stream()
                 .map(Tag::new)
                 .collect(Collectors.toList());
         tagList = tagService.saveOrGet(tagList);
-        final Question question = questionService.findById(questionDto.getId());
+        final Question question = questionService.findById(questionId);
         question.setTags(new HashSet<>(tagList));
         return questionService.save(question);
     }

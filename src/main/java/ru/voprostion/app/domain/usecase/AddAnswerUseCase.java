@@ -6,7 +6,7 @@ import ru.voprostion.app.domain.model.Answer;
 
 public interface AddAnswerUseCase {
 
-    Answer answer(AnswerDto answerDto);
+    Answer answer(Long questionId, String answer);
 
-    boolean canAnswer(QuestionDto questionDto);
+    boolean canAnswer(Long questionId);
 }
