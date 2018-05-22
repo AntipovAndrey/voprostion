@@ -16,8 +16,9 @@ import javax.validation.constraints.Size;
 })
 public class UserDto extends BaseDto {
     @NotNull
-    private String name;
-    @Size(min = 4)
-    private String password;
-    private String passwordConfirmation;
+    @Size(min = 2, max = 10)
+    private String name ;
+    @Size(min = 4, max = 16)
+    private String password ;
+    private String passwordConfirmation ;
 }

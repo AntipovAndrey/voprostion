@@ -22,6 +22,8 @@
                     <input th:field="*{name}" type="text" style="width: 270px; height :40px;"
                            placeholder="Enter Login"
                            name="email"/>
+                    <p class = "warningFrame" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                    <tt><p class="warningFrame" th:text="${usernametaken}"></p></tt>
                 </div>
 
 
@@ -30,13 +32,16 @@
                     <input th:field="*{password}" type="password" id="inputStyle"
                            placeholder="Enter Password"
                            name="psw"/>
+                    <div class="warningFrame" th:if="${#fields.hasErrors('password')}">
+                    <tt><p th:errors="*{password}"></p></tt>
+                    </div>
                 </div>
-
                 <label><b><p align="center"><tt>Repeat Password</tt></p></b></label>
                 <div align="center">
                     <input th:field="*{passwordConfirmation}" type="password" id="inputStyle"
                            placeholder="Repeat Password"
                            name="psw-repeat"/>
+                    <tt><p class="warningFrame" th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></p></tt>
                 </div>
                 <hr/>
 
