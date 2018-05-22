@@ -2,8 +2,6 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.voprostion.app.domain.dto.TagDto;
-import ru.voprostion.app.domain.dto.UserDto;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.model.User;
@@ -40,14 +38,14 @@ public class QuestionsListUseCaseImpl implements QuestionsListUseCase {
     }
 
     @Override
-    public List<Question> getByUser(UserDto userDto) {
-        final User user = userService.findByUserName(userDto.getName());
+    public List<Question> getByUser(String username) {
+        final User user = userService.findByUserName(username);
         return questionService.getByUser(user);
     }
 
     @Override
-    public List<Question> getByTag(TagDto tagDto) {
-        final Tag tag = tagService.findByName(tagDto.getName());
+    public List<Question> getByTag(String tagName) {
+        final Tag tag = tagService.findByName(tagName);
         return questionService.getByTag(tag);
     }
 }

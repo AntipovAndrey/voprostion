@@ -6,5 +6,5 @@ import javax.validation.Valid;
 
 public interface RegistrationUseCase {
 
-    void registerNewUser(@Valid UserDto userDto);
+    void registerNewUser(String name, String password);
 }

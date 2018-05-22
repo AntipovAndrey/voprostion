@@ -1,11 +1,12 @@
 package ru.voprostion.app.domain.usecase;
 
-import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.Question;
+
+import java.util.List;
 
 public interface AskQuestionUseCase {
 
-    Question ask(QuestionDto questionDto);
+    Question ask(String question, List<String> tags);
 
-    boolean canAsk(QuestionDto questionDto);
+    boolean canAsk();
 }

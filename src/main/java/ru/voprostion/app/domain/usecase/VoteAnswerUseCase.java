@@ -4,7 +4,7 @@ import ru.voprostion.app.domain.dto.AnswerDto;
 
 public interface VoteAnswerUseCase {
 
-    void upVote(AnswerDto answerDto);
+    void upVote(Long answerId);
 
-    void downVote(AnswerDto answerDto);
+    void downVote(Long answerId);
 }

@@ -2,13 +2,15 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.service.AnswerService;
 import ru.voprostion.app.domain.service.QuestionService;
 import ru.voprostion.app.domain.service.UserService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AskQuestionUseCaseImpl implements AskQuestionUseCase {
@@ -27,14 +29,13 @@ public class AskQuestionUseCaseImpl implements AskQuestionUseCase {
     }
 
     @Override
-    public Question ask(QuestionDto questionDto) {
-        if (!canAsk(questionDto)) return null;
-        return questionService.create(questionDto.getQuestion(),
-                Tag.fromString(questionDto.getTags()));
+    public Question ask(String question, List<String> tags) {
+        if (!canAsk()) return null;
+        return questionService.create(question, tags.stream().map(Tag::new).collect(Collectors.toList()));
     }
 
     @Override
-    public boolean canAsk(QuestionDto questionDto) {
+    public boolean canAsk() {
         final User loggedIn = userService.getLoggedIn();
         if (loggedIn == null) return false;
         return true;

@@ -20,8 +20,7 @@ public class AuthorizationUseCaseImpl implements AuthorizationUseCase {
     }
 
     @Override
-    public void login(UserDto userDto) {
-        logger.info("trying to login");
-        securityService.autoLogin(userDto.getName(), userDto.getPassword());
+    public void login(String login, String password) {
+        securityService.autoLogin(login, password);
     }
 }

@@ -23,6 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${roles.authenticated.moderator}")
     private String moderatorRole;
 
+    @Value("${roles.authenticated}")
+    private String userRole;
+
     @Autowired
     public WebSecurityConfig(@Qualifier("PersistenceUserDetailsService") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -39,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
        http
                 .authorizeRequests()
+                .antMatchers("/question/add").hasAuthority(userRole)
                     .antMatchers(
                             "/registration",
                             "/js/**",

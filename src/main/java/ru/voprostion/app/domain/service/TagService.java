@@ -8,6 +8,8 @@ public interface TagService {
 
     List<Tag> saveAll(List<Tag> tags);
 
+    List<Tag> saveOrGet(List<Tag> tags);
+
     Tag findByName(String name);
 
     Tag save(Tag tag);

@@ -8,26 +8,34 @@ import javax.validation.ConstraintValidatorContext;
 public class FieldsValueMatchValidator
         implements ConstraintValidator<FieldsValueMatch, Object> {
 
-    private String field;
-    private String fieldMatch;
+    private String firstFieldName;
+    private String secondFieldName;
 
-    public void initialize(FieldsValueMatch constraintAnnotation) {
-        this.field = constraintAnnotation.field();
-        this.fieldMatch = constraintAnnotation.fieldMatch();
+    @Override
+    public void initialize(final FieldsValueMatch constraintAnnotation) {
+        firstFieldName = constraintAnnotation.field();
+        secondFieldName = constraintAnnotation.fieldMatch();
     }
 
-    public boolean isValid(Object value,
-                           ConstraintValidatorContext context) {
+    @Override
+    public boolean isValid(final Object value, final ConstraintValidatorContext context) {
+        try {
+            final Object firstObj = new BeanWrapperImpl(value).getPropertyValue(firstFieldName);
+            final Object secondObj = new BeanWrapperImpl(value).getPropertyValue(secondFieldName);
 
-        Object fieldValue = new BeanWrapperImpl(value)
-                .getPropertyValue(field);
-        Object fieldMatchValue = new BeanWrapperImpl(value)
-                .getPropertyValue(fieldMatch);
+            boolean isValid = firstObj == null && secondObj == null || firstObj != null && firstObj.equals(secondObj);
 
-        if (fieldValue != null) {
-            return fieldValue.equals(fieldMatchValue);
-        } else {
-            return fieldMatchValue == null;
+            if (!isValid) {
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
+                        .addNode(secondFieldName).addConstraintViolation();
+            }
+
+            return isValid;
         }
+        catch (final Exception ignore) {
+            // ignore
+        }
+        return true;
     }
 }

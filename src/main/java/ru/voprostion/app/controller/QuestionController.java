@@ -3,22 +3,20 @@ package ru.voprostion.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
-import ru.voprostion.app.domain.dto.TagDto;
-import ru.voprostion.app.domain.dto.UserDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
+import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.usecase.*;
 
 import javax.validation.Valid;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/question")
@@ -43,53 +41,52 @@ public class QuestionController {
         this.voteAnswerUseCase = voteAnswerUseCase;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public String getAllQuestions(Model model) {
         model.addAttribute("questions", questionsListUseCase.getAll());
         return "main";
     }
 
-    @RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
+    @GetMapping(value = "/user/{username}")
     public String getQuestionsByUser(@PathVariable("username") String username, Model model) {
-        UserDto userDto = new UserDto();
-        userDto.setName(username);
-        model.addAttribute("questions", questionsListUseCase.getByUser(userDto));
+        model.addAttribute("questions", questionsListUseCase.getByUser(username));
         return "main";
     }
 
-    @RequestMapping(value = "/tag/{tagname}", method = RequestMethod.GET)
+    @GetMapping(value = "/tag/{tagname}")
     public String getQuestionsByTag(@PathVariable("tagname") String tagname, Model model) {
-        TagDto tagDto = new TagDto();
-        tagDto.setName(tagname);
-        model.addAttribute("questions", questionsListUseCase.getByTag(tagDto));
+        model.addAttribute("questions", questionsListUseCase.getByTag(tagname));
         return "main";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @GetMapping(value = "/add")
     public String addQuestionForm(Model model) {
         model.addAttribute("questionForm", new QuestionDto());
         return "add_question";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addQuestion(@Valid @ModelAttribute QuestionDto questionDto) {
-        final Question question = askQuestionUseCase.ask(questionDto);
+    @PostMapping(value = "/add")
+    public String addQuestion(@Valid @ModelAttribute("questionForm") QuestionDto questionDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add_question";
+        }
+        final Question question = askQuestionUseCase.ask(questionDto.getQuestion(),
+                Stream.of(questionDto.getTags().split(","))
+                        .collect(Collectors.toList())
+        );
         return "redirect:/question/" + question.getId();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public String getQuestionDetails(@PathVariable("id") Long id, Model model) {
-        final QuestionDto questionDto = new QuestionDto();
-        questionDto.setId(id);
-        final Question question = questionDetailsUseCase.getDetailed(questionDto);
+        final Question question = questionDetailsUseCase.getDetailed(id);
         final List<Answer> answers = question.getAnswers()
                 .stream()
                 .sorted(Comparator.comparing(Answer::getRating, Comparator.reverseOrder())
                         .thenComparing(Answer::getDateCreated, Comparator.reverseOrder())
                 )
                 .collect(Collectors.toList());
-        questionDto.setId(id);
-        final boolean canAnswer = addAnswerUseCase.canAnswer(questionDto);
+        final boolean canAnswer = addAnswerUseCase.canAnswer(id);
 
         model.addAttribute("question", question);
         model.addAttribute("answers", answers);
@@ -99,29 +96,39 @@ public class QuestionController {
         return "question_details";
     }
 
-    @RequestMapping(value = "/{id}/answer", method = RequestMethod.POST)
+    @PostMapping(value = "/{id}/answer")
     public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
                              @PathVariable("id") Long id) {
-        answerDto.setQuestionId(id);
-        addAnswerUseCase.answer(answerDto);
+        addAnswerUseCase.answer(id, answerDto.getAnswer());
         return "redirect:/question/" + id;
     }
 
-    @RequestMapping(value = "/{questionId}/like/{answerId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{questionId}/like/{answerId}")
     public String likeComment(@PathVariable("questionId") Long questionId,
                               @PathVariable("answerId") Long answerId) {
-        final AnswerDto answerDto = new AnswerDto();
-        answerDto.setId(answerId);
-        voteAnswerUseCase.upVote(answerDto);
+        voteAnswerUseCase.upVote(answerId);
         return "redirect:/question/" + questionId;
     }
 
-    @RequestMapping(value = "/{questionId}/dislike/{answerId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{questionId}/dislike/{answerId}")
     public String dislikeComment(@PathVariable("questionId") Long questionId,
                                  @PathVariable("answerId") Long answerId) {
-        final AnswerDto answerDto = new AnswerDto();
-        answerDto.setId(answerId);
-        voteAnswerUseCase.downVote(answerDto);
+        voteAnswerUseCase.downVote(answerId);
         return "redirect:/question/" + questionId;
+    }
+
+    @GetMapping(value = "/{questionId}/edit")
+    public String editQuestionForm(@PathVariable("questionId") Long questionId, Model model) {
+        final QuestionDto dto = new QuestionDto();
+        dto.setId(questionId);
+        final Question question = questionDetailsUseCase.getDetailed(questionId);
+        dto.setQuestion(question.getQuestionTitle());
+        final String tagString = question.getTags()
+                .stream()
+                .map(Tag::getTagName)
+                .collect(Collectors.joining(","));
+        dto.setTags(tagString);
+        model.addAttribute("questionForm", dto);
+        return "add_question";
     }
 }

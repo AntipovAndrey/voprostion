@@ -17,7 +17,7 @@ public class QuestionDetailsUseCaseImpl implements QuestionDetailsUseCase {
     }
 
     @Override
-    public Question getDetailed(QuestionDto questionDto) {
-        return questionService.findById(questionDto.getId());
+    public Question getDetailed(Long questionId) {
+        return questionService.findById(questionId);
     }
 }
