@@ -15,12 +15,28 @@ input[type=text]:focus, input[type=password]:focus {
     outline: none;
 }
 
+
+
+
+
+
+
 #inputStyle {
     position: center;
     width: 270px;
     height :40px
 }
 
+
+.warningFrame{
+    border-style: groove;
+    width: 340px;
+    margin-top: 30px;
+    padding: 10px;
+    margin-bottom: 30px;
+    height: auto;
+    background-color: #f1f1f1;
+}
 
 hr {
     border: 1px solid #f1f1f1;
@@ -178,12 +194,14 @@ H1{
 
 .buttonToAdd{
     display: inline-block;
-    margin-top: 500px;
-    width: 70px;
+    margin-top: 400px;
+    width: 10px;
     height: 70px;
-    background: #004d39;
+    background: white;
     cursor: pointer;
+    align-self: left;
     border-radius: 50%;
+    margin-right: 120px;
 
 }
 
@@ -220,6 +238,114 @@ body {
 
 }
 
+
+
+
+#search-block-form {
+    width: 200px;
+    margin: 20px;
+    height: 40px;
+    border-radius: 15px;
+    border: #c9c9c9 solid 2px;
+    background: url(img/outline-search-24px.svg) left top repeat-x;
+}
+
+.focus-active{
+    border-color:#aaa !important;
+    background:#fff !important;
+}
+
+#search-block-form .form-item {
+    width: 300px;
+    padding: 0px 5px;
+    /* float: right; */
+    height: 40px;
+}
+
+
+
+
+
+
+
+
+//SEARCH
+
+
+  #search-block-form{
+      width:200px;
+      height:30px;
+      border-radius:3px;
+      border:#c9c9c9 solid 1px;
+      background:url(img/outline-search-24px.svg) left top repeat-x;
+  }
+.focus-active{
+    border-color:#aaa !important;
+    background:#fff !important;
+}
+#search-block-form input{
+    padding:0;
+    margin:0;
+    display:block;
+    border:none;
+    outline:none;
+    background:none;
+    width:100%;
+    height:100%;
+}
+#search-block-form .form-actions{
+    width:40px;
+    height:40px;
+    float:left;
+    background:url(img/outline-search-24px.svg) 5px 2px no-repeat;
+}
+#search-block-form .form-actions input:hover{
+    cursor:pointer;
+}
+#search-block-form .form-actions input{
+    overflow:hidden;
+    text-indent:-9999px;
+}
+#search-block-form .form-item{
+    width:200px;
+    padding:0px 5px;
+    float:right;
+    height:40x;
+}
+#search-block-form .form-item input{
+    font:13px/16px "Trebuchet MS", Arial, Helvetica, sans-serif;
+    color:#222;
+    margin-left: 15px;
+    font-size: 16px;
+    height:auto !important;
+    padding:6px 0;
+}
+.placeholder{color:#cbcbcb !important;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#search{
+    margin: 50px auto;
+    width: 300px;
+    height: 50px;
+
+}
+
+
 #sidebar {
     float: right;
     width: 20%;
@@ -229,6 +355,7 @@ body {
     width: auto;
     height: auto;
     margin: 5px;
+    margin-bottom: 12px;
     font-size: 15px;
 }
 

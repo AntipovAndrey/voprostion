@@ -17,7 +17,7 @@
             </li>
 
             <li sec:authorize="isAuthenticated()">
-                <a sec:authentication="name" th:href="@{'/user/'+${#authentication.name}}" >Name</a>
+                <a sec:authentication="name" th:href="@{'/user/'+${#authentication.name}}">Name</a>
             </li>
 
             <li sec:authorize="!isAuthenticated()">
@@ -27,17 +27,34 @@
             <li sec:authorize="!isAuthenticated()">
                 <tt>Already have an account?</tt> <a th:href="@{/login}"><tt>Sign in</tt></a>
             </li>
+
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/}"><tt>Log out</tt></a>
+            </li>
         </ul>
     </nav>
 
 
     <div id="sidebar">
-        <h2>Правая панель</h2>
+
+
+        <form action="" method="post" id="search-block-form" class="">
+            <div class="form-item">
+                <tt><input  type="text" name="" value="" size="25" maxlength="128" placeholder="Search by tag..."/></tt>
+            </div>
+            <div class="form-actions">
+                <input type="submit" id="edit-submit" name="op" value="Поиск" class="form-submit"/>
+            </div>
+        </form>
+
+
+
         <div align="bottom">
             <div sec:authorize="isAuthenticated()">
-                <a href="" ><tt>Мои вопросы</tt></a>
+                <a href=""><tt>Мои вопросы</tt></a>
+                <button onclick="location.href='/question/add';" align="left" class="buttonToAdd"><img
+                        th:src="@{/img/drawing.svg}"/></button>
             </div>
-            <button onclick="location.href='/question/add';" align="bottom" class="buttonToAdd"><img th:src="@{/img/round_add_circle_outline_white_48dp.png}" /></button>
         </div>
     </div>
 
