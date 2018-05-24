@@ -59,6 +59,11 @@ public class QuestionController {
         return "main";
     }
 
+    @GetMapping(value = "/search/tag/")
+    public String searchByTag(@RequestParam("tagname") String tagname) {
+        return "redirect:/question/tag/" + tagname;
+    }
+
     @GetMapping(value = "/add")
     public String addQuestionForm(Model model) {
         model.addAttribute("questionForm", new QuestionDto());

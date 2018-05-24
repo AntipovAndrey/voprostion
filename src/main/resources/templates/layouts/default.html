@@ -38,16 +38,17 @@
     <div id="sidebar">
 
 
-        <form action="" method="post" id="search-block-form" class="">
-            <div class="form-item">
-                <tt><input  type="text" name="" value="" size="25" maxlength="128" placeholder="Search by tag..."/></tt>
+        <form th:action="@{/question/search/tag/}" method="get" id="search-block-form">
+            <div id="searchFrame" class="form-item">
+                <input type="text" name="" value="" maxlength="128" placeholder="Search by a tag.."/>
             </div>
             <div class="form-actions">
-                <input type="submit" id="edit-submit" name="op" value="Поиск" class="form-submit"/>
+                <input type="submit" name="op" value="Поиск" class="form-submit"/>
             </div>
         </form>
 
 
+        <hr/>
 
         <div align="bottom">
             <div sec:authorize="isAuthenticated()">

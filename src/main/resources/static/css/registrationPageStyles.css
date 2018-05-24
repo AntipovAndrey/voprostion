@@ -1,4 +1,6 @@
-* {box-sizing: border-box}
+* {
+    box-sizing: border-box
+}
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -15,20 +17,13 @@ input[type=text]:focus, input[type=password]:focus {
     outline: none;
 }
 
-
-
-
-
-
-
 #inputStyle {
     position: center;
     width: 270px;
-    height :40px
+    height: 40px
 }
 
-
-.warningFrame{
+.warningFrame {
     border-style: groove;
     width: 340px;
     margin-top: 30px;
@@ -55,12 +50,15 @@ button {
     opacity: 0.9;
 }
 
-button:hover {
-    opacity:1;
+#ButtonVote {
+    height: 10px;
+    width: 10px;
+    background: white;
 }
 
-
-
+button:hover {
+    opacity: 1;
+}
 
 /* Extra styles for the cancel button */
 .cancelbtn {
@@ -79,23 +77,20 @@ button:hover {
     padding: 16px;
 }
 
-
-
-
-
-
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
 .top-menu {
     position: relative;
     background: #fff;
     box-shadow: inset 0 0 10px #ccc;
 }
-.current{
+
+.current {
     align-content: left;
     align-items: left;
     text-align: left;
     font-size: 160%;
 }
+
 .top-menu:before,
 .top-menu:after {
     content: "";
@@ -105,12 +100,14 @@ button:hover {
     border-bottom: 1px solid white;
     margin-bottom: 1px;
 }
+
 .top-menu:after {
     border-bottom: 3px solid #575350;
     border-top: 1px solid #575350;
     box-shadow: 0 2px 7px #ccc;
     margin-top: 1px;
 }
+
 .menu-main {
     list-style: none;
     padding-left: 40px;
@@ -119,6 +116,7 @@ button:hover {
     text-align: center;
     position: relative;
 }
+
 .menu-main:before,
 .menu-main:after {
     content: "\25C8";
@@ -127,12 +125,20 @@ button:hover {
     top: 50%;
     transform: translateY(-50%);
 }
-.menu-main:before {left: 15px;}
-.menu-main:after {right: 15px;}
+
+.menu-main:before {
+    left: 15px;
+}
+
+.menu-main:after {
+    right: 15px;
+}
+
 .menu-main li {
     display: inline-block;
     padding: 5px 0;
 }
+
 .menu-main a {
     text-decoration: none;
     display: inline-block;
@@ -153,21 +159,24 @@ button:hover {
     font-size: 130%;
     border-color: #c6c6c6;
 }
+
 @media (max-width: 500px) {
-    .menu-main li {display: block;}
+    .menu-main li {
+        display: block;
+    }
 }
 
-.nav-bar-text{
+.nav-bar-text {
     font-weight: bold;
     font-size: 160%;
 }
 
-H1{
+H1 {
     font-weight: bold;
     font-size: 190%;
 }
 
-.fixed-nav-bar{
+.fixed-nav-bar {
     position: fixed;
     top: 0;
     left: 0;
@@ -191,8 +200,7 @@ H1{
     }
 }
 
-
-.buttonToAdd{
+.buttonToAdd {
     display: inline-block;
     margin-top: 400px;
     width: 10px;
@@ -204,7 +212,6 @@ H1{
     margin-right: 120px;
 
 }
-
 
 body {
     background: #FFF;
@@ -227,9 +234,10 @@ body {
     height: 400px;
 }
 
-#questionPreview{
+#questionPreview {
     margin-top: 60px;
-    margin: 40px;
+    margin-left: 50px;
+    margin-bottom: 27px;
     width: 85%;
     height: 100%; /* Размеры */
     background: whitesmoke;
@@ -238,120 +246,103 @@ body {
 
 }
 
+#answerFrame {
+    width: 60%;
+    margin-left: 50px;
+    height: 100%; /* Размеры */
+    background: #fafafa;
+    outline: 1px solid #c7c5c5; /* Чёрная рамка */
+    border: 2px solid #fff; /* Белая рамка */
 
-
-
-#search-block-form {
-    width: 200px;
-    margin: 20px;
-    height: 40px;
-    border-radius: 15px;
-    border: #c9c9c9 solid 2px;
-    background: url(img/outline-search-24px.svg) left top repeat-x;
 }
 
-.focus-active{
-    border-color:#aaa !important;
-    background:#fff !important;
+
+#searchFrame {
+    width: 40%;
+    margin: 15px;
+    height: 100%; /* Размеры */
+    outline: 1px solid #c7c5c5; /* Чёрная рамка */
+    border: 2px solid #fff; /* Белая рамка */
+
+}
+
+//SEARCH
+#search-block-form {
+    margin: 15px;
+    margin: 15px;
+    width: 90%;
+    height: 35px;
+    border-radius: 15px;
+    border: #444444 solid 1px;
+    background: url(/img/round-search-24px.svg) left top repeat-x;
+}
+
+.focus-active {
+    border-color: #aaa !important;
+    background: #fff !important;
+}
+
+#search-block-form input {
+    padding: 0;
+    margin: 0;
+    display: block;
+    border: none;
+    outline: none;
+    background: none;
+    width: 100%;
+    height: 100%;
+}
+
+#search-block-form .form-actions {
+    width: 28px;
+    height: 28px;
+    float: left;
+    margin-top: 15px;
+    margin-left: 10px;
+    background: url(/img/round-search-24px.svg) 5px 2px no-repeat;
+}
+
+#search-block-form .form-actions input:hover {
+    cursor: pointer;
+}
+
+#search-block-form .form-actions input {
+    overflow: hidden;
+    text-indent: -9999px;
 }
 
 #search-block-form .form-item {
-    width: 300px;
+    width: 80%;
     padding: 0px 5px;
-    /* float: right; */
-    height: 40px;
+    float: right;
+    height: 28px;
 }
 
-
-
-
-
-
-
-
-//SEARCH
-
-
-  #search-block-form{
-      width:200px;
-      height:30px;
-      border-radius:3px;
-      border:#c9c9c9 solid 1px;
-      background:url(img/outline-search-24px.svg) left top repeat-x;
-  }
-.focus-active{
-    border-color:#aaa !important;
-    background:#fff !important;
-}
-#search-block-form input{
-    padding:0;
-    margin:0;
-    display:block;
-    border:none;
-    outline:none;
-    background:none;
-    width:100%;
-    height:100%;
-}
-#search-block-form .form-actions{
-    width:40px;
-    height:40px;
-    float:left;
-    background:url(img/outline-search-24px.svg) 5px 2px no-repeat;
-}
-#search-block-form .form-actions input:hover{
-    cursor:pointer;
-}
-#search-block-form .form-actions input{
-    overflow:hidden;
-    text-indent:-9999px;
-}
-#search-block-form .form-item{
-    width:200px;
-    padding:0px 5px;
-    float:right;
-    height:40x;
-}
-#search-block-form .form-item input{
-    font:13px/16px "Trebuchet MS", Arial, Helvetica, sans-serif;
-    color:#222;
-    margin-left: 15px;
+#search-block-form .form-item input {
+    font: 13px/16px "Trebuchet MS", Arial, Helvetica, sans-serif;
+    color: #222;
     font-size: 16px;
-    height:auto !important;
-    padding:6px 0;
+    height: auto !important;
+    padding: 6px 0;
 }
-.placeholder{color:#cbcbcb !important;}
 
+.placeholder {
+    color: #cbcbcb !important;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#search{
+#search {
     margin: 50px auto;
     width: 300px;
     height: 50px;
 
 }
 
-
 #sidebar {
     float: right;
     width: 20%;
 }
 
-#tagsButton{
+#tagsButton {
     width: auto;
     height: auto;
     margin: 5px;
