@@ -22,10 +22,14 @@
                     <input th:field="*{name}" type="text" style="width: 270px; height :40px;"
                            placeholder="Enter Login"
                            name="email"/>
-                    <p class = "warningFrame" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-                    <tt><p class="warningFrame" th:text="${usernametaken}"></p></tt>
+                    <div class="warningFrame" th:if="${#fields.hasErrors('name')}">
+                        <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/><tt><p th:errors="*{name}"></p></tt>
+                    </div>
+                    <div class="warningFrame" th:if="${usernametaken != null}" >
+                        <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
+                        <tt><p th:text="${usernametaken}"></p></tt>
+                    </div>
                 </div>
-
 
                 <label><b><p align="center"><tt>Password</tt></p></b></label>
                 <div align="center">
@@ -33,7 +37,8 @@
                            placeholder="Enter Password"
                            name="psw"/>
                     <div class="warningFrame" th:if="${#fields.hasErrors('password')}">
-                    <tt><p th:errors="*{password}"></p></tt>
+                        <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
+                        <tt><p th:errors="*{password}"></p></tt>
                     </div>
                 </div>
                 <label><b><p align="center"><tt>Repeat Password</tt></p></b></label>
@@ -41,7 +46,10 @@
                     <input th:field="*{passwordConfirmation}" type="password" id="inputStyle"
                            placeholder="Repeat Password"
                            name="psw-repeat"/>
-                    <tt><p class="warningFrame" th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></p></tt>
+                    <div class="warningFrame" th:if="${#fields.hasErrors('passwordConfirmation')}">
+                        <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
+                        <tt><p th:errors="*{passwordConfirmation}"></p></tt>
+                    </div>
                 </div>
                 <hr/>
 
