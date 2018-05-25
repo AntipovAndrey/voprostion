@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en"
       layout:decorator="layouts/default">
 <body>
 <div id="page" layout:fragment="content">
     <div id="content">
 
-        <H1 align="center" style="margin-top: 30px"><b><tt>Ask a Vopros!</tt></b></H1>
+        <H1 align="center" style="margin-top: 30px"><b><tt>Edit Tag</tt></b></H1>
         <hr/>
         <!--/*@thymesVar id="question" type="ru.voprostion.app.domain.dto.QuestionDto"*/-->
-        <form th:action="@{/question/add}" th:object="${questionForm}" method="post">
-
+        <form th:action="@{/question/__${question.id}__/edit}" th:object="${question}" method="post">
             <label><b><p align="center"><tt>Question</tt></p></b></label>
             <div align="center">
-                <textarea th:field="*{question}" type="text" style="width: 380px; height :70px;"
-                       placeholder="Enter Question"/>
-                <p th:if="${#fields.hasErrors('question')}" th:errors="*{question}"></p>
+                <p th:text="*{question}" style="width: 380px; height :70px;"></p>
             </div>
-
+            <input type="hidden" th:field="*{question}"/>
             <label><b><p align="center"><tt>Comma separated tags</tt></p></b></label>
             <div align="center">
                 <input th:field="*{tags}" type="text" style="width: 270px; height :40px;"
@@ -29,7 +26,7 @@
             <hr/>
 
             <div align="center">
-                <button type="submit" style="width: 270px; height: 40px" class="registerbtn">Ask</button>
+                <button type="submit" style="width: 270px; height: 40px" class="registerbtn">Edit</button>
             </div>
         </form>
     </div>
