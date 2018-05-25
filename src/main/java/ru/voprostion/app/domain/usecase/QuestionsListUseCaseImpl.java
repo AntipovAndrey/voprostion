@@ -31,21 +31,24 @@ public class QuestionsListUseCaseImpl implements QuestionsListUseCase {
 
     @Override
     public List<Question> getAll() {
-        return questionService.getAll()
-                .stream()
-                .sorted(Comparator.comparing(Question::getDateCreated, Comparator.reverseOrder()))
-                .collect(Collectors.toList());
+        return sortedByDate(questionService.getAll());
     }
 
     @Override
     public List<Question> getByUser(String username) {
         final User user = userService.findByUserName(username);
-        return questionService.getByUser(user);
+        return sortedByDate(questionService.getByUser(user));
     }
 
     @Override
     public List<Question> getByTag(String tagName) {
         final Tag tag = tagService.findByName(tagName);
-        return questionService.getByTag(tag);
+        return sortedByDate(questionService.getByTag(tag));
+    }
+
+    private List<Question> sortedByDate(List<Question> src) {
+        return src.stream()
+                .sorted(Comparator.comparing(Question::getDateCreated, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
     }
 }
