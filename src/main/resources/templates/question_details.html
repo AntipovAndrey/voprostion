@@ -29,6 +29,8 @@
                     </nobr>
                 </th:block>
             </div>
+            <a sec:authorize="hasAuthority('MODERATOR')"
+               th:href="@{/question/__${question.id}__/edit}">Edit tags</a>
         </div>
         <div align="center" th:if="${canAnswer}">
 
@@ -57,24 +59,20 @@
                                 th:text="|${answer.user.name + ' • ' + #lists.size(answer.votes)}| + ' votes'">
                         </tt></h5>
                     <a sec:authorize="hasAuthority('MODERATOR')"
-                       th:href="@{/moderator/answer/delete/__${answer.id}__}" th:text="delete">
-
-                    </a>
+                       th:href="@{/moderator/answer/delete/__${answer.id}__}">Delete</a>
                 </div>
 
                 <h3 align="center"><tt th:text="${answer.answer}"></tt></h3>
                 <div>
                     <a sec:authorize="isAuthenticated()"
                        th:if="${answer.user.name != #authentication.name}"
-                       th:href="@{__${#httpServletRequest.requestURI}__/like/{id}(id=${answer.id})}"
-                       th:text="Like"></a>
-                    <p align="center" th:text="${answer.rating}"/>
-                    <button  align="left" id="ButtonVote"><img
+                       th:href="@{__${#httpServletRequest.requestURI}__/like/{id}(id=${answer.id})}">Like</a>
+                    <p align="center" th:text="${answer.rating}">0</p>
+                    <button id="ButtonVote"><img
                             th:src="@{/img/like.png}" height="25px" style="margin-right: 50px"/></button>
                     <a sec:authorize="isAuthenticated()"
                        th:if="${answer.user.name != #authentication.name}"
-                       th:href="@{__${#httpServletRequest.requestURI}__/dislike/{id}(id=${answer.id})}"
-                       th:text="Disike"></a>
+                       th:href="@{__${#httpServletRequest.requestURI}__/dislike/{id}(id=${answer.id})}">Dislike</a>
                 </div>
             </div>
         </th:block>
