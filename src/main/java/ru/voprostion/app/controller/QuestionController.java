@@ -9,11 +9,9 @@ import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
-import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.usecase.*;
 
 import javax.validation.Valid;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,18 +25,21 @@ public class QuestionController {
     private QuestionDetailsUseCase questionDetailsUseCase;
     private AddAnswerUseCase addAnswerUseCase;
     private VoteAnswerUseCase voteAnswerUseCase;
+    private AnswersListUseCase answersListUseCase;
 
     @Autowired
     public QuestionController(QuestionsListUseCase questionsListUseCase,
                               AskQuestionUseCase askQuestionUseCase,
                               QuestionDetailsUseCase questionDetailsUseCase,
                               AddAnswerUseCase addAnswerUseCase,
-                              VoteAnswerUseCase voteAnswerUseCase) {
+                              VoteAnswerUseCase voteAnswerUseCase,
+                              AnswersListUseCase answersListUseCase) {
         this.questionsListUseCase = questionsListUseCase;
         this.askQuestionUseCase = askQuestionUseCase;
         this.questionDetailsUseCase = questionDetailsUseCase;
         this.addAnswerUseCase = addAnswerUseCase;
         this.voteAnswerUseCase = voteAnswerUseCase;
+        this.answersListUseCase = answersListUseCase;
     }
 
     @GetMapping(value = "/")
@@ -83,21 +84,17 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public String getQuestionDetails(@PathVariable("id") Long id, Model model) {
-        final Question question = questionDetailsUseCase.getDetailed(id);
-        final List<Answer> answers = question.getAnswers()
-                .stream()
-                .sorted(Comparator.comparing(Answer::getRating, Comparator.reverseOrder())
-                        .thenComparing(Answer::getDateCreated, Comparator.reverseOrder())
-                )
-                .collect(Collectors.toList());
-        final boolean canAnswer = addAnswerUseCase.canAnswer(id);
+    public String getQuestionDetails(@PathVariable("id") Long questionId, Model model) {
+        final Question question = questionDetailsUseCase.getDetailed(questionId);
+        final boolean canAnswer = addAnswerUseCase.canAnswer(questionId);
+        final List<Answer> answers = answersListUseCase.getAll(questionId);
 
         model.addAttribute("question", question);
         model.addAttribute("answers", answers);
         model.addAttribute("metaTitle", question.getQuestionTitle());
         model.addAttribute("answerForm", new AnswerDto());
         model.addAttribute("canAnswer", canAnswer);
+
         return "question_details";
     }
 
@@ -120,20 +117,5 @@ public class QuestionController {
                                  @PathVariable("answerId") Long answerId) {
         voteAnswerUseCase.downVote(answerId);
         return "redirect:/question/" + questionId;
-    }
-
-    @GetMapping("/{questionId}/edit")
-    public String editQuestionForm(@PathVariable("questionId") Long questionId, Model model) {
-        final QuestionDto dto = new QuestionDto();
-        dto.setId(questionId);
-        final Question question = questionDetailsUseCase.getDetailed(questionId);
-        dto.setQuestion(question.getQuestionTitle());
-        final String tagString = question.getTags()
-                .stream()
-                .map(Tag::getTagName)
-                .collect(Collectors.joining(","));
-        dto.setTags(tagString);
-        model.addAttribute("questionForm", dto);
-        return "add_question";
     }
 }
