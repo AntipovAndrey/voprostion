@@ -24,7 +24,7 @@ public class Tag extends BaseModel {
     private String tagName;
 
     public Tag(String tagName) {
-        this.tagName = tagName;
+        setTagName(tagName);
     }
 
     @ManyToMany(mappedBy = "tags")
@@ -38,6 +38,10 @@ public class Tag extends BaseModel {
     public void removeQuestion(Question question) {
         Objects.requireNonNull(question);
         questions.remove(question);
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName.trim();
     }
 
     public static List<Tag> fromString(String tags, String delim) {

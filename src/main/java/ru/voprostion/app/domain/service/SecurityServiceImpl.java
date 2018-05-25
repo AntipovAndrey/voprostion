@@ -6,10 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
@@ -48,6 +54,16 @@ public class SecurityServiceImpl implements SecurityService {
             SecurityContextHolder.getContext()
                     .setAuthentication(usernamePasswordAuthenticationToken);
             logger.info(String.format("Auto login %s successfully!", username));
+        }
+    }
+
+    @Override
+    public void logout() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes()).getRequest();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, null, null);
         }
     }
 }

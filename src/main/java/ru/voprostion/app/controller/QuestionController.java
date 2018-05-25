@@ -82,7 +82,7 @@ public class QuestionController {
         return "redirect:/question/" + question.getId();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public String getQuestionDetails(@PathVariable("id") Long id, Model model) {
         final Question question = questionDetailsUseCase.getDetailed(id);
         final List<Answer> answers = question.getAnswers()
@@ -101,28 +101,28 @@ public class QuestionController {
         return "question_details";
     }
 
-    @PostMapping(value = "/{id}/answer")
+    @PostMapping("/{id}/answer")
     public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
                              @PathVariable("id") Long id) {
         addAnswerUseCase.answer(id, answerDto.getAnswer());
         return "redirect:/question/" + id;
     }
 
-    @GetMapping(value = "/{questionId}/like/{answerId}")
+    @GetMapping("/{questionId}/like/{answerId}")
     public String likeComment(@PathVariable("questionId") Long questionId,
                               @PathVariable("answerId") Long answerId) {
         voteAnswerUseCase.upVote(answerId);
         return "redirect:/question/" + questionId;
     }
 
-    @GetMapping(value = "/{questionId}/dislike/{answerId}")
+    @GetMapping("/{questionId}/dislike/{answerId}")
     public String dislikeComment(@PathVariable("questionId") Long questionId,
                                  @PathVariable("answerId") Long answerId) {
         voteAnswerUseCase.downVote(answerId);
         return "redirect:/question/" + questionId;
     }
 
-    @GetMapping(value = "/{questionId}/edit")
+    @GetMapping("/{questionId}/edit")
     public String editQuestionForm(@PathVariable("questionId") Long questionId, Model model) {
         final QuestionDto dto = new QuestionDto();
         dto.setId(questionId);

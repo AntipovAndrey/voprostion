@@ -26,13 +26,13 @@ public class UserController {
         this.authorizationUseCase = authorizationUseCase;
     }
 
-    @GetMapping(value = "/registration")
+    @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("user", new UserDto());
         return "registration";
     }
 
-    @PostMapping(value = "/registration")
+    @PostMapping("/registration")
     public String registration(@Valid @ModelAttribute("user") UserDto userForm,
                                BindingResult bindingResult,
                                Model model) {
@@ -52,7 +52,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping(value = "/login")
+    @GetMapping("/login")
     public String login(Model model, String error, String logout) {
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
@@ -63,7 +63,7 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping(value = "/user/{name}")
+    @GetMapping("/user/{name}")
     public String userPage(@PathVariable("name") String userName) {
         return "redirect:/question/user/" + userName;
     }
