@@ -54,7 +54,9 @@
             <div class="answer_frame">
                 <div class="answer_header">
                     <a th:text="${answer.user.name}" th:href="@{/user/__${answer.user.name}__}">andrey</a>
-                    <span th:text="|${' • ' + #lists.size(question.answers)}| + ' votes'">13 votes</span>
+                    <span th:text="|${' • ' + #lists.size(answer.votes)}| + ' votes'">13 votes</span>
+                    <a sec:authorize="hasAuthority('MODERATOR')"
+                       th:href="@{/moderator/answer/delete/__${answer.id}__}">Delete</a>
                 </div>
                 <p th:text="${answer.answer}">This is the answer</p>
                 <div class="rating">
