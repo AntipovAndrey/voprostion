@@ -2,6 +2,58 @@
     box-sizing: border-box
 }
 
+/* Answer */
+
+.answer_frame {
+    margin: 10px auto;
+    border: 2px solid #00a087;
+    border-radius: 4px;
+    width: 60%;
+    padding: 16px;
+    overflow: auto;
+}
+
+.answer_header {
+    float: right;
+}
+
+.answer_frame > p {
+    margin-top: 34px;
+    text-align: center;
+}
+
+.rating {
+    margin: auto;
+    overflow: auto;
+    display: table;
+    margin: 0 auto;
+}
+
+.rating div {
+    overflow: auto;
+}
+
+.like img, .dislike img {
+    width: 20px;
+    height: 20px;
+}
+
+.like {
+    float: left;
+}
+
+.rating_number {
+    float: left;
+    margin: auto 10px;
+}
+
+.dislike {
+    float: left;
+}
+
+/* End Answer */
+
+
 /* Full-width input fields */
 input[type=text], input[type=password] {
     width: 100%;
@@ -266,7 +318,7 @@ body {
 
 }
 
-//SEARCH
+/* Search */
 #search-block-form {
     margin: 15px;
     margin: 15px;

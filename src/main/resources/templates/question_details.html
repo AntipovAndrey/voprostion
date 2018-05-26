@@ -51,32 +51,31 @@
         <hr/>
         <!--/*@thymesVar id="answerForm" type="ru.voprostion.app.domain.model.Answer"*/-->
         <th:block th:each="answer : ${answers}">
-            <div id="answerFrame" align="right">
-                <div align="right">
-
-                    <h5 align="center">
-                        <tt
-                                th:text="|${answer.user.name + ' • ' + #lists.size(answer.votes)}| + ' votes'">
-                        </tt></h5>
-                    <a sec:authorize="hasAuthority('MODERATOR')"
-                       th:href="@{/moderator/answer/delete/__${answer.id}__}">Delete</a>
+            <div class="answer_frame">
+                <div class="answer_header">
+                    <a th:text="${answer.user.name}" th:href="@{/user/__${answer.user.name}__}">andrey</a>
+                    <span th:text="|${' • ' + #lists.size(question.answers)}| + ' votes'">13 votes</span>
                 </div>
-
-                <h3 align="center"><tt th:text="${answer.answer}"></tt></h3>
-                <div>
-                    <a sec:authorize="isAuthenticated()"
-                       th:if="${answer.user.name != #authentication.name}"
-                       th:href="@{__${#httpServletRequest.requestURI}__/like/{id}(id=${answer.id})}">Like</a>
-                    <p align="center" th:text="${answer.rating}">0</p>
-                    <button id="ButtonVote"><img
-                            th:src="@{/img/like.png}" height="25px" style="margin-right: 50px"/></button>
-                    <a sec:authorize="isAuthenticated()"
-                       th:if="${answer.user.name != #authentication.name}"
-                       th:href="@{__${#httpServletRequest.requestURI}__/dislike/{id}(id=${answer.id})}">Dislike</a>
+                <p th:text="${answer.answer}">This is the answer</p>
+                <div class="rating">
+                    <div class="like">
+                        <a sec:authorize="isAuthenticated()"
+                           th:if="${answer.user.name != #authentication.name}"
+                           th:href="@{__${#httpServletRequest.requestURI}__/like/{id}(id=${answer.id})}">
+                            <img th:src="@{/img/like.png}"/>
+                        </a>
+                    </div>
+                    <div class="rating_number" th:text="${answer.rating}">8</div>
+                    <div class="dislike">
+                        <a sec:authorize="isAuthenticated()"
+                           th:if="${answer.user.name != #authentication.name}"
+                           th:href="@{__${#httpServletRequest.requestURI}__/dislike/{id}(id=${answer.id})}">
+                            <img th:src="@{/img/dislike.png}"/>
+                        </a>
+                    </div>
                 </div>
             </div>
         </th:block>
-
     </div>
 </div>
 </body>
