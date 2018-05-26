@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       lang="en"
-      layout:decorator="layouts/default">
+      layout:decorator="layouts/defaul">
 <body>
 <div id="page" layout:fragment="content">
     <div id="content">
@@ -18,9 +18,14 @@
             <input type="hidden" th:field="*{question}"/>
             <label><b><p align="center">Comma separated tags</p></b></label>
             <div align="center">
-                <input th:field="*{tags}" type="text" style="width: 270px; height :40px;"
+                <input th:field="*{tags}" type="text" style="width: 270px; height :20px;"
                        placeholder="Enter Tags"/>
-                <p th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}"></p>
+
+                <div class="warningFrame" th:if="${#fields.hasErrors('tags')}">
+                    <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
+                    <p th:errors="*{tags}"></p>
+                </div>
+
             </div>
 
             <hr/>
