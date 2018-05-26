@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
+
+<head th:replace="layouts/header :: head"></head>
+<body>
+
+
+<div id="container">
+
+    <nav class="top-menu">
+        <ul class="menu-main">
+            <li>
+                <a class="current" href="/" align="left"><b>The Voprostion</b></a>
+            </li>
+
+            <li>
+                <a href="">About us</a>
+            </li>
+
+            <li sec:authorize="isAuthenticated()">
+                <a sec:authentication="name" th:href="@{'/user/'+${#authentication.name}}">Name</a>
+            </li>
+
+            <li sec:authorize="!isAuthenticated()">
+                <a th:href="@{/registration}">Register</a>
+            </li>
+
+            <li sec:authorize="!isAuthenticated()">
+                Already have an account? <a th:href="@{/login}">Sign in</a>
+            </li>
+
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/logout}">Log out</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    <div align="center" class="warningFrame" style="height: 60px; ">
+        <img src="/img/baseline-error_outline-24px.svg" height="60px" align="left"/>
+        <p>Sorry! This page has gone to the UML lesson!</p>
+    </div>
+
+    <img width="100%" src="/img/itmo.jpg"/>
+
+</div>
+</body>
+</html>
