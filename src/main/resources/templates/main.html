@@ -10,17 +10,16 @@
             <div id="questionPreview" align="center">
                 <div>
                     <h5 align="right" style="margin-right: 10px">
-                        <tt>
-                            <a th:text="${question.user.name}" th:href="@{/user/__${question.user.name}__}"></a>
-                        </tt>
-                        <tt
-                                th:text="|${' • ' + #lists.size(question.answers)}| + ' answers'">
-                        </tt>
+                        <a th:text="${question.user.name}" th:href="@{/user/__${question.user.name}__}"></a>
 
+                        <span
+                                th:text="|${' • ' + #lists.size(question.answers)}| + ' answers'"></span>
                     </h5>
                 </div>
 
-                <h3><a th:href="@{'/question/' + ${question.id}}"><tt th:text="${question.questionTitle}"></tt></a></h3>
+                <p class="question_title">
+                    <a th:href="@{'/question/' + ${question.id}}"><span th:text="${question.questionTitle}"></span></a>
+                </p>
                 <div>
                     <th:block th:each="tag : ${question.tags}">
                         <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.tagName}__}">

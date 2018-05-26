@@ -7,21 +7,21 @@
 <div id="page" layout:fragment="content">
     <div id="content">
 
-        <H1 align="center" style="margin-top: 30px"><b><tt>Log in</tt></b></H1>
+        <H1 align="center" style="margin-top: 30px"><b>Log in</b></H1>
         <hr/>
         <form th:action="@{/login}" method="post">
 
             <div align="center" class="warningFrame" th:if="${error != null}" >
                 <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
-                <tt><p align="center" th:text="${error}"></p></tt>
+                <p align="center" th:text="${error}"></p>
             </div>
-            <label><b><p align="center"><tt>Login</tt></p></b></label>
+            <label><b><p align="center">Login</p></b></label>
             <div align="center">
                 <input type="text" style="width: 270px; height :40px;" placeholder="Enter Email"
                        name="username"/>
             </div>
 
-            <label><b><p align="center"><tt>Password</tt></p></b></label>
+            <label><b><p align="center">Password</p></b></label>
             <div align="center">
                 <input type="password" style="width: 270px; height :40px;" placeholder="Enter Password"
                        name="password"/>

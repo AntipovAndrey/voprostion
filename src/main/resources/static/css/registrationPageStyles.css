@@ -1,5 +1,16 @@
-/* Answer */
+@font-face {
+    font-family: "Roboto Slab";
+    src: url(RobotoSlab-Regular.ttf);
+}
 
+body {
+    background: #FFF;
+    color: #000;
+    font-family: 'Roboto Slab', serif;
+    font-size: 14px;
+}
+
+/* Answer */
 .answer_frame {
     margin: 10px auto;
     border: 2px solid #00a087;
@@ -48,6 +59,9 @@
 
 /* End Answer */
 
+.question_title {
+    font-size: 1.5em;
+}
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -124,7 +138,6 @@ button:hover {
     padding: 16px;
 }
 
-@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 .top-menu {
     position: relative;
     background: #fff;
@@ -191,7 +204,6 @@ button:hover {
     display: inline-block;
     margin: 2px 5px;
     padding: 6px 15px;
-    font-family: 'PT Sans', sans-serif;
     font-size: 16px;
     color: #777777;
     border-bottom: 1px solid transparent;
@@ -260,13 +272,6 @@ H1 {
 
 }
 
-body {
-    background: #FFF;
-    color: #000;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-}
-
 #header {
     background: #F5DEB3;
     width: 100%;
@@ -302,6 +307,7 @@ body {
     padding: 6px;
     margin-top: 8px;
     font-size: 17px;
+    font-family: inherit;
     border: none;
     height: auto;
 }
@@ -343,9 +349,9 @@ body {
 #tagsButton {
     width: auto;
     height: auto;
-    margin: 5px;
-    margin-bottom: 12px;
+    margin: 5px 5px 12px;
     font-size: 15px;
+    font-family: inherit;
 }
 
 #content {

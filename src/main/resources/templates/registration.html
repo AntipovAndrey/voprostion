@@ -12,43 +12,43 @@
         <th:block sec:authorize="!isAuthenticated()">
             <!--/*@thymesVar id="user" type="ru.voprostion.app.domain.dto.UserDto"*/-->
             <form action="" th:action="@{/registration}" th:object="${user}" method="POST">
-                <H1 align="center" style="margin-top: 30px"><b><tt>Register</tt></b></H1>
+                <H1 align="center" style="margin-top: 30px"><b>Register</b></H1>
 
-                <p align="center"><tt>Please fill in this form to create an account</tt></p>
+                <p align="center">Please fill in this form to create an account</p>
                 <hr/>
 
-                <label><b><p align="center"><tt>Login</tt></p></b></label>
+                <label><b><p align="center">Login</p></b></label>
                 <div align="center">
                     <input th:field="*{name}" type="text" style="width: 270px; height :40px;"
                            placeholder="Enter Login"
                            name="email"/>
                     <div class="warningFrame" th:if="${#fields.hasErrors('name')}">
-                        <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/><tt><p th:errors="*{name}"></p></tt>
+                        <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/><p th:errors="*{name}"></p>
                     </div>
                     <div class="warningFrame" th:if="${usernametaken != null}" >
                         <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
-                        <tt><p th:text="${usernametaken}"></p></tt>
+                        <p th:text="${usernametaken}"></p>
                     </div>
                 </div>
 
-                <label><b><p align="center"><tt>Password</tt></p></b></label>
+                <label><b><p align="center">Password</p></b></label>
                 <div align="center">
                     <input th:field="*{password}" type="password" id="inputStyle"
                            placeholder="Enter Password"
                            name="psw"/>
                     <div class="warningFrame" th:if="${#fields.hasErrors('password')}">
                         <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
-                        <tt><p th:errors="*{password}"></p></tt>
+                        <p th:errors="*{password}"></p>
                     </div>
                 </div>
-                <label><b><p align="center"><tt>Repeat Password</tt></p></b></label>
+                <label><b><p align="center">Repeat Password</p></b></label>
                 <div align="center">
                     <input th:field="*{passwordConfirmation}" type="password" id="inputStyle"
                            placeholder="Repeat Password"
                            name="psw-repeat"/>
                     <div class="warningFrame" th:if="${#fields.hasErrors('passwordConfirmation')}">
                         <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
-                        <tt><p th:errors="*{passwordConfirmation}"></p></tt>
+                        <p th:errors="*{passwordConfirmation}"></p>
                     </div>
                 </div>
                 <hr/>

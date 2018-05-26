@@ -9,11 +9,11 @@
     <nav class="top-menu">
         <ul class="menu-main">
             <li>
-                <a class="current" href="/" align="left"><tt><b>The Voprostion</b></tt></a>
+                <a class="current" href="/" align="left"><b>The Voprostion</b></a>
             </li>
 
             <li>
-                <a href=""><tt>About us</tt></a>
+                <a href="">About us</a>
             </li>
 
             <li sec:authorize="isAuthenticated()">
@@ -21,15 +21,15 @@
             </li>
 
             <li sec:authorize="!isAuthenticated()">
-                <a th:href="@{/registration}"><tt>Register</tt></a>
+                <a th:href="@{/registration}">Register</a>
             </li>
 
             <li sec:authorize="!isAuthenticated()">
-                <tt>Already have an account?</tt> <a th:href="@{/login}"><tt>Sign in</tt></a>
+                Already have an account? <a th:href="@{/login}">Sign in</a>
             </li>
 
             <li sec:authorize="isAuthenticated()">
-                <a th:href="@{/logout}"><tt>Log out</tt></a>
+                <a th:href="@{/logout}">Log out</a>
             </li>
         </ul>
     </nav>
@@ -50,7 +50,7 @@
 
         <div align="bottom">
             <div sec:authorize="isAuthenticated()">
-                <a th:href="@{'/user/'+${#authentication.name}}"><tt>Мои вопросы</tt></a>
+                <a th:href="@{'/user/'+${#authentication.name}}">Мои вопросы</a>
                 <button onclick="location.href='/question/add';" align="left" class="buttonToAdd"><img
                         th:src="@{/img/drawing.svg}"/></button>
             </div>

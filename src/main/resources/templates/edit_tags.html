@@ -7,16 +7,16 @@
 <div id="page" layout:fragment="content">
     <div id="content">
 
-        <H1 align="center" style="margin-top: 30px"><b><tt>Edit Tag</tt></b></H1>
+        <H1 align="center" style="margin-top: 30px"><b>Edit Tag</b></H1>
         <hr/>
         <!--/*@thymesVar id="question" type="ru.voprostion.app.domain.dto.QuestionDto"*/-->
         <form th:action="@{/question/__${question.id}__/edit}" th:object="${question}" method="post">
-            <label><b><p align="center"><tt>Question</tt></p></b></label>
+            <label><b><p align="center">Question</p></b></label>
             <div align="center">
                 <p th:text="*{question}" style="width: 380px; height :70px;"></p>
             </div>
             <input type="hidden" th:field="*{question}"/>
-            <label><b><p align="center"><tt>Comma separated tags</tt></p></b></label>
+            <label><b><p align="center">Comma separated tags</p></b></label>
             <div align="center">
                 <input th:field="*{tags}" type="text" style="width: 270px; height :40px;"
                        placeholder="Enter Tags"/>

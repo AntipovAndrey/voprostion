@@ -10,23 +10,21 @@
         <div id="questionPreview" align="center">
             <div>
                 <h5 align="right" style="margin-right: 10px">
-                    <tt>
-                        <a th:text="${question.user.name}" th:href="@{/user/__${question.user.name}__}"></a>
-                    </tt>
-                    <tt
-                            th:text="|${' • ' + #lists.size(question.answers)}| + ' answers'">
-                    </tt>
+
+                    <a th:text="${question.user.name}" th:href="@{/user/__${question.user.name}__}"></a>
+
+                    <span
+                            th:text="|${' • ' + #lists.size(question.answers)}| + ' answers'"></span>
+
                 </h5>
             </div>
 
-            <h3><tt th:text="${question.questionTitle}"></tt></h3>
+            <p class="question_title"><span th:text="${question.questionTitle}"></span></p>
             <div>
                 <th:block th:each="tag : ${question.tags}">
-                    <nobr>
-                        <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.tagName}__}">
-                            <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
-                        </form>
-                    </nobr>
+                    <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.tagName}__}">
+                        <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
+                    </form>
                 </th:block>
             </div>
             <a sec:authorize="hasAuthority('MODERATOR')"
@@ -35,8 +33,7 @@
         <div align="center" th:if="${canAnswer}">
 
             <form th:action="@{__${#httpServletRequest.requestURI}__/answer}" th:object="${answerForm}" method="post">
-
-                <label><b><p align="center"><tt>Answer</tt></p></b></label>
+                <label><b><p align="center">Answer</p></b></label>
                 <div align="center">
                     <input th:field="*{answer}" type="text" style="width: 270px; height :40px;"
                            placeholder="Enter Answer"/>
