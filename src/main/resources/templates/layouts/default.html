@@ -37,22 +37,20 @@
 
     <div id="sidebar">
 
-
-        <form th:action="@{/question/search/tag/}" method="get" id="search-block-form">
-            <div id="searchFrame" class="form-item">
-                <input type="text" name="tagname" value="" maxlength="128" placeholder="Search by a tag.."/>
-            </div>
-            <div class="form-actions">
-                <input type="submit" name="op" value="Поиск" class="form-submit"/>
-            </div>
-        </form>
-
-
-        <hr/>
+        <div class="search-container">
+            <form th:action="@{/question/search/tag/}" method="get">
+                <div class="search-input">
+                    <input type="text" name="tagname" placeholder="Search.."/>
+                </div>
+                <div class="search-button">
+                    <input type="image" th:src="@{/img/outline-search-24px.svg}"/>
+                </div>
+            </form>
+        </div>
 
         <div align="bottom">
             <div sec:authorize="isAuthenticated()">
-                <a href=""><tt>Мои вопросы</tt></a>
+                <a th:href="@{'/user/'+${#authentication.name}}"><tt>Мои вопросы</tt></a>
                 <button onclick="location.href='/question/add';" align="left" class="buttonToAdd"><img
                         th:src="@{/img/drawing.svg}"/></button>
             </div>

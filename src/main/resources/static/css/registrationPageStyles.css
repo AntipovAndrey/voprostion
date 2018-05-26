@@ -1,7 +1,3 @@
-* {
-    box-sizing: border-box
-}
-
 /* Answer */
 
 .answer_frame {
@@ -23,7 +19,6 @@
 }
 
 .rating {
-    margin: auto;
     overflow: auto;
     display: table;
     margin: 0 auto;
@@ -298,95 +293,46 @@ body {
 
 }
 
-#answerFrame {
-    width: 60%;
-    margin-left: 50px;
-    height: 100%; /* Размеры */
-    background: #fafafa;
-    outline: 1px solid #c7c5c5; /* Чёрная рамка */
-    border: 2px solid #fff; /* Белая рамка */
-
+.search-container {
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
-
-#searchFrame {
-    width: 40%;
-    margin: 15px;
-    height: 100%; /* Размеры */
-    outline: 1px solid #c7c5c5; /* Чёрная рамка */
-    border: 2px solid #fff; /* Белая рамка */
-
-}
-
-/* Search */
-#search-block-form {
-    margin: 15px;
-    margin: 15px;
-    width: 90%;
-    height: 35px;
-    border-radius: 15px;
-    border: #444444 solid 1px;
-    background: url(/img/round-search-24px.svg) left top repeat-x;
-}
-
-.focus-active {
-    border-color: #aaa !important;
-    background: #fff !important;
-}
-
-#search-block-form input {
-    padding: 0;
-    margin: 0;
-    display: block;
+.search-container input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
     border: none;
-    outline: none;
-    background: none;
-    width: 100%;
-    height: 100%;
+    height: auto;
 }
 
-#search-block-form .form-actions {
-    width: 28px;
-    height: 28px;
-    float: left;
-    margin-top: 15px;
-    margin-left: 10px;
-    background: url(/img/round-search-24px.svg) 5px 2px no-repeat;
-}
-
-#search-block-form .form-actions input:hover {
-    cursor: pointer;
-}
-
-#search-block-form .form-actions input {
-    overflow: hidden;
-    text-indent: -9999px;
-}
-
-#search-block-form .form-item {
-    width: 80%;
-    padding: 0px 5px;
+.search-container input[type=image] {
     float: right;
-    height: 28px;
+    padding: 6px 10px;
+    margin-top: 8px;
+    background: #ddd;
+    border: none;
+    cursor: pointer;
+    width: 17px;
+    height: 18px;
 }
 
-#search-block-form .form-item input {
-    font: 13px/16px "Trebuchet MS", Arial, Helvetica, sans-serif;
-    color: #222;
-    font-size: 16px;
-    height: auto !important;
-    padding: 6px 0;
+.search-container button:hover {
+    background: #ccc;
 }
 
-.placeholder {
-    color: #cbcbcb !important;
+.search-input {
+    width: 80%;
+    float: left;
 }
 
-#search {
-    margin: 50px auto;
-    width: 300px;
-    height: 50px;
+.search-button {
+    width: 20%;
+    float: left;
+}
 
+.search-container + div {
+    clear: both;
 }
 
 #sidebar {
