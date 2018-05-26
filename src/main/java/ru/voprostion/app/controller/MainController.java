@@ -24,10 +24,15 @@ public class MainController implements ErrorController {
             Integer statusCode = Integer.valueOf(status.toString());
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "error-page";
+                return "redirect:/404";
             }
         }
         return "error";
+    }
+
+    @GetMapping("404")
+    public String notFound() {
+        return "error_page";
     }
 
     @Override

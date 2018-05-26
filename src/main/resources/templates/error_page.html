@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      lang="en"
-      layout:decorator="layouts/default">
-
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layouts/header :: head"></head>
 <body>
 
+<div id="container">
 
-<div align="center" class="warningFrame" style="height: 60px; ">
-    <img src="/img/baseline-error_outline-24px.svg" height="60px" align="left"/>
-    <p>Sorry! This page has gone to the UML lesson!</p>
+    <th:block th:replace="layouts/header :: nav"/>
+
+    <div align="center" class="warningFrame" style="height: 60px; ">
+        <img th:src="@{/img/baseline-error_outline-24px.svg}" height="60px" align="left"/>
+        <p>Sorry! This page has gone to the UML lesson!</p>
+    </div>
+
+    <img width="100%" th:src="@{/img/itmo.jpg}"/>
 </div>
-
-<img width="100%" src="/img/itmo.jpg"/>
-
 </body>
 </html>
