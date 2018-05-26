@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.model.User;
-import ru.voprostion.app.domain.service.AnswerService;
 import ru.voprostion.app.domain.service.QuestionService;
 import ru.voprostion.app.domain.service.UserService;
+import ru.voprostion.app.domain.usecase.exception.TooFewTagsException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,21 +16,19 @@ import java.util.stream.Collectors;
 public class AskQuestionUseCaseImpl implements AskQuestionUseCase {
 
     private QuestionService questionService;
-    private AnswerService answerService;
     private UserService userService;
 
     @Autowired
     public AskQuestionUseCaseImpl(QuestionService questionService,
-                                  AnswerService answerService,
                                   UserService userService) {
         this.questionService = questionService;
-        this.answerService = answerService;
         this.userService = userService;
     }
 
     @Override
     public Question ask(String question, List<String> tags) {
         if (!canAsk()) return null;
+        if (tags.size() < 2) throw new TooFewTagsException("Too few tags : " + tags.size());
         return questionService.create(question, tags.stream().map(Tag::new).collect(Collectors.toList()));
     }
 

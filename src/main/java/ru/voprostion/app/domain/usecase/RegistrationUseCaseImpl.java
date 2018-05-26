@@ -6,6 +6,7 @@ import ru.voprostion.app.domain.model.Role;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.service.RoleService;
 import ru.voprostion.app.domain.service.UserService;
+import ru.voprostion.app.domain.usecase.exception.UserAlreadyRegistered;
 
 @Service
 public class RegistrationUseCaseImpl implements RegistrationUseCase {
@@ -24,6 +25,9 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
 
     @Override
     public void registerNewUser(String name, String password) {
+        if (userService.findByUserName(name) != null) {
+            throw new UserAlreadyRegistered("Username " + name + " is taken");
+        }
         final Role authRole = roleService.findOneByName(simpleUserRole);
         final User user = new User();
         user.setName(name);
