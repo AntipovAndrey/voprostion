@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.voprostion.app.domain.model.Role;
 import ru.voprostion.app.domain.model.User;
+import ru.voprostion.app.domain.service.UserService;
 import ru.voprostion.app.repository.RoleRepository;
 import ru.voprostion.app.repository.UserRepository;
 
@@ -14,7 +16,7 @@ import ru.voprostion.app.repository.UserRepository;
 public class AddDataOnStartup {
 
     private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Value("${roles.authenticated}")
     private String simpleUserRole;
@@ -33,12 +35,13 @@ public class AddDataOnStartup {
 
     @Autowired
     public AddDataOnStartup(RoleRepository roleRepository,
-                            UserRepository userRepository) {
+                            UserService userService) {
         this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @EventListener
+    @Transactional
     public void appReady(ApplicationReadyEvent event) {
         if (!databaseUpdate) return;
         final Role moderatorRole = roleRepository.save(new Role(this.moderatorRole));
@@ -49,6 +52,6 @@ public class AddDataOnStartup {
         moderator.setPasswordHash(moderatorPassword);
         moderator.addRole(moderatorRole);
         moderator.addRole(userRole);
-        userRepository.save(moderator);
+        userService.save(moderator);
     }
 }
