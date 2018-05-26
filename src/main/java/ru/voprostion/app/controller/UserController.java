@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.voprostion.app.domain.dto.UserDto;
 import ru.voprostion.app.domain.usecase.AuthorizationUseCase;
 import ru.voprostion.app.domain.usecase.RegistrationUseCase;
+import ru.voprostion.app.domain.usecase.exception.UserAlreadyRegistered;
 
 import javax.validation.Valid;
 
@@ -43,8 +44,7 @@ public class UserController {
         try {
             registrationUseCase.registerNewUser(userForm.getName(), userForm.getPassword());
             authorizationUseCase.login(userForm.getName(), userForm.getPassword());
-            // TODO: more specific exception
-        } catch (Exception e) {
+        } catch (UserAlreadyRegistered e) {
             model.addAttribute("usernametaken", "Username is already taken");
             model.addAttribute("user", userForm);
             return "registration";

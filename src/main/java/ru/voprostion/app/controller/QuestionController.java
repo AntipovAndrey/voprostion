@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.voprostion.app.controller.exception.NotFoundException;
 import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.Answer;
@@ -76,16 +77,18 @@ public class QuestionController {
         if (bindingResult.hasErrors()) {
             return "add_question";
         }
-        final Question question = askQuestionUseCase.ask(questionDto.getQuestion(),
-                Stream.of(questionDto.getTags().split(","))
-                        .collect(Collectors.toList())
-        );
+        final List<String> tagList = Stream.of(questionDto.getTags().split(","))
+                .collect(Collectors.toList());
+        final Question question = askQuestionUseCase.ask(questionDto.getQuestion(), tagList);
         return "redirect:/question/" + question.getId();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:[\\d]+}")
     public String getQuestionDetails(@PathVariable("id") Long questionId, Model model) {
         final Question question = questionDetailsUseCase.getDetailed(questionId);
+
+        if (question == null) throw new NotFoundException();
+
         final boolean canAnswer = addAnswerUseCase.canAnswer(questionId);
         final List<Answer> answers = answersListUseCase.getAll(questionId);
 
@@ -98,21 +101,21 @@ public class QuestionController {
         return "question_details";
     }
 
-    @PostMapping("/{id}/answer")
+    @PostMapping("/{id:[\\d]+}/answer")
     public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
                              @PathVariable("id") Long id) {
         addAnswerUseCase.answer(id, answerDto.getAnswer());
         return "redirect:/question/" + id;
     }
 
-    @GetMapping("/{questionId}/like/{answerId}")
+    @GetMapping("/{questionId:[\\d]+}/like/{answerId:[\\d]+}")
     public String likeComment(@PathVariable("questionId") Long questionId,
                               @PathVariable("answerId") Long answerId) {
         voteAnswerUseCase.upVote(answerId);
         return "redirect:/question/" + questionId;
     }
 
-    @GetMapping("/{questionId}/dislike/{answerId}")
+    @GetMapping("/{questionId:[\\d]+}/dislike/{answerId:[\\d]+}")
     public String dislikeComment(@PathVariable("questionId") Long questionId,
                                  @PathVariable("answerId") Long answerId) {
         voteAnswerUseCase.downVote(answerId);

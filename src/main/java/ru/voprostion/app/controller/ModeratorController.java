@@ -35,13 +35,13 @@ public class ModeratorController {
         this.editTagsUseCase = editTagsUseCase;
     }
 
-    @GetMapping("/moderator/answer/delete/{answerId}")
+    @GetMapping("/moderator/answer/delete/{answerId:[\\d]+}")
     public String deleteAnswer(@PathVariable("answerId") Long answerId, HttpServletRequest request) {
         deleteAnswerUseCase.delete(answerId);
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @GetMapping("/question/{questionId}/edit")
+    @GetMapping("/question/{questionId:[\\d]+}/edit")
     public String editQuestionForm(@PathVariable("questionId") Long questionId, Model model) {
         final QuestionDto dto = new QuestionDto();
         dto.setId(questionId);
