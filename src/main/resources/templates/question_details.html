@@ -35,10 +35,10 @@
             <form th:action="@{__${#httpServletRequest.requestURI}__/answer}" th:object="${answerForm}" method="post">
                 <label><b><p align="center">Answer</p></b></label>
                 <div align="center">
-                    <input th:field="*{answer}" type="text" style="width: 270px; height :40px;"
+                    <textarea th:field="*{answer}" type="text" style="width: 350px; height :80px;"
                            placeholder="Enter Answer"/>
                 </div>
-                <hr/>
+
 
                 <div align="center">
                     <button type="submit" style="width: 270px; height: 40px" class="registerbtn">Answer</button>
