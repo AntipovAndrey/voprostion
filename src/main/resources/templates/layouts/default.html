@@ -6,34 +6,7 @@
 <body>
 <div id="container">
 
-    <nav class="top-menu">
-        <ul class="menu-main">
-            <li>
-                <a class="current" href="/" align="left"><b>The Voprostion</b></a>
-            </li>
-
-            <li>
-                <a href="">About us</a>
-            </li>
-
-            <li sec:authorize="isAuthenticated()">
-                <a sec:authentication="name" th:href="@{'/user/'+${#authentication.name}}">Name</a>
-            </li>
-
-            <li sec:authorize="!isAuthenticated()">
-                <a th:href="@{/registration}">Register</a>
-            </li>
-
-            <li sec:authorize="!isAuthenticated()">
-                Already have an account? <a th:href="@{/login}">Sign in</a>
-            </li>
-
-            <li sec:authorize="isAuthenticated()">
-                <a th:href="@{/logout}">Log out</a>
-            </li>
-        </ul>
-    </nav>
-
+    <th:block th:replace="layouts/header :: nav"/>
 
     <div id="sidebar">
 
