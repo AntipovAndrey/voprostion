@@ -2,6 +2,7 @@ package ru.voprostion.app.domain.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class Answer extends BaseModel {
+    @Lob
     private String answer;
 
     @ManyToOne(fetch = FetchType.LAZY)
