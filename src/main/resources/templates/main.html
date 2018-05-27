@@ -13,7 +13,7 @@
                         <a th:text="${question.user.name}" th:href="@{/user/__${question.user.name}__}"></a>
 
                         <span
-                                th:text="|${' • ' + #lists.size(question.answers)}| + ' answers'"></span>
+                                th:text="|${' • ' + question.answers}| + ' answers'"></span>
                     </h5>
                 </div>
 

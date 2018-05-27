@@ -89,11 +89,9 @@ input[type=text]:focus, input[type=password]:focus {
 
 .warningFrame {
     border-style: groove;
-    margin: auto;
     width: 340px;
-    margin-top: 30px;
     padding: 10px;
-    margin-bottom: 30px;
+    margin: 30px auto;
     height: auto;
     background-color: #f1f1f1;
 }

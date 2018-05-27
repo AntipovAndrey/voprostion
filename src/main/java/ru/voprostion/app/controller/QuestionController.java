@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.voprostion.app.controller.exception.NotFoundException;
 import ru.voprostion.app.controller.form.AnswerForm;
 import ru.voprostion.app.controller.form.QuestionForm;
-import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.usecase.*;
 
@@ -99,9 +98,9 @@ public class QuestionController {
     }
 
     @PostMapping("/{id:[\\d]+}/answer")
-    public String answerForm(@Valid @ModelAttribute AnswerDto answerDto,
+    public String answerForm(@Valid @ModelAttribute AnswerForm answerForm,
                              @PathVariable("id") Long id) {
-        addAnswerUseCase.answer(id, answerDto.getAnswer());
+        addAnswerUseCase.answer(id, answerForm.getAnswer());
         return "redirect:/question/" + id;
     }
 

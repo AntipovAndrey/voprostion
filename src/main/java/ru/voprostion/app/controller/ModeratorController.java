@@ -3,6 +3,7 @@ package ru.voprostion.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +59,11 @@ public class ModeratorController {
 
     @PostMapping("/question/{questionId}/edit")
     public String editQuestion(@PathVariable("questionId") Long questionId,
-                               @Valid @ModelAttribute("question") QuestionForm questionForm) {
+                               @Valid @ModelAttribute("question") QuestionForm questionForm,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit_tags";
+        }
         editTagsUseCase.setNewTags(questionId,
                 Stream.of(questionForm.getTags().split(",")).collect(Collectors.toList()));
         return "redirect:/question/" + questionId;

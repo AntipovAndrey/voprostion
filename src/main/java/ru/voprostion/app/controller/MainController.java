@@ -23,7 +23,7 @@ public class MainController implements ErrorController {
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
 
-            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+            if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 return "redirect:/404";
             }
         }
