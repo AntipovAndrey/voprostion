@@ -2,6 +2,7 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.model.User;
@@ -26,10 +27,13 @@ public class AskQuestionUseCaseImpl implements AskQuestionUseCase {
     }
 
     @Override
-    public Question ask(String question, List<String> tags) {
+    public QuestionDto ask(String question, List<String> tags) {
         if (!canAsk()) return null;
         if (tags.size() < 2) throw new TooFewTagsException("Too few tags : " + tags.size());
-        return questionService.create(question, tags.stream().map(Tag::new).collect(Collectors.toList()));
+        final Question model = questionService.create(question, tags.stream()
+                .map(Tag::new)
+                .collect(Collectors.toList()));
+        return new QuestionDto(model);
     }
 
     @Override

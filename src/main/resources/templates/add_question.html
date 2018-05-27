@@ -15,7 +15,7 @@
             <label><b><p align="center">Question</p></b></label>
             <div align="center">
                 <textarea th:field="*{question}" type="text" style="width: 380px; height :70px;"
-                       placeholder="Enter Question"/>
+                          placeholder="Enter Question"/>
                 <div class="warningFrame" th:if="${#fields.hasErrors('question')}">
                     <img src="/img/baseline-error_outline-24px.svg" height="40px" align="left"/>
                     <p th:errors="*{question}"></p>

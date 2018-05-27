@@ -24,7 +24,7 @@ public class EditTagsUseCaseImpl implements EditTagsUseCase {
     }
 
     @Override
-    public Question setNewTags(Long questionId, List<String> tags) {
+    public void setNewTags(Long questionId, List<String> tags) {
         if (tags == null || tags.size() < 1) {
             throw new IllegalArgumentException();
         }
@@ -34,6 +34,6 @@ public class EditTagsUseCaseImpl implements EditTagsUseCase {
         tagList = tagService.saveOrGet(tagList);
         final Question question = questionService.findById(questionId);
         question.setTags(new HashSet<>(tagList));
-        return questionService.save(question);
+        questionService.save(question);
     }
 }

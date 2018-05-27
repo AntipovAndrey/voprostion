@@ -10,7 +10,6 @@ import ru.voprostion.app.domain.model.Role;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.service.UserService;
 import ru.voprostion.app.repository.RoleRepository;
-import ru.voprostion.app.repository.UserRepository;
 
 @Component
 public class AddDataOnStartup {

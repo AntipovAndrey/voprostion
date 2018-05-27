@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.voprostion.app.domain.dto.UserDto;
+import ru.voprostion.app.controller.form.UserForm;
 import ru.voprostion.app.domain.usecase.AuthorizationUseCase;
 import ru.voprostion.app.domain.usecase.RegistrationUseCase;
 import ru.voprostion.app.domain.usecase.exception.UserAlreadyRegistered;
@@ -29,12 +29,12 @@ public class UserController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", new UserForm());
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@Valid @ModelAttribute("user") UserDto userForm,
+    public String registration(@Valid @ModelAttribute("user") UserForm userForm,
                                BindingResult bindingResult,
                                Model model) {
         if (bindingResult.hasErrors()) {

@@ -23,9 +23,10 @@
                            placeholder="Enter Login"
                            name="email"/>
                     <div class="warningFrame" th:if="${#fields.hasErrors('name')}">
-                        <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/><p th:errors="*{name}"></p>
+                        <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
+                        <p th:errors="*{name}"></p>
                     </div>
-                    <div class="warningFrame" th:if="${usernametaken != null}" >
+                    <div class="warningFrame" th:if="${usernametaken != null}">
                         <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
                         <p th:text="${usernametaken}"></p>
                     </div>

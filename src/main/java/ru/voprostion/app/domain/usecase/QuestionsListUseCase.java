@@ -1,14 +1,14 @@
 package ru.voprostion.app.domain.usecase;
 
-import ru.voprostion.app.domain.model.Question;
+import ru.voprostion.app.domain.dto.QuestionPreviewDto;
 
 import java.util.List;
 
 public interface QuestionsListUseCase {
 
-    List<Question> getAll();
+    List<QuestionPreviewDto> getAll();
 
-    List<Question> getByUser(String username);
+    List<QuestionPreviewDto> getByUser(String username);
 
-    List<Question> getByTag(String tag);
+    List<QuestionPreviewDto> getByTag(String tag);
 }

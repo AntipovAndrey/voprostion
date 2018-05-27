@@ -11,7 +11,7 @@
         <hr/>
         <form th:action="@{/login}" method="post">
 
-            <div align="center" class="warningFrame" th:if="${error != null}" >
+            <div align="center" class="warningFrame" th:if="${error != null}">
                 <img src="img/baseline-error_outline-24px.svg" height="40px" align="left"/>
                 <p align="center" th:text="${error}"></p>
             </div>

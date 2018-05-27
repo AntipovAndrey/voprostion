@@ -2,6 +2,7 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.voprostion.app.domain.dto.QuestionPreviewDto;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.model.User;
@@ -30,25 +31,26 @@ public class QuestionsListUseCaseImpl implements QuestionsListUseCase {
     }
 
     @Override
-    public List<Question> getAll() {
+    public List<QuestionPreviewDto> getAll() {
         return sortedByDate(questionService.getAll());
     }
 
     @Override
-    public List<Question> getByUser(String username) {
+    public List<QuestionPreviewDto> getByUser(String username) {
         final User user = userService.findByUserName(username);
         return sortedByDate(questionService.getByUser(user));
     }
 
     @Override
-    public List<Question> getByTag(String tagName) {
+    public List<QuestionPreviewDto> getByTag(String tagName) {
         final Tag tag = tagService.findByName(tagName);
         return sortedByDate(questionService.getByTag(tag));
     }
 
-    private List<Question> sortedByDate(List<Question> src) {
+    private List<QuestionPreviewDto> sortedByDate(List<Question> src) {
         return src.stream()
                 .sorted(Comparator.comparing(Question::getDateCreated, Comparator.reverseOrder()))
+                .map(QuestionPreviewDto::new)
                 .collect(Collectors.toList());
     }
 }

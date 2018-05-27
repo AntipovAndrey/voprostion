@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.voprostion.app.controller.form.QuestionForm;
 import ru.voprostion.app.domain.dto.QuestionDto;
-import ru.voprostion.app.domain.model.Question;
-import ru.voprostion.app.domain.model.Tag;
+import ru.voprostion.app.domain.dto.TagDto;
 import ru.voprostion.app.domain.usecase.DeleteAnswerUseCase;
 import ru.voprostion.app.domain.usecase.EditTagsUseCase;
 import ru.voprostion.app.domain.usecase.QuestionDetailsUseCase;
@@ -43,24 +43,24 @@ public class ModeratorController {
 
     @GetMapping("/question/{questionId:[\\d]+}/edit")
     public String editQuestionForm(@PathVariable("questionId") Long questionId, Model model) {
-        final QuestionDto dto = new QuestionDto();
-        dto.setId(questionId);
-        final Question question = questionDetailsUseCase.getDetailed(questionId);
-        dto.setQuestion(question.getQuestionTitle());
-        final String tagString = question.getTags()
+        final QuestionForm form = new QuestionForm();
+        form.setId(questionId);
+        final QuestionDto questionDto = questionDetailsUseCase.getDetailed(questionId);
+        form.setQuestion(questionDto.getQuestion());
+        final String tagString = questionDto.getTags()
                 .stream()
-                .map(Tag::getTagName)
+                .map(TagDto::getName)
                 .collect(Collectors.joining(","));
-        dto.setTags(tagString);
-        model.addAttribute("question", dto);
+        form.setTags(tagString);
+        model.addAttribute("question", form);
         return "edit_tags";
     }
 
     @PostMapping("/question/{questionId}/edit")
     public String editQuestion(@PathVariable("questionId") Long questionId,
-                               @Valid @ModelAttribute("question") QuestionDto questionDto) {
+                               @Valid @ModelAttribute("question") QuestionForm questionForm) {
         editTagsUseCase.setNewTags(questionId,
-                Stream.of(questionDto.getTags().split(",")).collect(Collectors.toList()));
+                Stream.of(questionForm.getTags().split(",")).collect(Collectors.toList()));
         return "redirect:/question/" + questionId;
     }
 }

@@ -6,13 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.voprostion.app.controller.exception.NotFoundException;
+import ru.voprostion.app.controller.form.AnswerForm;
+import ru.voprostion.app.controller.form.QuestionForm;
 import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
-import ru.voprostion.app.domain.model.Answer;
-import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.usecase.*;
 
 import javax.validation.Valid;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,21 +27,18 @@ public class QuestionController {
     private QuestionDetailsUseCase questionDetailsUseCase;
     private AddAnswerUseCase addAnswerUseCase;
     private VoteAnswerUseCase voteAnswerUseCase;
-    private AnswersListUseCase answersListUseCase;
 
     @Autowired
     public QuestionController(QuestionsListUseCase questionsListUseCase,
                               AskQuestionUseCase askQuestionUseCase,
                               QuestionDetailsUseCase questionDetailsUseCase,
                               AddAnswerUseCase addAnswerUseCase,
-                              VoteAnswerUseCase voteAnswerUseCase,
-                              AnswersListUseCase answersListUseCase) {
+                              VoteAnswerUseCase voteAnswerUseCase) {
         this.questionsListUseCase = questionsListUseCase;
         this.askQuestionUseCase = askQuestionUseCase;
         this.questionDetailsUseCase = questionDetailsUseCase;
         this.addAnswerUseCase = addAnswerUseCase;
         this.voteAnswerUseCase = voteAnswerUseCase;
-        this.answersListUseCase = answersListUseCase;
     }
 
     @GetMapping(value = "/")
@@ -63,40 +61,39 @@ public class QuestionController {
 
     @GetMapping(value = "/search/tag/")
     public String searchByTag(@RequestParam("tagname") String tagname) {
-        return "redirect:/question/tag/" + tagname;
+        return "redirect:/question/tag/" + URLEncoder.encode(tagname);
     }
 
     @GetMapping(value = "/add")
     public String addQuestionForm(Model model) {
-        model.addAttribute("questionForm", new QuestionDto());
+        model.addAttribute("questionForm", new QuestionForm());
         return "add_question";
     }
 
     @PostMapping(value = "/add")
-    public String addQuestion(@Valid @ModelAttribute("questionForm") QuestionDto questionDto, BindingResult bindingResult) {
+    public String addQuestion(@Valid @ModelAttribute("questionForm") QuestionForm questionForm,
+                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "add_question";
         }
-        final List<String> tagList = Stream.of(questionDto.getTags().split(","))
+        final List<String> tagList = Stream.of(questionForm.getTags().split(","))
                 .collect(Collectors.toList());
-        final Question question = askQuestionUseCase.ask(questionDto.getQuestion(), tagList);
-        return "redirect:/question/" + question.getId();
+        final QuestionDto questionDto = askQuestionUseCase.ask(questionForm.getQuestion(), tagList);
+        return "redirect:/question/" + questionDto.getId();
     }
 
     @GetMapping("/{id:[\\d]+}")
     public String getQuestionDetails(@PathVariable("id") Long questionId, Model model) {
-        final Question question = questionDetailsUseCase.getDetailed(questionId);
+        final QuestionDto question = questionDetailsUseCase.getDetailed(questionId);
 
         if (question == null) throw new NotFoundException();
 
-        final boolean canAnswer = addAnswerUseCase.canAnswer(questionId);
-        final List<Answer> answers = answersListUseCase.getAll(questionId);
+        if (addAnswerUseCase.canAnswer(questionId)) {
+            model.addAttribute("answerForm", new AnswerForm());
+        }
 
         model.addAttribute("question", question);
-        model.addAttribute("answers", answers);
-        model.addAttribute("metaTitle", question.getQuestionTitle());
-        model.addAttribute("answerForm", new AnswerDto());
-        model.addAttribute("canAnswer", canAnswer);
+        model.addAttribute("metaTitle", question.getQuestion());
 
         return "question_details";
     }

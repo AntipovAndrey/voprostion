@@ -18,12 +18,12 @@
                 </div>
 
                 <p class="question_title">
-                    <a th:href="@{'/question/' + ${question.id}}"><span th:text="${question.questionTitle}"></span></a>
+                    <a th:href="@{'/question/' + ${question.id}}"><span th:text="${question.question}"></span></a>
                 </p>
                 <div>
                     <th:block th:each="tag : ${question.tags}">
-                        <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.tagName}__}">
-                            <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
+                        <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.name}__}">
+                            <button type="submit" id="tagsButton" th:text="${tag.name}"></button>
                         </form>
                     </th:block>
                 </div>

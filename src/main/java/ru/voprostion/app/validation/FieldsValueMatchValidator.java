@@ -32,8 +32,7 @@ public class FieldsValueMatchValidator
             }
 
             return isValid;
-        }
-        catch (final Exception ignore) {
+        } catch (final Exception ignore) {
             // ignore
         }
         return true;

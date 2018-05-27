@@ -1,8 +1,8 @@
 package ru.voprostion.app.domain.usecase;
 
-import ru.voprostion.app.domain.model.Question;
+import ru.voprostion.app.domain.dto.QuestionDto;
 
 public interface QuestionDetailsUseCase {
 
-    Question getDetailed(Long questionId);
+    QuestionDto getDetailed(Long questionId);
 }

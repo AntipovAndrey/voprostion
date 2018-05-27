@@ -6,7 +6,7 @@
 <body>
 <div id="page" layout:fragment="content">
     <div id="content">
-        <!--/*@thymesVar id="question" type="ru.voprostion.app.domain.model.Question"*/-->
+        <!--/*@thymesVar id="question" type="ru.voprostion.app.domain.dto.QuestionDto"*/-->
         <div id="questionPreview" align="center">
             <div>
                 <h5 align="right" style="margin-right: 10px">
@@ -19,39 +19,37 @@
                 </h5>
             </div>
 
-            <p class="question_title"><span th:text="${question.questionTitle}"></span></p>
+            <p class="question_title"><span th:text="${question.question}"></span></p>
             <div>
                 <th:block th:each="tag : ${question.tags}">
-                    <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.tagName}__}">
-                        <button type="submit" id="tagsButton" th:text="${tag.tagName}"></button>
+                    <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.name}__}">
+                        <button type="submit" id="tagsButton" th:text="${tag.name}"></button>
                     </form>
                 </th:block>
             </div>
             <a sec:authorize="hasAuthority('MODERATOR')"
                th:href="@{/question/__${question.id}__/edit}">Edit tags</a>
         </div>
-        <div align="center" th:if="${canAnswer}">
-
+        <!--/*@thymesVar id="answerForm" type="ru.voprostion.app.controller.form.AnswerForm"*/-->
+        <div align="center" th:if="${answerForm != null}">
             <form th:action="@{__${#httpServletRequest.requestURI}__/answer}" th:object="${answerForm}" method="post">
                 <label><b><p align="center">Answer</p></b></label>
                 <div align="center">
                     <textarea th:field="*{answer}" type="text" style="width: 350px; height :80px;"
-                           placeholder="Enter Answer"/>
+                              placeholder="Enter Answer"/>
                 </div>
-
-
                 <div align="center">
                     <button type="submit" style="width: 270px; height: 40px" class="registerbtn">Answer</button>
                 </div>
             </form>
         </div>
         <hr/>
-        <!--/*@thymesVar id="answerForm" type="ru.voprostion.app.domain.model.Answer"*/-->
-        <th:block th:each="answer : ${answers}">
+
+        <th:block th:each="answer : ${question.answers}">
             <div class="answer_frame">
                 <div class="answer_header">
                     <a th:text="${answer.user.name}" th:href="@{/user/__${answer.user.name}__}">andrey</a>
-                    <span th:text="|${' • ' + #lists.size(answer.votes)}| + ' votes'">13 votes</span>
+                    <span th:text="|${' • ' + answer.votes}| + ' votes'">13 votes</span>
                     <a sec:authorize="hasAuthority('MODERATOR')"
                        th:href="@{/moderator/answer/delete/__${answer.id}__}">Delete</a>
                 </div>

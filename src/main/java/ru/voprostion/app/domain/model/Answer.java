@@ -2,7 +2,6 @@ package ru.voprostion.app.domain.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Objects;
