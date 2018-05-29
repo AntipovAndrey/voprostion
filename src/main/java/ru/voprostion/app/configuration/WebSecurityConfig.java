@@ -54,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/question/*",
                             "/question/user/*",
                             "/question/tag/*",
-                            "/question/search/tag/*").permitAll()
+                            "/question/search/tag/*",
+                            "/about").permitAll()
                     .antMatchers("/moderator/**").hasAuthority(moderatorRole)
                     .anyRequest().authenticated()
                 .and()
