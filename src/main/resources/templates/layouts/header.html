@@ -9,10 +9,6 @@
             <a class="current" href="/" align="left"><b>The Voprostion</b></a>
         </li>
 
-        <li>
-            <a href="">About us</a>
-        </li>
-
         <li sec:authorize="isAuthenticated()">
             <a sec:authentication="name" th:href="@{'/user/'+${#authentication.name}}">Name</a>
         </li>
