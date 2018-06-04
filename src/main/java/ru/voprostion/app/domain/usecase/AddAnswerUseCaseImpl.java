@@ -2,7 +2,6 @@ package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.User;
@@ -31,7 +30,7 @@ public class AddAnswerUseCaseImpl implements AddAnswerUseCase {
     }
 
     @Override
-    public AnswerDto answer(Long questionId, String answerText) {
+    public Long answer(Long questionId, String answerText) {
         final Question question = questionService.findById(questionId);
         final User loggedIn = userService.getLoggedIn();
         Answer answer = new Answer();
@@ -39,7 +38,7 @@ public class AddAnswerUseCaseImpl implements AddAnswerUseCase {
         answer.setUser(loggedIn);
         question.addAnswer(answer);
         answerService.save(answer);
-        return new AnswerDto(answer);
+        return answer.getId();
     }
 
     @Override

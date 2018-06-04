@@ -77,8 +77,8 @@ public class QuestionController {
         }
         final List<String> tagList = Stream.of(questionForm.getTags().split(","))
                 .collect(Collectors.toList());
-        final QuestionDto questionDto = askQuestionUseCase.ask(questionForm.getQuestion(), tagList);
-        return "redirect:/question/" + questionDto.getId();
+        final Long id = askQuestionUseCase.ask(questionForm.getQuestion(), tagList);
+        return "redirect:/question/" + id;
     }
 
     @GetMapping("/{id:[\\d]+}")

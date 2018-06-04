@@ -62,7 +62,9 @@
                             <img th:src="@{/img/like.png}"/>
                         </a>
                     </div>
-                    <div class="rating_number" th:text="${answer.rating}">8</div>
+                    <div class="rating_number" th:text="${answer.rating}"
+                         th:style="${answer.loggedUserVote != null ? 'color:#00cc00;' : ''}">8
+                    </div>
                     <div class="dislike">
                         <a sec:authorize="isAuthenticated()"
                            th:if="${answer.user.name != #authentication.name}"
