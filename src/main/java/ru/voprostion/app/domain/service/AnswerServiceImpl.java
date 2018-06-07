@@ -7,6 +7,8 @@ import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.repository.AnswerRepository;
 
+import java.util.Optional;
+
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
@@ -23,17 +25,17 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer findById(Long id) {
-        return answerRepository.findOne(id);
+    public Optional<Answer> findById(Long id) {
+        return answerRepository.findById(id);
     }
 
     @Override
-    public Answer findPreviousAnswer(Question question, User user) {
+    public Optional<Answer> findPreviousAnswer(Question question, User user) {
         return answerRepository.findByQuestionAndUser(question, user);
     }
 
     @Override
     public void deleteById(Long id) {
-        answerRepository.delete(id);
+        answerRepository.deleteById(id);
     }
 }

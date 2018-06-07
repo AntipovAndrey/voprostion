@@ -6,6 +6,7 @@ import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.repository.TagRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TagServiceImpl implements TagService {
@@ -19,24 +20,25 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> saveAll(List<Tag> tags) {
-        return tagRepository.save(tags);
+        return tagRepository.saveAll(tags);
     }
 
     @Override
     public List<Tag> saveOrGet(List<Tag> tags) {
         for (Tag tag : tags) {
-            final Tag fromRepo = findByName(tag.getTagName());
-            if (fromRepo == null) {
-                save(tag);
-            } else {
+            final Optional<Tag> byName = findByName(tag.getTagName());
+            if (byName.isPresent()) {
+                final Tag fromRepo = byName.get();
                 tag.setId(fromRepo.getId());
+            } else {
+                save(tag);
             }
         }
         return saveAll(tags);
     }
 
     @Override
-    public Tag findByName(String name) {
+    public Optional<Tag> findByName(String name) {
         return tagRepository.findByTagNameIgnoreCase(name);
     }
 

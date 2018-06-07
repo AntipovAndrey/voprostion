@@ -1,6 +1,7 @@
 package ru.voprostion.app.domain.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.voprostion.app.domain.dto.QuestionPreviewDto;
 import ru.voprostion.app.domain.model.Question;
@@ -9,6 +10,7 @@ import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.service.QuestionService;
 import ru.voprostion.app.domain.service.TagService;
 import ru.voprostion.app.domain.service.UserService;
+import ru.voprostion.app.domain.usecase.exception.TagNotFoundException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -37,13 +39,15 @@ public class QuestionsListUseCaseImpl implements QuestionsListUseCase {
 
     @Override
     public List<QuestionPreviewDto> getByUser(String username) {
-        final User user = userService.findByUserName(username);
+        final User user = userService.findByUserName(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
         return sortedByDate(questionService.getByUser(user));
     }
 
     @Override
     public List<QuestionPreviewDto> getByTag(String tagName) {
-        final Tag tag = tagService.findByName(tagName);
+        final Tag tag = tagService.findByName(tagName)
+                .orElseThrow(() -> new TagNotFoundException(tagName));
         return sortedByDate(questionService.getByTag(tag));
     }
 

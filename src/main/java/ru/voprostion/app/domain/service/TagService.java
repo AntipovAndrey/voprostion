@@ -3,6 +3,7 @@ package ru.voprostion.app.domain.service;
 import ru.voprostion.app.domain.model.Tag;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TagService {
 
@@ -10,7 +11,7 @@ public interface TagService {
 
     List<Tag> saveOrGet(List<Tag> tags);
 
-    Tag findByName(String name);
+    Optional<Tag> findByName(String name);
 
     Tag save(Tag tag);
 }

@@ -7,6 +7,8 @@ import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.repository.RoleRepository;
 import ru.voprostion.app.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -32,12 +34,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUserName(String username) {
+    public Optional<User> findByUserName(String username) {
         return userRepository.findByName(username);
     }
 
     @Override
-    public User getLoggedIn() {
+    public Optional<User> getLoggedIn() {
         return userRepository.findByName(securityService.findLoggedInUsername());
     }
 }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.voprostion.app.domain.model.Role;
 import ru.voprostion.app.repository.RoleRepository;
 
+import java.util.Optional;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -16,7 +18,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findOneByName(String name) {
+    public Optional<Role> findOneByName(String name) {
         return roleRepository.findByName(name);
     }
 }

@@ -1,11 +1,14 @@
 package ru.voprostion.app.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.voprostion.app.controller.exception.NotFoundException;
+import ru.voprostion.app.domain.usecase.exception.QuestionNotFoundException;
+import ru.voprostion.app.domain.usecase.exception.TagNotFoundException;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
@@ -13,9 +16,12 @@ public class GlobalControllerAdvice {
     @Value("${app.title}")
     private String siteTitle;
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler({NotFoundException.class,
+            QuestionNotFoundException.class,
+            TagNotFoundException.class,
+            UsernameNotFoundException.class})
     public String notFoundPage() {
-        return "error_page";
+        return "forward:/errors/404";
     }
 
     @ModelAttribute("metaTitle")

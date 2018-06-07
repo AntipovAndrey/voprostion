@@ -7,6 +7,8 @@ import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.model.Vote;
 import ru.voprostion.app.repository.VoteRepository;
 
+import java.util.Optional;
+
 @Service
 public class VoteServiceImpl implements VoteService {
 
@@ -18,7 +20,7 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public Vote findPreviousVote(Answer answer, User loggedIn) {
+    public Optional<Vote> findPreviousVote(Answer answer, User loggedIn) {
         return voteRepository.findByUserAndAnswer(loggedIn, answer);
     }
 

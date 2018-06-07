@@ -2,7 +2,9 @@ package ru.voprostion.app.domain.usecase;
 
 import ru.voprostion.app.domain.dto.QuestionDto;
 
+import java.util.Optional;
+
 public interface QuestionDetailsUseCase {
 
-    QuestionDto getDetailed(Long questionId);
+    Optional<QuestionDto> getDetailed(Long questionId);
 }

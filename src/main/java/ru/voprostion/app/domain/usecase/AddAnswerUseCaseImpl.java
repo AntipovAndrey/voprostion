@@ -8,6 +8,10 @@ import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.service.AnswerService;
 import ru.voprostion.app.domain.service.QuestionService;
 import ru.voprostion.app.domain.service.UserService;
+import ru.voprostion.app.domain.usecase.exception.IllegalAccessException;
+import ru.voprostion.app.domain.usecase.exception.QuestionNotFoundException;
+
+import java.util.Objects;
 
 @Service
 public class AddAnswerUseCaseImpl implements AddAnswerUseCase {
@@ -31,8 +35,10 @@ public class AddAnswerUseCaseImpl implements AddAnswerUseCase {
 
     @Override
     public Long answer(Long questionId, String answerText) {
-        final Question question = questionService.findById(questionId);
-        final User loggedIn = userService.getLoggedIn();
+        final Question question = questionService.findById(questionId)
+                .orElseThrow(() -> new QuestionNotFoundException(Objects.toString(questionId)));
+        final User loggedIn = userService.getLoggedIn()
+                .orElseThrow(IllegalAccessException::new);
         Answer answer = new Answer();
         answer.setAnswer(answerText);
         answer.setUser(loggedIn);
@@ -43,11 +49,12 @@ public class AddAnswerUseCaseImpl implements AddAnswerUseCase {
 
     @Override
     public boolean canAnswer(Long questionId) {
-        final User loggedIn = userService.getLoggedIn();
-        if (loggedIn == null) return false;
-        final Question question = questionService.findById(questionId);
+        if (!userService.getLoggedIn().isPresent()) return false;
+        final Question question = questionService.findById(questionId)
+                .orElseThrow(() -> new QuestionNotFoundException(Objects.toString(questionId)));
+        final User loggedIn = userService.getLoggedIn().get();
         if (question.getUser().equals(loggedIn)) return false;
-        if (answerService.findPreviousAnswer(question, loggedIn) != null) return false;
+        if (answerService.findPreviousAnswer(question, loggedIn).isPresent()) return false;
         return true;
     }
 }

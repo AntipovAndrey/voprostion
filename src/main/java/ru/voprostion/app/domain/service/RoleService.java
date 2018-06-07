@@ -2,7 +2,9 @@ package ru.voprostion.app.domain.service;
 
 import ru.voprostion.app.domain.model.Role;
 
+import java.util.Optional;
+
 public interface RoleService {
 
-    Role findOneByName(String name);
+    Optional<Role> findOneByName(String name);
 }

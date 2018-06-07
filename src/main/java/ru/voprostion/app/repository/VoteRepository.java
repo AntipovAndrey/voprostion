@@ -5,7 +5,9 @@ import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.domain.model.Vote;
 
+import java.util.Optional;
+
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
-    Vote findByUserAndAnswer(User owner, Answer answer);
+    Optional<Vote> findByUserAndAnswer(User owner, Answer answer);
 }

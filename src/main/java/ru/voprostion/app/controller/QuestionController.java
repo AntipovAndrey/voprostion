@@ -83,7 +83,8 @@ public class QuestionController {
 
     @GetMapping("/{id:[\\d]+}")
     public String getQuestionDetails(@PathVariable("id") Long questionId, Model model) {
-        final QuestionDto question = questionDetailsUseCase.getDetailed(questionId);
+        final QuestionDto question = questionDetailsUseCase.getDetailed(questionId)
+                .orElseThrow(NotFoundException::new);
 
         if (question == null) throw new NotFoundException();
 

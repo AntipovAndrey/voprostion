@@ -3,7 +3,9 @@ package ru.voprostion.app.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.voprostion.app.domain.model.Tag;
 
+import java.util.Optional;
+
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
-    Tag findByTagNameIgnoreCase(String tagName);
+    Optional<Tag> findByTagNameIgnoreCase(String tagName);
 }

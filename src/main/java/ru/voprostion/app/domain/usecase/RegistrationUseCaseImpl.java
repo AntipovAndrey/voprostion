@@ -25,10 +25,11 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
 
     @Override
     public void registerNewUser(String name, String password) {
-        if (userService.findByUserName(name) != null) {
+        if (userService.findByUserName(name).isPresent()) {
             throw new UserAlreadyRegistered("Username " + name + " is taken");
         }
-        final Role authRole = roleService.findOneByName(simpleUserRole);
+        final Role authRole = roleService.findOneByName(simpleUserRole)
+                .orElseThrow(IllegalStateException::new);
         final User user = new User();
         user.setName(name);
         user.setPassword(password);

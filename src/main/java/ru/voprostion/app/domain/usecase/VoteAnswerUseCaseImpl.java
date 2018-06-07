@@ -8,6 +8,9 @@ import ru.voprostion.app.domain.model.Vote;
 import ru.voprostion.app.domain.service.AnswerService;
 import ru.voprostion.app.domain.service.UserService;
 import ru.voprostion.app.domain.service.VoteService;
+import ru.voprostion.app.domain.usecase.exception.AnswerNotFoundException;
+
+import java.util.Objects;
 
 @Service
 public class VoteAnswerUseCaseImpl implements VoteAnswerUseCase {
@@ -36,15 +39,14 @@ public class VoteAnswerUseCaseImpl implements VoteAnswerUseCase {
     }
 
     private void vote(Long answerId, boolean like) {
-        final User loggedIn = userService.getLoggedIn();
-        final Answer answer = answerService.findById(answerId);
-        if (loggedIn == null) {
-            throw new RuntimeException("not authenticated");
-        }
+        final User loggedIn = userService.getLoggedIn()
+                .orElseThrow(IllegalAccessError::new);
+        final Answer answer = answerService.findById(answerId)
+                .orElseThrow(() -> new AnswerNotFoundException(Objects.toString(answerId)));
         if (loggedIn.equals(answer.getUser())) {
             throw new RuntimeException("you can not vote your answer");
         }
-        Vote vote = voteService.findPreviousVote(answer, loggedIn);
+        Vote vote = voteService.findPreviousVote(answer, loggedIn).orElse(null);
         if (vote == null) {
             vote = new Vote();
             vote.setUser(loggedIn);

@@ -30,7 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByName(username);
+        User user = userRepository.findByName(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
 
         Set<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
                 .map(Role::getName)

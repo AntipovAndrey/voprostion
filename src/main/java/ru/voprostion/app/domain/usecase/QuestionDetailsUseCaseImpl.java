@@ -10,10 +10,7 @@ import ru.voprostion.app.domain.service.QuestionService;
 import ru.voprostion.app.domain.service.UserService;
 import ru.voprostion.app.domain.service.VoteService;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,36 +30,40 @@ public class QuestionDetailsUseCaseImpl implements QuestionDetailsUseCase {
     }
 
     @Override
-    public QuestionDto getDetailed(Long questionId) {
-        final Question question = questionService.findById(questionId);
+    public Optional<QuestionDto> getDetailed(Long questionId) {
+        final Optional<Question> question = questionService.findById(questionId);
 
-        if (question == null) return null;
+        if (!question.isPresent()) return Optional.empty();
 
-        final User loggedIn = userService.getLoggedIn();
-
-        final List<TagDto> tagDtos = question.getTags()
+        final List<TagDto> tagDtos = question.get().getTags()
                 .stream()
                 .sorted(Comparator.comparing(Tag::getTagName))
                 .map(TagDto::new)
                 .collect(Collectors.toList());
 
-        final Set<Answer> answerSet = question.getAnswers();
+        final Set<Answer> answerSet = question.get().getAnswers();
         final List<AnswerDto> answerDtos = new ArrayList<>(answerSet.size());
+
+        final Optional<User> loggedIn = userService.getLoggedIn();
 
         for (Answer answer : answerSet) {
             final AnswerDto answerDto = new AnswerDto(answer);
-            if (loggedIn != null) {
-                final Vote previousVote = voteService.findPreviousVote(answer, loggedIn);
-                if (previousVote != null) {
-                    answerDto.setLoggedUserVote(previousVote.getValue());
-                }
-            }
+
+//            loggedIn.ifPresent(user ->
+//                    voteService.findPreviousVote(answer, user)
+//                            .map(Vote::getValue)
+//                            .ifPresent(answerDto::setLoggedUserVote));
+
+            loggedIn.flatMap(user -> voteService.findPreviousVote(answer, user))
+                    .map(Vote::getValue)
+                    .ifPresent(answerDto::setLoggedUserVote);
+
             answerDtos.add(answerDto);
         }
 
         answerDtos.sort(answersByDate());
 
-        return new QuestionDto(question, answerDtos, tagDtos);
+        return Optional.of(new QuestionDto(question.get(), answerDtos, tagDtos));
     }
 
     private Comparator<AnswerDto> answersByDate() {

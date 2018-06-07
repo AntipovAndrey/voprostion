@@ -8,6 +8,7 @@ import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.repository.QuestionRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -34,15 +35,15 @@ public class QuestionServiceImpl implements QuestionService {
     public Question create(String questionString, List<Tag> tags) {
         Question question = new Question();
         question.setQuestionTitle(questionString);
-        question.setUser(userService.getLoggedIn());
+        userService.getLoggedIn().ifPresent(question::setUser);
         tags = tagService.saveOrGet(tags);
         tags.forEach(question::addTag);
         return questionRepository.save(question);
     }
 
     @Override
-    public Question findById(Long id) {
-        return questionRepository.findOne(id);
+    public Optional<Question> findById(Long id) {
+        return questionRepository.findById(id);
     }
 
     @Override

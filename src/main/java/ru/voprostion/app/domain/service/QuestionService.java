@@ -5,6 +5,7 @@ import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QuestionService {
 
@@ -12,7 +13,7 @@ public interface QuestionService {
 
     Question create(String question, List<Tag> tags);
 
-    Question findById(Long id);
+    Optional<Question> findById(Long id);
 
     Question save(Question question);
 

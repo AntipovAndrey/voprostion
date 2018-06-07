@@ -2,11 +2,13 @@ package ru.voprostion.app.domain.service;
 
 import ru.voprostion.app.domain.model.User;
 
+import java.util.Optional;
+
 public interface UserService {
 
     void save(User user);
 
-    User findByUserName(String username);
+    Optional<User> findByUserName(String username);
 
-    User getLoggedIn();
+    Optional<User> getLoggedIn();
 }

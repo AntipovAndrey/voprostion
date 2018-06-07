@@ -10,6 +10,7 @@ import ru.voprostion.app.domain.service.UserService;
 import ru.voprostion.app.domain.usecase.exception.TooFewTagsException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,8 +38,8 @@ public class AskQuestionUseCaseImpl implements AskQuestionUseCase {
 
     @Override
     public boolean canAsk() {
-        final User loggedIn = userService.getLoggedIn();
-        if (loggedIn == null) return false;
-        return true;
+        final Optional<User> loggedIn = userService.getLoggedIn();
+        if (loggedIn.isPresent()) return true;
+        return false;
     }
 }

@@ -5,7 +5,9 @@ import ru.voprostion.app.domain.model.Answer;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.User;
 
+import java.util.Optional;
+
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    Answer findByQuestionAndUser(Question question, User user);
+    Optional<Answer> findByQuestionAndUser(Question question, User user);
 }
