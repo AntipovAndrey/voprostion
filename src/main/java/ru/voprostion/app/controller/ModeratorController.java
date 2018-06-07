@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.voprostion.app.controller.exception.NotFoundException;
 import ru.voprostion.app.controller.form.QuestionForm;
 import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.dto.TagDto;
@@ -47,8 +46,7 @@ public class ModeratorController {
     public String editQuestionForm(@PathVariable("questionId") Long questionId, Model model) {
         final QuestionForm form = new QuestionForm();
         form.setId(questionId);
-        final QuestionDto questionDto = questionDetailsUseCase.getDetailed(questionId)
-                .orElseThrow(NotFoundException::new);
+        final QuestionDto questionDto = questionDetailsUseCase.getDetailed(questionId);
         form.setQuestion(questionDto.getQuestion());
         final String tagString = questionDto.getTags()
                 .stream()

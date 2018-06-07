@@ -9,6 +9,7 @@ import ru.voprostion.app.domain.model.*;
 import ru.voprostion.app.domain.service.QuestionService;
 import ru.voprostion.app.domain.service.UserService;
 import ru.voprostion.app.domain.service.VoteService;
+import ru.voprostion.app.domain.usecase.exception.QuestionNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,29 +31,23 @@ public class QuestionDetailsUseCaseImpl implements QuestionDetailsUseCase {
     }
 
     @Override
-    public Optional<QuestionDto> getDetailed(Long questionId) {
-        final Optional<Question> question = questionService.findById(questionId);
+    public QuestionDto getDetailed(Long questionId) {
+        final Question question = questionService.findById(questionId)
+                .orElseThrow(() -> new QuestionNotFoundException(Objects.toString(questionId)));
 
-        if (!question.isPresent()) return Optional.empty();
-
-        final List<TagDto> tagDtos = question.get().getTags()
+        final List<TagDto> tagDtos = question.getTags()
                 .stream()
                 .sorted(Comparator.comparing(Tag::getTagName))
                 .map(TagDto::new)
                 .collect(Collectors.toList());
 
-        final Set<Answer> answerSet = question.get().getAnswers();
+        final Set<Answer> answerSet = question.getAnswers();
         final List<AnswerDto> answerDtos = new ArrayList<>(answerSet.size());
 
         final Optional<User> loggedIn = userService.getLoggedIn();
 
         for (Answer answer : answerSet) {
             final AnswerDto answerDto = new AnswerDto(answer);
-
-//            loggedIn.ifPresent(user ->
-//                    voteService.findPreviousVote(answer, user)
-//                            .map(Vote::getValue)
-//                            .ifPresent(answerDto::setLoggedUserVote));
 
             loggedIn.flatMap(user -> voteService.findPreviousVote(answer, user))
                     .map(Vote::getValue)
@@ -63,7 +58,7 @@ public class QuestionDetailsUseCaseImpl implements QuestionDetailsUseCase {
 
         answerDtos.sort(answersByDate());
 
-        return Optional.of(new QuestionDto(question.get(), answerDtos, tagDtos));
+        return new QuestionDto(question, answerDtos, tagDtos);
     }
 
     private Comparator<AnswerDto> answersByDate() {

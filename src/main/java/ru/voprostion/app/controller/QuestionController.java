@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.voprostion.app.controller.exception.NotFoundException;
 import ru.voprostion.app.controller.form.AnswerForm;
 import ru.voprostion.app.controller.form.QuestionForm;
 import ru.voprostion.app.domain.dto.QuestionDto;
@@ -83,10 +82,7 @@ public class QuestionController {
 
     @GetMapping("/{id:[\\d]+}")
     public String getQuestionDetails(@PathVariable("id") Long questionId, Model model) {
-        final QuestionDto question = questionDetailsUseCase.getDetailed(questionId)
-                .orElseThrow(NotFoundException::new);
-
-        if (question == null) throw new NotFoundException();
+        final QuestionDto question = questionDetailsUseCase.getDetailed(questionId);
 
         if (addAnswerUseCase.canAnswer(questionId)) {
             model.addAttribute("answerForm", new AnswerForm());

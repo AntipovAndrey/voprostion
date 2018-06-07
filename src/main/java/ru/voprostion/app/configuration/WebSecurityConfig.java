@@ -19,6 +19,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String API = "/api";
+
     private UserDetailsService userDetailsService;
 
     @Value("${roles.authenticated.moderator}")
@@ -62,7 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/question/user/*",
                             "/question/tag/*",
                             "/question/search/tag/*",
-                            "/about").permitAll()
+                            "/about",
+                            API + "/question/*",
+                            API + "/question/").permitAll()
                     .antMatchers("/moderator/**").hasAuthority(moderatorRole)
                     .anyRequest().authenticated()
                 .and()
