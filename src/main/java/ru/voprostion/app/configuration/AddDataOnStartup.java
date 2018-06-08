@@ -48,7 +48,6 @@ public class AddDataOnStartup {
         User moderator = new User();
         moderator.setName(moderatorName);
         moderator.setPassword(moderatorPassword);
-        moderator.setPasswordHash(moderatorPassword);
         moderator.addRole(moderatorRole);
         moderator.addRole(userRole);
         userService.save(moderator);

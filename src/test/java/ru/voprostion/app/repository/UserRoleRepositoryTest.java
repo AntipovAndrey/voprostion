@@ -105,7 +105,7 @@ public class UserRoleRepositoryTest {
     @Test
     public void remove_user_with_roles_does_not_remove_roles() {
         final User afterSave = userRepository.save(user4);
-        userRepository.delete(afterSave.getId());
+        userRepository.deleteById(afterSave.getId());
         final int sizeRoles = roleRepository.findAll().size();
 
         Assert.assertEquals(2, sizeRoles);

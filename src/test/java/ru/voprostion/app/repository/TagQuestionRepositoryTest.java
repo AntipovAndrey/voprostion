@@ -122,7 +122,7 @@ public class TagQuestionRepositoryTest {
         question1.addTag(tag1);
         question1.addTag(tag2);
         final Question saved = questionRepository.save(question1);
-        final Question questionFromDb = questionRepository.findOne(saved.getId());
+        final Question questionFromDb = questionRepository.findById(saved.getId()).get();
         final Set<Tag> tagsFromDb = questionFromDb.getTags();
 
         Assert.assertTrue(tagsFromDb.contains(tag1) && tagsFromDb.contains(tag2));
@@ -139,7 +139,7 @@ public class TagQuestionRepositoryTest {
         question1.addTag(tag4);
 
         final Long savedQuestionId = questionRepository.save(question1).getId();
-        final Question questionFromDb = questionRepository.findOne(savedQuestionId);
+        final Question questionFromDb = questionRepository.findById(savedQuestionId).get();
         final Set<Tag> tagsFromDb = questionFromDb.getTags();
 
         final boolean correctSize = tagsFromDb.size() == 2;
@@ -162,7 +162,7 @@ public class TagQuestionRepositoryTest {
 
         question1.removeTag(tag1);
         final Long savedId1 = questionRepository.save(question1).getId();
-        final Question fromDb1 = questionRepository.findOne(savedId1);
+        final Question fromDb1 = questionRepository.findById(savedId1).get();
         final Set<Tag> fromDb1Tags = fromDb1.getTags();
 
         final int sizeAfterRemovingTag = questionRepository.findAll().size();
