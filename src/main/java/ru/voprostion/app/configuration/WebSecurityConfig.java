@@ -50,10 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
        http
-                .authorizeRequests()
-                .antMatchers("/question/add").hasAuthority(userRole)
-                    .antMatchers(
-                            "/registration",
+               .authorizeRequests()
+               .antMatchers("/question/add").hasAuthority(userRole)
+               .antMatchers("/moderator/**").hasAuthority(moderatorRole)
+               .antMatchers("/registration",
                             "/js/**",
                             "/css/**",
                             "/img/**",
@@ -67,19 +67,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/about",
                             API + "/question/*",
                             API + "/question/").permitAll()
-                    .antMatchers("/moderator/**").hasAuthority(moderatorRole)
-                    .anyRequest().authenticated()
-                .and()
+               .anyRequest().authenticated()
+               .and()
                     .formLogin()
                         .loginPage("/login")
                             .permitAll()
-                .and()
+               .and()
                     .logout()
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/")
-                .permitAll();
+               .permitAll();
 
         http
                 .authorizeRequests().antMatchers("/console/**").permitAll();

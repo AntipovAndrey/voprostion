@@ -10,7 +10,7 @@
         <H1 align="center" style="margin-top: 30px"><b>Edit Tag</b></H1>
         <hr/>
         <!--/*@thymesVar id="question" type="ru.voprostion.app.domain.dto.QuestionDto"*/-->
-        <form th:action="@{/question/__${question.id}__/edit}" th:object="${question}" method="post">
+        <form th:action="@{/moderator/question/__${question.id}__/edit}" th:object="${question}" method="post">
             <label><b><p align="center">Question</p></b></label>
             <div align="center">
                 <p th:text="*{question}" style="width: 380px; height :70px;"></p>

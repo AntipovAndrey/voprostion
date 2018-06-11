@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.voprostion.app.controller.form.QuestionForm;
 import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.dto.TagDto;
@@ -21,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Controller
+@RequestMapping("/moderator")
 public class ModeratorController {
 
     private DeleteAnswerUseCase deleteAnswerUseCase;
@@ -36,7 +34,7 @@ public class ModeratorController {
         this.editTagsUseCase = editTagsUseCase;
     }
 
-    @GetMapping("/moderator/answer/delete/{answerId:[\\d]+}")
+    @GetMapping("/answer/delete/{answerId:[\\d]+}")
     public String deleteAnswer(@PathVariable("answerId") Long answerId, HttpServletRequest request) {
         deleteAnswerUseCase.delete(answerId);
         return "redirect:" + request.getHeader("Referer");

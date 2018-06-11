@@ -28,7 +28,7 @@
                 </th:block>
             </div>
             <a sec:authorize="hasAuthority('MODERATOR')"
-               th:href="@{/question/__${question.id}__/edit}">Edit tags</a>
+               th:href="@{/moderator/question/__${question.id}__/edit}">Edit tags</a>
         </div>
         <!--/*@thymesVar id="answerForm" type="ru.voprostion.app.controller.form.AnswerForm"*/-->
         <div align="center" th:if="${answerForm != null}">
