@@ -10,6 +10,8 @@ import ru.voprostion.app.controller.exception.NotFoundException;
 import ru.voprostion.app.domain.usecase.exception.QuestionNotFoundException;
 import ru.voprostion.app.domain.usecase.exception.TagNotFoundException;
 
+import javax.servlet.http.HttpServletResponse;
+
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
@@ -20,8 +22,9 @@ public class GlobalControllerAdvice {
             QuestionNotFoundException.class,
             TagNotFoundException.class,
             UsernameNotFoundException.class})
-    public String notFoundPage() {
-        return "forward:/errors/404";
+    public String notFoundPage(HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        return "error_page";
     }
 
     @ModelAttribute("metaTitle")
