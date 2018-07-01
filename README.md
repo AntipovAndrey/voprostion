@@ -17,6 +17,9 @@ A web application running on Spring Boot
 4. Voting for an answer
 5. Searching by tag/user
 
+## Compile
+This app uses the Lombok annotation processor, so you have to enable annotation processing in your IDE
+
 ## Run
 1. You need to edit the following properties in the application.properties file:
    ```
