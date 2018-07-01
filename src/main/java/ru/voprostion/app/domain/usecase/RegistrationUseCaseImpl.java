@@ -11,9 +11,9 @@ import ru.voprostion.app.domain.usecase.exception.UserAlreadyRegistered;
 @Service
 public class RegistrationUseCaseImpl implements RegistrationUseCase {
 
-    private UserService userService;
-    private RoleService roleService;
-    private String simpleUserRole;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final String simpleUserRole;
 
     public RegistrationUseCaseImpl(UserService userService,
                                    RoleService roleService,

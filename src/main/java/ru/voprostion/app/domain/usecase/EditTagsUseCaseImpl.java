@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class EditTagsUseCaseImpl implements EditTagsUseCase {
 
-    private QuestionService questionService;
-    private TagService tagService;
+    private final QuestionService questionService;
+    private final TagService tagService;
 
     @Autowired
     public EditTagsUseCaseImpl(QuestionService questionService, TagService tagService) {

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.voprostion.app.domain.model.User;
-import ru.voprostion.app.repository.RoleRepository;
 import ru.voprostion.app.repository.UserRepository;
 
 import java.util.Optional;
@@ -12,17 +11,15 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private SecurityService securityService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final SecurityService securityService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository,
-                           SecurityService securityService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+                           SecurityService securityService,
+                           BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.securityService = securityService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }

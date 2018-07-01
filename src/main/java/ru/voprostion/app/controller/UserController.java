@@ -18,8 +18,8 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
 
-    private RegistrationUseCase registrationUseCase;
-    private AuthorizationUseCase authorizationUseCase;
+    private final RegistrationUseCase registrationUseCase;
+    private final AuthorizationUseCase authorizationUseCase;
 
     @Autowired
     public UserController(RegistrationUseCase registrationUseCase, AuthorizationUseCase authorizationUseCase) {

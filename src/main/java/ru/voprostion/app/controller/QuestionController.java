@@ -20,11 +20,11 @@ import java.util.stream.Stream;
 @RequestMapping("/question")
 public class QuestionController {
 
-    private QuestionsListUseCase questionsListUseCase;
-    private AskQuestionUseCase askQuestionUseCase;
-    private QuestionDetailsUseCase questionDetailsUseCase;
-    private AddAnswerUseCase addAnswerUseCase;
-    private VoteAnswerUseCase voteAnswerUseCase;
+    private final QuestionsListUseCase questionsListUseCase;
+    private final AskQuestionUseCase askQuestionUseCase;
+    private final QuestionDetailsUseCase questionDetailsUseCase;
+    private final AddAnswerUseCase addAnswerUseCase;
+    private final VoteAnswerUseCase voteAnswerUseCase;
 
     @Autowired
     public QuestionController(QuestionsListUseCase questionsListUseCase,
@@ -39,27 +39,33 @@ public class QuestionController {
         this.voteAnswerUseCase = voteAnswerUseCase;
     }
 
-    @GetMapping(value = "/")
-    public String getAllQuestions(Model model) {
-        model.addAttribute("questions", questionsListUseCase.getAll());
+    @GetMapping(value = {"/", ""})
+    public String getAllQuestions(@RequestParam(value = "page", required = false) Integer pageNum, Model model) {
+        model.addAttribute("questions", questionsListUseCase.getAll(pageNum == null ? 0 : pageNum));
         return "main";
     }
 
     @GetMapping(value = "/user/{username}")
-    public String getQuestionsByUser(@PathVariable("username") String username, Model model) {
-        model.addAttribute("questions", questionsListUseCase.getByUser(username));
+    public String getQuestionsByUser(@PathVariable("username") String username,
+                                     @RequestParam(value = "page", required = false) Integer pageNum,
+                                     Model model) {
+        model.addAttribute("questions", questionsListUseCase.getByUser(username, pageNum == null ? 0 : pageNum));
         return "main";
     }
 
     @GetMapping(value = "/tag/{tagname}")
-    public String getQuestionsByTag(@PathVariable("tagname") String tagname, Model model) {
-        model.addAttribute("questions", questionsListUseCase.getByTag(tagname));
+    public String getQuestionsByTag(@PathVariable("tagname") String tagname,
+                                    @RequestParam(value = "page", required = false) Integer pageNum,
+                                    Model model) {
+        model.addAttribute("questions", questionsListUseCase.getByTag(tagname, pageNum == null ? 0 : pageNum));
         return "main";
     }
 
     @GetMapping(value = "/search/tag/")
-    public String searchByTag(@RequestParam("tagname") String tagname) {
-        return "redirect:/question/tag/" + URLEncoder.encode(tagname);
+    public String searchByTag(@RequestParam(value = "page", required = false) Integer pageNum,
+                              @RequestParam("tagname") String tagname) {
+        final String page = pageNum == null ? "" : "&page=" + pageNum;
+        return "redirect:/question/tag/" + URLEncoder.encode(tagname) + page;
     }
 
     @GetMapping(value = "/add")

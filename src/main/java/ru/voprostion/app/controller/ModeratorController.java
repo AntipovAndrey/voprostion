@@ -21,9 +21,9 @@ import java.util.stream.Stream;
 @RequestMapping("/moderator")
 public class ModeratorController {
 
-    private DeleteAnswerUseCase deleteAnswerUseCase;
-    private QuestionDetailsUseCase questionDetailsUseCase;
-    private EditTagsUseCase editTagsUseCase;
+    private final DeleteAnswerUseCase deleteAnswerUseCase;
+    private final QuestionDetailsUseCase questionDetailsUseCase;
+    private final EditTagsUseCase editTagsUseCase;
 
     @Autowired
     public ModeratorController(DeleteAnswerUseCase deleteAnswerUseCase,

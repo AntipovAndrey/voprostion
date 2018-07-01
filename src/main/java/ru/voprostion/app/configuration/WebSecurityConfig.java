@@ -60,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/webjars/**",
                             "/",
                             "/user/*",
+                            "/question",
                             "/question/*",
                             "/question/user/*",
                             "/question/tag/*",

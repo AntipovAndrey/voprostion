@@ -1,5 +1,6 @@
 package ru.voprostion.app.domain.service;
 
+import org.springframework.data.domain.Page;
 import ru.voprostion.app.domain.model.Question;
 import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.model.User;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 public interface QuestionService {
 
-    List<Question> getAll();
+    Page<Question> getByPage(int pageNumber, String sortBy);
 
     Question create(String question, List<Tag> tags);
 
@@ -17,7 +18,7 @@ public interface QuestionService {
 
     Question save(Question question);
 
-    List<Question> getByUser(User user);
+    Page<Question> getByUser(User user, int pageNumber, String sortBy);
 
-    List<Question> getByTag(Tag tag);
+    Page<Question> getByTag(Tag tag, int pageNumber, String sortBy);
 }

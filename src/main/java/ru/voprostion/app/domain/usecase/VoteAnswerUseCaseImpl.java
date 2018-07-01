@@ -15,9 +15,9 @@ import java.util.Objects;
 @Service
 public class VoteAnswerUseCaseImpl implements VoteAnswerUseCase {
 
-    private VoteService voteService;
-    private UserService userService;
-    private AnswerService answerService;
+    private final VoteService voteService;
+    private final UserService userService;
+    private final AnswerService answerService;
 
     @Autowired
     public VoteAnswerUseCaseImpl(VoteService voteService,

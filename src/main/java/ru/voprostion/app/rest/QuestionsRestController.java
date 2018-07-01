@@ -13,8 +13,8 @@ import ru.voprostion.app.domain.usecase.QuestionsListUseCase;
 @RequestMapping("/api/question")
 public class QuestionsRestController {
 
-    private QuestionsListUseCase questionsListUseCase;
-    private QuestionDetailsUseCase questionDetailsUseCase;
+    private final QuestionsListUseCase questionsListUseCase;
+    private final QuestionDetailsUseCase questionDetailsUseCase;
 
     @Autowired
     public QuestionsRestController(QuestionsListUseCase questionsListUseCase,
@@ -25,7 +25,7 @@ public class QuestionsRestController {
 
     @GetMapping(value = "/")
     public ResponseEntity<?> getAllQuestions() {
-        return ResponseEntity.ok().body(questionsListUseCase.getAll());
+        return ResponseEntity.ok().body(questionsListUseCase.getAll(1));
     }
 
     @GetMapping("/{id:[\\d]+}")

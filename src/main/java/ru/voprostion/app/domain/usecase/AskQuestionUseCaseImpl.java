@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class AskQuestionUseCaseImpl implements AskQuestionUseCase {
 
-    private QuestionService questionService;
-    private UserService userService;
+    private final QuestionService questionService;
+    private final UserService userService;
 
     @Autowired
     public AskQuestionUseCaseImpl(QuestionService questionService,

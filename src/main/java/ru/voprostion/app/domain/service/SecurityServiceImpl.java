@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
-    private AuthenticationManager authenticationManager;
-    private UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 

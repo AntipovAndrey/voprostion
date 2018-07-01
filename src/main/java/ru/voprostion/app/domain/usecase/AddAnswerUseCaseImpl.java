@@ -16,20 +16,16 @@ import java.util.Objects;
 @Service
 public class AddAnswerUseCaseImpl implements AddAnswerUseCase {
 
-    private AnswerService answerService;
-    private UserService userService;
-    private QuestionDetailsUseCase questionDetailsUseCase;
-    private QuestionService questionService;
+    private final AnswerService answerService;
+    private final UserService userService;
+    private final QuestionService questionService;
 
     @Autowired
     public AddAnswerUseCaseImpl(AnswerService answerService,
                                 UserService userService,
-                                QuestionDetailsUseCase questionDetailsUseCase,
                                 QuestionService questionService) {
         this.answerService = answerService;
-        this.answerService = answerService;
         this.userService = userService;
-        this.questionDetailsUseCase = questionDetailsUseCase;
         this.questionService = questionService;
     }
 

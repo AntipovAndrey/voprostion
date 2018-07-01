@@ -9,7 +9,7 @@ import ru.voprostion.app.domain.service.SecurityService;
 @Service
 public class AuthorizationUseCaseImpl implements AuthorizationUseCase {
 
-    private SecurityService securityService;
+    private final SecurityService securityService;
 
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationUseCase.class);
 

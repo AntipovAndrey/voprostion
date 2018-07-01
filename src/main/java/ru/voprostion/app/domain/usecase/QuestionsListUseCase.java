@@ -2,13 +2,11 @@ package ru.voprostion.app.domain.usecase;
 
 import ru.voprostion.app.domain.dto.QuestionPreviewDto;
 
-import java.util.List;
-
 public interface QuestionsListUseCase {
 
-    List<QuestionPreviewDto> getAll();
+    Iterable<QuestionPreviewDto> getAll(int pageNumber);
 
-    List<QuestionPreviewDto> getByUser(String username);
+    Iterable<QuestionPreviewDto> getByUser(String username, int pageNumber);
 
-    List<QuestionPreviewDto> getByTag(String tag);
+    Iterable<QuestionPreviewDto> getByTag(String tag, int pageNumber);
 }

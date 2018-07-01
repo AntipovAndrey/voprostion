@@ -7,7 +7,7 @@ import ru.voprostion.app.domain.service.AnswerService;
 @Service
 public class DeleteAnswerUseCaseImpl implements DeleteAnswerUseCase {
 
-    private AnswerService answerService;
+    private final AnswerService answerService;
 
     @Autowired
     public DeleteAnswerUseCaseImpl(AnswerService answerService) {
