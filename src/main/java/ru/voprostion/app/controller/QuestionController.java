@@ -41,7 +41,7 @@ public class QuestionController {
 
     @GetMapping(value = {"/", ""})
     public String getAllQuestions(@RequestParam(value = "page", required = false) Integer pageNum, Model model) {
-        model.addAttribute("questions", questionsListUseCase.getAll(pageNum == null ? 0 : pageNum));
+        //    model.addAttribute("questions", questionsListUseCase.getAll(pageNum == null ? 0 : pageNum));
         return "main";
     }
 

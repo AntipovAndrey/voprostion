@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/question/search/tag/*",
                             "/about",
                             API + "/question/*",
-                            API + "/question/").permitAll()
+                       API + "/question").permitAll()
                .anyRequest().authenticated()
                .and()
                     .formLogin()

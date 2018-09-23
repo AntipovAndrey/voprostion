@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-@JsonPropertyOrder({"id", "user", "tags", "question", "answers"})
+@JsonPropertyOrder({"id", "user", "tags", "question", "answers", "date"})
 public class QuestionPreviewDto extends BaseDto {
     private String question;
     private List<TagDto> tags;
@@ -27,6 +27,7 @@ public class QuestionPreviewDto extends BaseDto {
 
     public QuestionPreviewDto(Question question) {
         setId(question.getId());
+        setDateCreated(question.getDateCreated());
         this.question = question.getQuestionTitle();
         user = new UserDto(question.getUser());
         answers = question.getAnswers().size();

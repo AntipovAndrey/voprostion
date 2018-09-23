@@ -11,6 +11,7 @@ import ru.voprostion.app.domain.model.Tag;
 import ru.voprostion.app.domain.model.User;
 import ru.voprostion.app.repository.QuestionRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,22 +23,22 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final TagService tagService;
     private final UserService userService;
-    private final Integer pageSize;
+    private final Sort sort;
 
     @Autowired
     public QuestionServiceImpl(QuestionRepository questionRepository,
                                TagService tagService,
                                UserService userService,
-                               @Value("${question.pageSize}") Integer pageSize) {
+                               @Value("${question.sortingKey}") String sortingKey) {
         this.questionRepository = questionRepository;
         this.tagService = tagService;
         this.userService = userService;
-        this.pageSize = pageSize;
+        this.sort = Sort.by(Order.desc(sortingKey));
     }
 
     @Override
-    public Page<Question> getByPage(int pageNumber, String sortBy) {
-        return questionRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(Order.desc(sortBy))));
+    public Page<Question> getByPage(int pageNumber, int count, String sortBy) {
+        return questionRepository.findAll(PageRequest.of(pageNumber, count, Sort.by(Order.desc(sortBy))));
     }
 
     @Override
@@ -61,12 +62,18 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Page<Question> getByUser(User user, int pageNumber, String sortBy) {
-        return questionRepository.findAllByUser(user, PageRequest.of(pageNumber, pageSize, Sort.by(Order.desc(sortBy))));
+    public Page<Question> getByUser(User user, int pageNumber, int count) {
+        return questionRepository.findAllByUser(user, PageRequest.of(pageNumber, count, sort));
     }
 
     @Override
-    public Page<Question> getByTag(Tag tag, int pageNumber, String sortBy) {
-        return questionRepository.findAllByTags(tag, PageRequest.of(pageNumber, pageSize, Sort.by(Order.desc(sortBy))));
+    public Page<Question> getByTag(Tag tag, int pageNumber, int count) {
+        return questionRepository.findAllByTags(tag, PageRequest.of(pageNumber, count, sort));
+    }
+
+    @Override
+    public List<Question> getBeforeDate(Date from, int count) {
+        return questionRepository.findAllByDateCreatedBefore(from,
+                PageRequest.of(0, count, sort));
     }
 }
