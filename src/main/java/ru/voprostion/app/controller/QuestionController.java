@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.voprostion.app.controller.form.AnswerForm;
 import ru.voprostion.app.controller.form.QuestionForm;
 import ru.voprostion.app.domain.dto.QuestionDto;
+import ru.voprostion.app.domain.dto.QuestionPreviewDto;
 import ru.voprostion.app.domain.usecase.*;
 
 import javax.validation.Valid;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,8 +42,14 @@ public class QuestionController {
     }
 
     @GetMapping(value = {"/", ""})
-    public String getAllQuestions(@RequestParam(value = "page", required = false) Integer pageNum, Model model) {
-        //    model.addAttribute("questions", questionsListUseCase.getAll(pageNum == null ? 0 : pageNum));
+    public String getAllQuestions(@RequestParam(value = "before", required = false) Long before, Model model) {
+        long dateFrom = before == null ? Calendar.getInstance().getTime().getTime() : before;
+        List<QuestionPreviewDto> questions = questionsListUseCase.getAll(dateFrom);
+        model.addAttribute("questions", questions);
+        if (questions != null && questions.size() != 0) {
+            QuestionPreviewDto last = questions.get(questions.size() - 1);
+            model.addAttribute("next", last.getDateCreated().getTime());
+        }
         return "main";
     }
 
