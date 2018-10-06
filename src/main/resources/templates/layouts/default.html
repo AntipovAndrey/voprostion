@@ -1,38 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+>
 <head th:replace="layouts/header :: head"></head>
 <body>
-<div id="container">
-
-    <th:block th:replace="layouts/header :: nav"/>
-
-    <div id="sidebar">
-
-        <div class="search-container">
-            <form th:action="@{/question/search/tag/}" method="get">
-                <div class="search-input">
-                    <input type="text" name="tagname" placeholder="Search.."/>
-                </div>
-                <div class="search-button">
-                    <input type="image" th:src="@{/img/outline-search-24px.svg}"/>
-                </div>
-            </form>
+<th:block th:replace="layouts/header :: nav"/>
+<div class="container" id="content">
+    <div class="row justify-content-md-center">
+        <div class="col-md-offset-2 col-md-8">
+            <th:block layout:fragment="content"/>
         </div>
-
-        <div align="bottom">
-            <div sec:authorize="isAuthenticated()">
-                <a th:href="@{'/user/'+${#authentication.name}}">Мои вопросы</a>
-                <button onclick="location.href='/question/add';" align="left" class="buttonToAdd"><img
-                        th:src="@{/img/drawing.svg}"/></button>
-            </div>
-        </div>
-    </div>
-
-    <div layout:fragment="content">
-
     </div>
 </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
 </body>
 </html>

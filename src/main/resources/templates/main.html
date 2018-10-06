@@ -4,32 +4,37 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
 <body>
-<div id="page" layout:fragment="content">
-    <div id="content">
-        <th:block th:each="question : ${questions}">
-            <div id="questionPreview" align="center">
-                <div>
-                    <h5 align="right" style="margin-right: 10px">
-                        <a th:text="${question.user.name}" th:href="@{/user/__${question.user.name}__}"></a>
-
-                        <span
-                                th:text="|${' • ' + question.answers}| + ' answers'"></span>
-                    </h5>
-                </div>
-
-                <p class="question_title">
-                    <a th:href="@{'/question/' + ${question.id}}"><span th:text="${question.question}"></span></a>
-                </p>
-                <div>
-                    <th:block th:each="tag : ${question.tags}">
-                        <form style="display: inline" method="get" th:action="@{/question/tag/__${tag.name}__}">
-                            <button type="submit" id="tagsButton" th:text="${tag.name}"></button>
-                        </form>
-                    </th:block>
+<div layout:fragment="content">
+    <th:block th:each="question : ${questions}">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <h6 align="right">
+                                <a th:href="@{/user/__${question.user.name}__}" th:text="${question.user.name}">
+                                </a>
+                                <span th:text="|${' • ' + question.answers}| + ' answers'"></span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center my-3">
+                        <h3>
+                            <a th:href="@{'/question/' + ${question.id}}"><span
+                                    th:text="${question.question}"></span></a>
+                        </h3>
+                    </div>
+                    <div class="row justify-content-center">
+                        <th:block th:each="tag : ${question.tags}">
+                            <a th:href="@{/question/tag/__${tag.name}__}"
+                               class="btn btn-secondary d-inline-block mr-2"
+                               th:text="${tag.name}">tag</a>
+                        </th:block>
+                    </div>
                 </div>
             </div>
-        </th:block>
-    </div>
+        </div>
+    </th:block>
 </div>
 </body>
 </html>
