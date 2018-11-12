@@ -7,6 +7,7 @@ A web application running on Spring Boot
   - Spring Data Jpa
   - Spring Security
   - Spring Boot
+  - Spring Rest
   - Spring MVC
   - Thymeleaf
 
@@ -24,13 +25,10 @@ This app uses the Lombok annotation processor, so you have to enable annotation 
 1. You need to edit the following properties in the application.properties file:
    ```
    spring.jpa.hibernate.ddl-auto=create
-   ...
-   app.filldb=true
    ```
-   Using this properties the app will create the schema and populate DB with the simple user role and a moderator account.
+   Using this property the app will create the DB schema.
 2. Run the DB in-memory server
    ```sh
    java -cp h2-1.4.190.jar org.h2.tools.Server
    ```
 3. Run AppApplication class from the Idea or using gradle command-line.
-4. Before you restart the app make sure if the edited properties were restored

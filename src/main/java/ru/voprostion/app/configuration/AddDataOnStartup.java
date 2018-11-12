@@ -29,9 +29,6 @@ public class AddDataOnStartup {
     @Value("${users.moderator.password}")
     private String moderatorPassword;
 
-    @Value("${app.filldb}")
-    private Boolean databaseUpdate;
-
     @Autowired
     public AddDataOnStartup(RoleRepository roleRepository,
                             UserService userService) {
@@ -42,14 +39,30 @@ public class AddDataOnStartup {
     @EventListener
     @Transactional
     public void appReady(ApplicationReadyEvent event) {
-        if (!databaseUpdate) return;
-        final Role moderatorRole = roleRepository.save(new Role(this.moderatorRole));
-        final Role userRole = roleRepository.save(new Role(simpleUserRole));
+        createRoles();
+        createModerator();
+    }
+
+    private void createRoles() {
+        if (!roleRepository.findByName(moderatorRole).isPresent()) {
+            roleRepository.save(new Role(moderatorRole));
+        }
+        if (!roleRepository.findByName(simpleUserRole).isPresent()) {
+            roleRepository.save(new Role(simpleUserRole));
+        }
+    }
+
+    private void createModerator() {
+        if (userService.findByUserName(moderatorName).isPresent()) {
+            return;
+        }
+        final Role roleModerator = roleRepository.findByName(moderatorRole).orElseThrow(IllegalStateException::new);
+        final Role roleUser = roleRepository.findByName(moderatorRole).orElseThrow(IllegalStateException::new);
         User moderator = new User();
         moderator.setName(moderatorName);
         moderator.setPassword(moderatorPassword);
-        moderator.addRole(moderatorRole);
-        moderator.addRole(userRole);
+        moderator.addRole(roleModerator);
+        moderator.addRole(roleUser);
         userService.save(moderator);
     }
 }
