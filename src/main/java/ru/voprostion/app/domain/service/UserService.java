@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void save(User user);
+    void create(User user);
 
     Optional<User> findByUserName(String username);
 

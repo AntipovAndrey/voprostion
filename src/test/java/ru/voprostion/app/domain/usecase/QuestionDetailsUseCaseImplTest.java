@@ -51,7 +51,7 @@ public class QuestionDetailsUseCaseImplTest {
         user = new User() {{
             addRole(role);
             setName("Test");
-            setPasswordHash("1234");
+            setPassword("1234");
             setId(1337L);
         }};
 

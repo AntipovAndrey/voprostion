@@ -34,6 +34,6 @@ public class RegistrationUseCaseImpl implements RegistrationUseCase {
         user.setName(name);
         user.setPassword(password);
         user.addRole(authRole);
-        userService.save(user);
+        userService.create(user);
     }
 }

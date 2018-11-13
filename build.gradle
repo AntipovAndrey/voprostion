@@ -37,6 +37,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-devtools')
     compile("org.projectlombok:lombok")
     runtime('com.h2database:h2')
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.3.1')
+    testCompile('org.junit.jupiter:junit-jupiter-params:5.3.1')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.1')
+    testCompile ('org.mockito:mockito-core:2.23.0')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
 }

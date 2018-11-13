@@ -63,6 +63,6 @@ public class AddDataOnStartup {
         moderator.setPassword(moderatorPassword);
         moderator.addRole(roleModerator);
         moderator.addRole(roleUser);
-        userService.save(moderator);
+        userService.create(moderator);
     }
 }

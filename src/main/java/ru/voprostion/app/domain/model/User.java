@@ -19,10 +19,7 @@ public class User extends BaseModel {
     private String name;
 
     @NotNull
-    private String passwordHash;
-
-    @Transient
-    @Size(min = 4, max = 16)
+    @Column(name = "passwordHash")
     private String password;
 
     @ManyToMany(cascade = {
