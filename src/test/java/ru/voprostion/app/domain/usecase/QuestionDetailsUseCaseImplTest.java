@@ -1,11 +1,10 @@
 package ru.voprostion.app.domain.usecase;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 import ru.voprostion.app.domain.dto.AnswerDto;
 import ru.voprostion.app.domain.dto.QuestionDto;
 import ru.voprostion.app.domain.model.*;
@@ -19,11 +18,11 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class QuestionDetailsUseCaseImplTest {
+class QuestionDetailsUseCaseImplTest {
 
     @Mock
     private QuestionService questionService;
@@ -41,8 +40,10 @@ public class QuestionDetailsUseCaseImplTest {
     private Role role;
     private Vote vote;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+
         when(userService.getLoggedIn()).thenReturn(Optional.empty());
         when(voteService.findPreviousVote(any(), any())).thenReturn(Optional.empty());
 
@@ -79,27 +80,23 @@ public class QuestionDetailsUseCaseImplTest {
         }};
     }
 
-    @Test(expected = QuestionNotFoundException.class)
-    public void throw_exception_when_requested_details_with_wrong_id() {
-        // when
+    @Test
+    void whenDetailedQuestionRequestedWithWrongIdThenThrowException() {
         when(questionService.findById(42L)).thenReturn(Optional.empty());
-        // action
-        useCase.getDetailed(42L);
+        assertThrows(QuestionNotFoundException.class, () -> useCase.getDetailed(42L));
     }
 
     @Test
-    public void answers_contain_rating_of_logged_user() {
-        // when
+    void whenDetailedQuestionRequestedThenModelMustContainLoggedUserVote() {
         when(userService.getLoggedIn()).thenReturn(Optional.of(user));
         when(voteService.findPreviousVote(answer, user)).thenReturn(Optional.of(vote));
         when(questionService.findById(42L)).thenReturn(Optional.of(question));
-        // action
+
         final QuestionDto detailed = useCase.getDetailed(42L);
-        // assert
+
         final AnswerDto answerDto = detailed.getAnswers().stream()
                 .filter(a -> a.getAnswer().equals(answer.getAnswer()))
-                .findFirst()
-                .get();
+                .findFirst().get();
         assertThat(answerDto.getLoggedUserVote(), is(equalTo(vote.getValue())));
     }
 }
