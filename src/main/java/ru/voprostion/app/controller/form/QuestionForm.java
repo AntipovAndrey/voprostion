@@ -14,7 +14,7 @@ public class QuestionForm extends BaseForm {
     @Length(min = 5, max = 140)
     private String question;
     @NotNull
-    @Length(min = 2, max = 30)
+    @Length(min = 2)
     @ListSize(min = 2)
     private String tags;
 }
